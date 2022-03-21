@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const Connection = require("../config/connection");
+const fs = require('fs');
 let router = express.Router();
 
 /* GET users listing. */
@@ -26,7 +27,7 @@ router.post('/signin', function(req, res, next) {
     let pwd = req.body.pwd;
     let user = null;
 
-    Connection.query("SELECT * FROM admin WHERE login="+"'"+login+"'", (error, result, fields) => {
+    Connection.query("SELECT * FROM utilisateur WHERE login="+"'"+login+"'", (error, result, fields) => {
         if(error){
             res.status(500).json(error500(error+' '+login+' '+pwd));
         } else {
@@ -35,7 +36,7 @@ router.post('/signin', function(req, res, next) {
                 user = result[0];
 
                 bcrypt.compare(pwd, user.paswwd).then((res) => {
-                    if(res===true){
+                    if(res){
 
                         let privateKey = fs.readFileSync('../jwt_secret.txt');
 
@@ -48,33 +49,7 @@ router.post('/signin', function(req, res, next) {
                 });
 
             } else {
-
-                Connection.query("SELECT * FROM client WHERE nom_client="+"'"+login+"'", (error, result, fields) => {
-                    if(error){
-                        res.status(500).json(error500(error+' '+login+' '+pwd));
-                    } else {
-                        if(result[0] !== null && result[0] !== undefined){
-
-                            user = result[0];
-
-                            bcrypt.compare(pwd, user.paswwd).then((res) => {
-                                if(res===true){
-
-                                    let privateKey = fs.readFileSync('../jwt_secret.txt');
-
-                                    let token = jwt.sign({sub: user.uuid}, privateKey, { algortihm: 'HS256', expiresIn: '1h' });
-                                    res.status(200).json({'token': token});
-
-                                } else {
-                                    res.status(401).json(error401("Le mot de passe n'est pas valide"));
-                                }
-                            });
-
-                        } else {
-                            res.status(401).json(error401("L'utilisateur n'existe pas."));
-                        }
-                    }
-                });
+                res.status(401).json(error401("L'utilisateur n'existe pas."));
             }
         }
     });

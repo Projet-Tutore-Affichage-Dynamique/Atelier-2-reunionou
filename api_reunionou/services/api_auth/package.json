@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "api.users",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,9 @@
     "knex": "~1.0.1",
     "morgan": "~1.9.1",
     "mysql": "~2.10.1",
-    "uuid": "~8.3.2"
+    "uuid": "~8.3.2",
+    "fs": "^0.0.1-security",
+    "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
     "nodemon": "2.0.15"

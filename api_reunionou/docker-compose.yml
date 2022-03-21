@@ -2,8 +2,8 @@ version: '2.3'
 
 services:
   #API
-  api_auth:
-    container_name: api.auth
+  api_users:
+    container_name: api.users
     image: node:lts
     env_file:
       - ./services/.env
@@ -14,9 +14,9 @@ services:
       - '5001:3000'
     command: npm run watch
     depends_on:
-      - database
+      - db_reunionou
     links:
-      - database
+      - db_reunionou
     networks:
       - backend_reunionou
 
@@ -32,9 +32,9 @@ services:
       - '5002:3000'
     command: npm run watch
     depends_on:
-      - database
+      - db_reunionou
     links:
-      - database
+      - db_reunionou
     networks:
       - backend_reunionou
 
@@ -53,14 +53,14 @@ services:
       - '8081:3000'
     command: npm run watch
     depends_on:
-      - api_auth
+      - api_users
       - api_events
     networks:
       - backend_reunionou
 
   #DATABASE
-  database:
-    container_name: database
+  db_reunionou:
+    container_name: database.reunionou
     image: mariadb:latest
     env_file:
       - ./services/.env
@@ -72,11 +72,20 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
       - '3306:3306'
-    expose:
-      - '3306'
     volumes:
       - ./services/db:/var/lib/mysql
       - ./tables.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./datas.sql:/docker-entrypoint-initdb.d/2.sql
+    networks:
+      - backend_reunionou
+
+  adminer_reunionou:
+    container_name: adminer.reunionou
+    image: adminer
+    depends_on:
+      - db_reunionou
+    ports:
+      - '5000:8080'
     networks:
       - backend_reunionou
 
