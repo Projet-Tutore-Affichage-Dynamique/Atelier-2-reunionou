@@ -16,6 +16,12 @@ router.get('/:id', function(req, res, next) {
 });
 
 
+/* Récupère tous les messages de l'event */
+router.get('/:id/messages', function(req, res, next) {
+    res.status(300).json({"message": "Path Not Defined"});
+});
+
+
 /* Invite un utilisateur dans l'évenement */
 router.post('/invite', function(req, res, next) {
     res.status(300).json({"message": "Path Not Defined"});
@@ -42,7 +48,7 @@ router.post('/create', function(req, res, next) {
         Connection.query("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+lieu+"')", (error, result, fields) => {
             if(!error){
 
-                res.status(200).json(error500("Création du nouvel evenement réussie"));
+                res.status(200).json({"message": "Création du nouvel evenement réussie"});
 
             } else{
                 res.status(500).json(error500(error));
@@ -54,6 +60,52 @@ router.post('/create', function(req, res, next) {
     }
 });
 
+
+/* Créer un nouveau message */
+router.post('/post_message', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    //Récupérer les données du body
+    let id_event = req.body.id_event;
+    let message = req.body.message;
+    let id_user = req.body.id_user;
+
+    if(verifyDataMessage(req.body)){
+
+        Connection.query("INSERT INTO messages (`id_event`,`id_createur`,`message`, `date`) VALUES ('"+id_event+"', '"+id_user+"', '"+message+"', NOW())", (error, result, fields) => {
+            if(!error){
+
+                res.status(200).json({"message": "Envoie du message réussie"});
+
+            } else{
+                res.status(500).json(error500(error));
+            }
+        });
+
+    } else{
+        res.status(401).json(error401('Données fausses ou manquantes'));
+    }
+});
+
+
+
+function verifyDataMessage(data){
+    const schema = Joi.object().keys({
+        id_event: Joi.number().integer().min(1).max(99999999999).required(),
+        message: Joi.string().min(1).max(256).required(),
+        id_user: Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required(),
+    });
+
+
+    const res = schema.validate(data);
+    const { value, error } = res;
+    const valid = error == null;
+    if (!valid) {
+        return false
+    } else {
+        return true;
+    }
+}
 
 
 function verifyDataCreate(data){

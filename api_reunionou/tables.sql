@@ -30,7 +30,7 @@ CREATE TABLE `invitation`(
     `id_event` int(11) NOT NULL,
     `id_invite` varchar(36) NOT NULL,
     `status` int(1) NOT NULL,
-    PRIMARY KEY (`id_event`),
+    PRIMARY KEY (`id_event`, `id_invite`),
     FOREIGN KEY (`id_event`) REFERENCES events(`id`),
     FOREIGN KEY (`id_invite`) REFERENCES utilisateur(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,7 +40,8 @@ CREATE TABLE `messages` (
     `id_event` int(11) NOT NULL,
     `id_createur` varchar(36) NOT NULL,
     `message` varchar(128) NOT NULL,
-    PRIMARY KEY (`id_event`),
+    `date` datetime NOT NULL,
+    PRIMARY KEY (`id_event`, `id_createur`, `date`),
     FOREIGN KEY (`id_event`) REFERENCES events(`id`),
     FOREIGN KEY (`id_createur`) REFERENCES utilisateur(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
