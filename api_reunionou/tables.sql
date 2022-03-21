@@ -15,7 +15,7 @@ CREATE TABLE `utilisateur` (
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events`(
-    `id` int(11) NOT NULL,
+    `id` int(11) NOT NULL AUTO_INCREMENT,
     `id_createur` varchar(36) NOT NULL,
     `titre` varchar(128) NOT NULL,
     `description` varchar(128),

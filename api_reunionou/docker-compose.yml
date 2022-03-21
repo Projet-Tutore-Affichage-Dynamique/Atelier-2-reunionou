@@ -58,6 +58,8 @@ services:
     networks:
       - backend_reunionou
 
+
+
   #DATABASE
   db_reunionou:
     container_name: database.reunionou
