@@ -6,10 +6,10 @@ vous. L'application est disponible en version web (ordinateurs et terminaux mobi
 version mobile (smartphones, tablettes).
 
 ## Membres du projet
-- Pierre-Alexandre Frisson
-- Theo Orias
-- Leopold Lelanilec
-- Valentin Aubertin
+- AUBERTIN Aubertin
+- FRISSON Pierre-Alexandre
+- LE NALINEC Leopold 
+- ORIAS Théo
 
 
 ## Tech Stack
