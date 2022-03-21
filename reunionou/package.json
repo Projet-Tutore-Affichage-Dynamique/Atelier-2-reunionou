@@ -1,5 +1,5 @@
 {
-  "name": "reunionou",
+  "name": "projectmusicbrainz",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,10 +7,13 @@
     "preview": "vite preview --port 5050"
   },
   "dependencies": {
-    "vue": "^3.2.31"
+    "axios": "^0.25.0",
+    "bootstrap": "^5.1.3",
+    "vue": "^3.2.29",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.2",
-    "vite": "^2.8.4"
+    "@vitejs/plugin-vue": "^2.1.0",
+    "vite": "^2.7.13"
   }
 }
