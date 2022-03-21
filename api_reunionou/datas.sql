@@ -1,0 +1,19 @@
+INSERT INTO `db`.`utilisateur` (`id`,`login`,`pwd`,`email`,`admin`) VALUES
+('a368a7e6-3a83-4398-8797-2905e4ee6b6f','PAFman','$2y$10$6IgSKSMqklQ7c2Tmnh1ZMuZKY96S9NEjpP0KS5b6fgKV260KXoNOS','pierre.frisson@gmail.com',1),
+('5c09009e-8b43-4c5e-8984-5c61924282f5','LeopoldLNC','$2y$10$vmhkugM75TtBPrG2tEZQyeh9Cp8fiPyrDrLmme4jyBh1zhjZ3Tko6','leopold55@hotmail.fr',0),
+('6962e727-486c-4f97-9e9a-ca68899e6ae8','Vaabt','$2y$10$gy0PH8cfulGBeBR967az6eoQO/Qk9.jbauz6ftKOOMcEkfrdGDjxu','AubertinVal@yahoo.fr',1),
+('bd0d009a-3479-4015-8f99-91955b179762','Theo','$2y$10$sqavI9K6PMcAjGns40OQx.pe.zUr4VBC0FsZ5A7K57XWa5MeUgTpu','theo.orias@club-internet.fr',0);
+
+INSERT INTO `db`.`events` (`id`,`id_createur`,`titre`,`description`,`date_RV`,`geoloc_lat`,`geoloc_long`) VALUES
+(00000000001, 'a368a7e6-3a83-4398-8797-2905e4ee6b6f', 'Anniv PAF', 'Anniversaire de Pierre-Alexandre', '2023-11-08 13:45:55', 48.76371092068914, 5.592440835748774),
+(00000000002, '5c09009e-8b43-4c5e-8984-5c61924282f5', 'Reunion Atelier', 'Reunion dev Atelier reunionou', '2022-03-03 09:00:00', 48.68349561253066, 6.161470923132911);
+
+INSERT INTO `db`.`invitation` (`id_event`,`id_invite`,`status`,`message`) VALUES
+(00000000001, '5c09009e-8b43-4c5e-8984-5c61924282f5', 2),
+(00000000002, 'a368a7e6-3a83-4398-8797-2905e4ee6b6f', 3),
+(00000000001, '6962e727-486c-4f97-9e9a-ca68899e6ae8', 1),
+(00000000002, 'bd0d009a-3479-4015-8f99-91955b179762', 0);
+
+INSERT INTO `db`.`messages` (`id_event`,`id_createur`,`message`) VALUES
+(00000000001, 'a368a7e6-3a83-4398-8797-2905e4ee6b6f', 'n oubliez pas les cadeaux'),
+(00000000002, '6962e727-486c-4f97-9e9a-ca68899e6ae8', 'premier rendez vous tres important');
