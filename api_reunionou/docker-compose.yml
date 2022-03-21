@@ -1,0 +1,41 @@
+version: '2.3'
+
+services:
+  api_webapp:
+    container_name: api.webapp
+    image: node:lts
+    env_file:
+      - ./services/.env
+    ports:
+      - '8081:3000'
+    command: npm run watch
+    depends_on:
+      - database
+    links:
+      - database
+    networks:
+      - backend_reunionou
+
+  database:
+    container_name: database
+    image: mariadb:latest
+    env_file:
+      - ./services/.env
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pwd'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./services/db:/var/lib/mysql
+      - ./tables.sql:/docker-entrypoint-initdb.d/1.sql
+    networks:
+      - backend_reunionou
+
+networks:
+  backend_reunionou:
