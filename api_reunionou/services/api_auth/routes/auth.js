@@ -117,17 +117,46 @@ router.get('/check', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    //Récupérer les données du body
     let login = req.body.login;
     let pwd = req.body.pwd;
     let confpwd = req.body.confpwd;
+    let email = req.body.email;
 
-    if(verifyDataSignUp(req.body)){
+    //Vérifie si les données sont présente et ne contiennent pas de caractères interdits  ||  Vérifie que les mots de passe sont identiques
+    if(verifyDataSignUp(req.body) && confpwd===pwd){
 
+        //Vérifie si le login n'est pas déjà utilisé
+        Connection.query("SELECT * FROM utilisateur WHERE login="+"'"+login+"'", (error, result, fields) => {
+           if(result[0]===undefined || result[0]===null){
 
+               // Génération du uuid utilisateur  ||  Cryptage du mdp
+               let id = uuidv4();
+               let salt = bcrypt.genSaltSync(10);
+               const hash = bcrypt.hashSync(pwd, salt);
+               // Insertion du nouvel utilisateur
+               Connection.query("INSERT INTO utilisateur (`id`,`login`,`pwd`,`email`,`admin`) VALUES ('"+id+"', '"+login+"', '"+hash+"', '"+email+"', "+0+")", (error, result, fields) => {
+                    if(error)
+                        res.status(500).json(error500("Création de l'utilisateur impossible"));
+                    else
+                        res.status(200).json({"message": "Création de l'utilisateur réussie"});
+               });
+
+           } else{
+               res.status(401).json(error401("Login utilisateur déjà utilisé"));
+           }
+        });
 
     } else {
-        res.status(401).json(error401('Data Not Found'));
+        res.status(401).json(error401('Données fausses ou manquantes'));
     }
+});
+router.get('/signup', function(req, res, next) {
+    res.status(405).json({
+        "type": "error",
+        "error": "405",
+        "message": "Méthode non autorisée pour cette URL"
+    });
 });
 
 
@@ -140,11 +169,12 @@ function verifyDataSignUp(data){
     const schema = Joi.object().keys({
         login: Joi.string().min(1).pattern(/^[a-zA-Z]+/).required(),
         pwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-        confpwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
+        confpwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+        email: Joi.string().email().required()
     });
 
 
-    const res = Joi.validate(data, schema);
+    const res = schema.validate(data);
     const { value, error } = res;
     const valid = error == null;
     if (!valid) {
