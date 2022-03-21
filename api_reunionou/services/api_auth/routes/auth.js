@@ -34,13 +34,15 @@ router.post('/signin', function(req, res, next) {
             if(result[0] !== null && result[0] !== undefined){
 
                 user = result[0];
+                console.log('user.pwd: '+user.pwd);
 
-                bcrypt.compare(pwd, user.paswwd).then((res) => {
-                    if(res){
+                bcrypt.compare(pwd, user.pwd).then((ok) => {
+                    if(ok){
 
-                        let privateKey = fs.readFileSync('../jwt_secret.txt');
+                        let privateKey = fs.readFileSync('./jwt_secret.txt');
 
-                        let token = jwt.sign({sub: user.uuid}, privateKey, { algortihm: 'HS256', expiresIn: '1h' });
+                        let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '1h' });
+                        console.log('token: '+token);
                         res.status(200).json({'token': token});
 
                     } else {
@@ -69,7 +71,7 @@ router.get('/signin', function(req, res, next) {
 router.post('/check', function(req, res, next) {
 
     let token = req.body.token;
-    let pKey = fs.readFileSync('../jwt_secret.txt', 'utf-8');
+    let pKey = fs.readFileSync('./jwt_secret.txt', 'utf-8');
 
     // Validity token
     jwt.verify(token, pKey, {algorithm: 'HS256'}, (err, decoded) => {
@@ -77,23 +79,21 @@ router.post('/check', function(req, res, next) {
        else{
            //Validity uuid
            if(typeof decoded.sub !== undefined){
+               console.log(decoded.sub);
 
                // Validity user
-               Connection.query("SELECT * FROM admin WHERE uuid="+decoded.sub, (error, result, fields) => {
+               Connection.query("SELECT * FROM utilisateur WHERE id="+"'"+decoded.sub+"'", (error, result, fields) => {
                    if(error) res.status(500).json(error500(error));
                    else {
                        if(typeof result[0] !== undefined){
-                            res.status(200).json({'valid': 'yes', 'role': 'admin'});
-                       } else {
 
-                           Connection.query("SELECT * FROM client WHERE uuid="+decoded.sub, (err, result, fields) => {
-                                if(error) res.status(500).json(error500(error));
-                                else {
-                                    if(typeof result[0] !== undefined){
-                                        res.status(200).json({'valid': 'yes', 'role': 'client'});
-                                    } else res.status(401).json(error401({'valid': 'no', 'error': 'Utilisateur non existant'}));
-                                }
-                           });
+                           if(result[0].admin === 1)
+                               res.status(200).json({'valid': 'yes', 'role': 'admin'});
+                           else
+                               res.status(200).json({'valid': 'yes', 'role': 'user'});
+
+                       } else {
+                            res.status(401).json(error401({'valid': 'no', 'error': 'Utilisateur non existant'}));
                        }
                    }
                });
