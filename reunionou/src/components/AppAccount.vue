@@ -1,7 +1,6 @@
 <template>
-    <h1 class="mb-5 border-bottom pb-2">Mon compte</h1>
-
     <div class="container w-50 my-5">
+        <h1 class="mb-5 border-bottom pb-2">Mon compte</h1>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email</label>
             <input
