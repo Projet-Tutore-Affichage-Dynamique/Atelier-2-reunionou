@@ -1,7 +1,7 @@
 INSERT INTO `utilisateur` (`id`,`login`,`pwd`,`email`,`admin`) VALUES
-('a368a7e6-3a83-4398-8797-2905e4ee6b6f','PAFman','$2y$10$6IgSKSMqklQ7c2Tmnh1ZMuZKY96S9NEjpP0KS5b6fgKV260KXoNOS','pierre.frisson@gmail.com',1),
-('5c09009e-8b43-4c5e-8984-5c61924282f5','LeopoldLNC','$2y$10$FRPbF2EoAxsfxWO2EEmME.AfgcSwXyDuSN41esdLogPApJUwF54cq','leopold55@hotmail.fr',0),
-('6962e727-486c-4f97-9e9a-ca68899e6ae8','Vaabt','$2y$10$gy0PH8cfulGBeBR967az6eoQO/Qk9.jbauz6ftKOOMcEkfrdGDjxu','AubertinVal@yahoo.fr',1),
+('a368a7e6-3a83-4398-8797-2905e4ee6b6f','Pierre-Alexandre','$2y$10$sqavI9K6PMcAjGns40OQx.pe.zUr4VBC0FsZ5A7K57XWa5MeUgTpu','pierre.frisson@gmail.com',1),
+('5c09009e-8b43-4c5e-8984-5c61924282f5','Leopold','$2y$10$sqavI9K6PMcAjGns40OQx.pe.zUr4VBC0FsZ5A7K57XWa5MeUgTpu','leopold55@hotmail.fr',0),
+('6962e727-486c-4f97-9e9a-ca68899e6ae8','Valentin','$2y$10$sqavI9K6PMcAjGns40OQx.pe.zUr4VBC0FsZ5A7K57XWa5MeUgTpu','AubertinVal@yahoo.fr',1),
 ('bd0d009a-3479-4015-8f99-91955b179762','Theo','$2y$10$sqavI9K6PMcAjGns40OQx.pe.zUr4VBC0FsZ5A7K57XWa5MeUgTpu','theo.orias@club-internet.fr',0);
 
 INSERT INTO `events` (`id`,`id_createur`,`titre`,`description`,`date_RV`,`geoloc`) VALUES
