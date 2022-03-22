@@ -33,7 +33,7 @@ const routes = [
     component: AppAccount,
   },
   {
-    path: '/:pathMatch(.*)*',
+    path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: AppNotFound,
   },

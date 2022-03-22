@@ -1,6 +1,6 @@
 # reunionou
 
-## Project setup
+## Setup le projet
 ```
 npm install
 ```
@@ -10,15 +10,12 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Compiles and hot-reloads for development
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**routes disponibles**
+- / (accueil)
+- /login (page de connexion)
+- /register (page de création de compte)
+- /account (page du compte)
+- /events (page des événements)
+- /[xyz] (page not found) 
