@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import AppNav from './components/AppNav.vue'
+import AppNav from './components/_partials/AppNav.vue'
 import axios from 'axios'
 
 export default {
@@ -27,7 +27,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>
