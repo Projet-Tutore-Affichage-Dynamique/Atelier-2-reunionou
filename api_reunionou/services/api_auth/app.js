@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 let authRouter = require('./routes/auth');
 
+let corsMW = require('./middleware/cors');
+
 var app = express();
 
 // view engine setup
@@ -18,6 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// MiddleWare
+app.use(corsMW);
+// Routes
 app.use('/auth', authRouter);
 /* ----- GESTION DES MAUVAISES URL's ------ */
 app.use('*', function(req, res, next){

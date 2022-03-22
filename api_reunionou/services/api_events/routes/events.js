@@ -16,16 +16,66 @@ router.get('/:id', function(req, res, next) {
 });
 
 
-/* Récupère tous les messages de l'event */
+// Récupère tous les messages de l'event  --  URL = localhost/events/:id/messages?id_user='[id_user]'
 router.get('/:id/messages', function(req, res, next) {
-    res.status(300).json({"message": "Path Not Defined"});
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données
+    let id_event = req.param['id'];
+    let id_user = req.query['id_user'];
+    if(id_user!==undefined&&id_user!==null){
+
+        Connection.query("SELECT id_createur, message, date FROM messages WHERE id_event='"+id_event, (error, result, fields) => {
+           if(!error){
+               let datas = {
+                   "messages": result
+               };
+
+               //Verifie si l'utilisateur est le créateur de l'evenement
+               Connection.query("SELECT * FROM events WHERE id_createur='"+id_user+"'", (error, result, fields) => {
+                   if(!error){
+                       if(result[0]!==undefined && result[0]!==null){
+                           res.status('200').json(datas);
+                       } else{
+
+                           //Vérifie si l'utilisateur est invité à l'evenement
+                           Connection.query("SELECT * FROM invitation WHERE id_event='"+id_event+"' AND id_invite='"+id_user+"'", (error, result, fields) => {
+                               if(!error){
+                                   if(result[0]!==undefined && result[0]!==null){
+
+                                       res.status('200').json(datas);
+
+                                   } else{
+                                       res.status(401).json(error401("Vous n'etes pas autorisé à accéder à cet évenement"));
+                                   }
+                               } else {
+                                   let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                                   res.status(500).json(error500(message));
+                               }
+                           });
+
+                       }
+
+                   } else {
+                       let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                       res.status(500).json(error500(message));
+                   }
+               });
+
+           } else{
+               let message = req.app.get('env') === 'development' ? error : "Erreur lors de la récupération des messages";
+               res.status(500).json(error500(message));
+           }
+        });
+
+    } else
+        res.status(401).json(error401("L'id utilisateur n'existe pas"));
 });
 
 
 /* Invite un utilisateur dans l'évenement */
 router.post('/invite', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
-    // Vérifie que l'utilisateur existe | Verifie si l'utilisateur n'est pas deja invite | Vérifie si l'evenement existe
 
     // Recupere les données du body
     let id_event = req.body.id_event;
@@ -35,12 +85,12 @@ router.post('/invite', function(req, res, next) {
     // Verifie si l'event est bien a l'utilisateur
     Connection.query("SELECT * FROM events WHERE id_createur='"+id_user+"' AND id='"+id_event+"'", (error, result, fields) => {
        if(!error){
-           if(result[0]!==undefined && result!==null){
+           if(result[0]!==undefined && result[0]!==null){
 
                // Verifie si l'utilisateur existe
                Connection.query("SELECT * FROM utilisateur WHERE id='"+id_invite+"'", (error, result, fields) => {
                    if(!error){
-                       if(result[0]!==undefined && result!==null){
+                       if(result[0]!==undefined && result[0]!==null){
 
                            // Insert l'utilisateur
                            Connection.query("INSERT INTO invitation VALUES ('"+id_event+"', '"+id_invite+"', "+0+")", (error, result, fields) => {
