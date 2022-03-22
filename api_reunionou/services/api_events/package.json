@@ -7,10 +7,12 @@
     "watch": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^1.0.0",
     "express": "~4.16.1",
+    "fs": "^0.0.1-security",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "joi": "~17.6.0",
@@ -18,9 +20,7 @@
     "knex": "~1.0.1",
     "morgan": "~1.9.1",
     "mysql": "~2.10.1",
-    "uuid": "~8.3.2",
-    "fs": "^0.0.1-security",
-    "bcryptjs": "^2.4.3"
+    "uuid": "~8.3.2"
   },
   "devDependencies": {
     "nodemon": "2.0.15"

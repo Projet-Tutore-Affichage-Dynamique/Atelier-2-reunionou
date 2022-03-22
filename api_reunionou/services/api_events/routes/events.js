@@ -24,7 +24,55 @@ router.get('/:id/messages', function(req, res, next) {
 
 /* Invite un utilisateur dans l'évenement */
 router.post('/invite', function(req, res, next) {
-    res.status(300).json({"message": "Path Not Defined"});
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    // Vérifie que l'utilisateur existe | Verifie si l'utilisateur n'est pas deja invite | Vérifie si l'evenement existe
+
+    // Recupere les données du body
+    let id_event = req.body.id_event;
+    let id_user = req.body.id_user;
+    let id_invite = req.body.id_invite;
+
+    // Verifie si l'event est bien a l'utilisateur
+    Connection.query("SELECT * FROM events WHERE id_createur='"+id_user+"' AND id='"+id_event+"'", (error, result, fields) => {
+       if(!error){
+           if(result[0]!==undefined && result!==null){
+
+               // Verifie si l'utilisateur existe
+               Connection.query("SELECT * FROM utilisateur WHERE id='"+id_invite+"'", (error, result, fields) => {
+                   if(!error){
+                       if(result[0]!==undefined && result!==null){
+
+                           // Insert l'utilisateur
+                           Connection.query("INSERT INTO invitation VALUES ('"+id_event+"', '"+id_invite+"', "+0+")", (error, result, fields) => {
+                              if(!error){
+
+                                  res.status(200).json({"message": "Invitation de l'utilisateur à l'event réussie"});
+
+                              } else{
+                                  let message = req.app.get('env') === 'development' ? error : "Erreur lors de l'insertion d'une invitation";
+                                  res.status(500).json(error500(message));
+                              }
+                           });
+
+                       } else{
+                           res.status(401).json(error401("L'utilisateur que vous voulez inviter n'existe pas"));
+                       }
+
+                   } else{
+                       let message = req.app.get('env') === 'development' ? error : "Erreur avec la base de données Utilisateur";
+                       res.status(500).json(error500(message));
+                   }
+               });
+
+           } else{
+               res.status(401).json(error401("Cet event ne vous appartient pas ou il n'existe pas"));
+           }
+
+       } else{
+           let message = req.app.get('env') === 'development' ? error : "Erreur avec la base de données event";
+           res.status(500).json(error500(message));
+       }
+    });
 });
 
 
@@ -51,7 +99,8 @@ router.post('/create', function(req, res, next) {
                 res.status(200).json({"message": "Création du nouvel evenement réussie"});
 
             } else{
-                res.status(500).json(error500(error));
+                let message = req.app.get('env') === 'development' ? error : "Erreur lors de la création du nouvel evenement";
+                res.status(500).json(error500(message));
             }
         });
 
@@ -78,6 +127,7 @@ router.post('/post_message', function(req, res, next) {
                 res.status(200).json({"message": "Envoie du message réussie"});
 
             } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur lors de l'envoie du message";
                 res.status(500).json(error500(error));
             }
         });
