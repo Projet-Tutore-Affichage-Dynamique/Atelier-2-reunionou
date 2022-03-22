@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+let cors = require('cors');
 
 let authRouter = require('./routes/auth');
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // MiddleWare
 app.use(corsMW);
+app.use(cors());
 // Routes
 app.use('/auth', authRouter);
 /* ----- GESTION DES MAUVAISES URL's ------ */
