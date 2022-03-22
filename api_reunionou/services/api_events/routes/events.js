@@ -12,7 +12,69 @@ router.get('/', function(req, res, next) {
 
 /* Récupère les données de l'évenement */
 router.get('/:id', function(req, res, next) {
-    res.status(300).json({"message": "Path Not Defined"});
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données de la requête
+    let id_event = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+
+        //Verifie si l'utilisateur est le créateur de l'evenement
+        Connection.query("SELECT * FROM events WHERE id_createur='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                if(result[0]!==undefined && result[0]!==null){
+
+                    //Récupère les données de l'evenement
+                    Connection.query("SELECT * FROM events WHERE id='"+id_event+"'", (error, result, fields) => {
+                        if(!error){
+
+                            res.status(200).json({"event": result[0]});
+
+                        } else{
+                            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                            res.status(500).json(error500(message));
+                        }
+                    });
+
+                } else{
+
+                    //Vérifie si l'utilisateur est invité à l'evenement
+                    Connection.query("SELECT * FROM invitation WHERE id_event='"+id_event+"' AND id_invite='"+id_user+"'", (error, result, fields) => {
+                        if(!error){
+                            if(result[0]!==undefined && result[0]!==null){
+
+                                //Récupère les données de l'evenement
+                                Connection.query("SELECT * FROM events WHERE id='"+id_event+"'", (error, result, fields) => {
+                                    if(!error){
+
+                                        res.status(200).json({"event": result[0]});
+
+                                    } else{
+                                        let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                                        res.status(500).json(error500(message));
+                                    }
+                                });
+
+                            } else{
+                                res.status(401).json(error401("Vous n'etes pas autorisé à accéder à cet évenement"));
+                            }
+                        } else {
+                            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                            res.status(500).json(error500(message));
+                        }
+                    });
+
+                }
+
+            } else {
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    } else
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
 });
 
 
@@ -26,6 +88,7 @@ router.get('/:id/messages', function(req, res, next) {
 
     if(id_user!==undefined&&id_user!==null){
 
+        //Récupère tous les messages de l'evenement
         Connection.query("SELECT id_createur, message, date FROM messages WHERE id_event='"+id_event+"'", (error, result, fields) => {
            if(!error){
                let datas = {
@@ -70,7 +133,7 @@ router.get('/:id/messages', function(req, res, next) {
         });
 
     } else
-        res.status(401).json(error401("L'id utilisateur n'existe pas"));
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
 });
 
 
