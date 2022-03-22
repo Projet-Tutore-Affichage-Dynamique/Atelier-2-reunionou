@@ -30,6 +30,7 @@ router.get('/:id/messages', function(req, res, next) {
                let datas = {
                    "messages": result
                };
+               console.log('1');
 
                //Verifie si l'utilisateur est le créateur de l'evenement
                Connection.query("SELECT * FROM events WHERE id_createur='"+id_user+"'", (error, result, fields) => {
