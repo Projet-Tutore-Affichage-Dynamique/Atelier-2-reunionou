@@ -19,7 +19,7 @@
 <script>
 import axios from 'axios'
 export default {
-    return: 'AppLogin',
+    name: 'AppLogin',
     data() {
         return {
             email: '',
