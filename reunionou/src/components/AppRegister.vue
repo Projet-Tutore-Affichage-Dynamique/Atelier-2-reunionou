@@ -1,5 +1,5 @@
 <template>
-    <form class="container w-25 my-5" @submit.prevent="handleSubmit">
+    <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Création de compte</h1>
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email</label>
