@@ -1,0 +1,95 @@
+version: '2.3'
+
+services:
+  #API
+  api_users:
+    container_name: api.users
+    image: node:lts
+    env_file:
+      - ./services/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./services/api_auth:/usr/src/app
+    ports:
+      - '5001:3000'
+    command: npm run watch
+    depends_on:
+      - db_reunionou
+    links:
+      - db_reunionou
+    networks:
+      - backend_reunionou
+
+  api_events:
+    container_name: api.events
+    image: node:lts
+    env_file:
+      - ./services/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./services/api_events:/usr/src/app
+    ports:
+      - '5002:3000'
+    command: npm run watch
+    depends_on:
+      - db_reunionou
+    links:
+      - db_reunionou
+    networks:
+      - backend_reunionou
+
+
+
+  #GATEWAY
+  api_webapp:
+    container_name: api.webapp
+    image: node:lts
+    env_file:
+      - ./services/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./services/api:/usr/src/app
+    ports:
+      - '8081:3000'
+    command: npm run watch
+    depends_on:
+      - api_users
+      - api_events
+    networks:
+      - backend_reunionou
+
+
+
+  #DATABASE
+  db_reunionou:
+    container_name: database.reunionou
+    image: mariadb:latest
+    env_file:
+      - ./services/.env
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pwd'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./services/db:/var/lib/mysql
+      - ./tables.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./datas.sql:/docker-entrypoint-initdb.d/2.sql
+    networks:
+      - backend_reunionou
+
+  adminer_reunionou:
+    container_name: adminer.reunionou
+    image: adminer
+    depends_on:
+      - db_reunionou
+    ports:
+      - '5000:8080'
+    networks:
+      - backend_reunionou
+
+networks:
+  backend_reunionou:

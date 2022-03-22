@@ -1,4 +1,4 @@
 *.idea
 */node_modules
 ./services/db/*
-*/package.lock.json
+*/package-lock.json
