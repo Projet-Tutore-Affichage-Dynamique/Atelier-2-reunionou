@@ -8,7 +8,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav" v-if="!user">
+        <!-- <ul class="navbar-nav" v-if="!user"> -->
+        <ul class="navbar-nav">
           <li class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/login">Me connecter</router-link>
           </li>
@@ -16,9 +17,16 @@
             <router-link class="nav-link active" aria-current="page" to="/register">Créer un compte</router-link>
           </li>
         </ul>
-        <ul class="navbar-nav" v-if="user">
+        <!-- <ul class="navbar-nav" v-if="user"> -->
+        <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="javascript:void(0)" @click="handleClick" class="nav-link active" >Déconnexion</a>
+            <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/events">Mes rendez-vous</router-link>
+          </li>
+          <li class="nav-item">
+            <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion</a>
           </li>
         </ul>
       </div>
