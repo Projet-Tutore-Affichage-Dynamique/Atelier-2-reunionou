@@ -6,7 +6,53 @@ var router = express.Router();
 
 /* Récupère tous les évenements de l'utilisateur */
 router.get('/', function(req, res, next) {
-    res.status(300).json({"message": "Path Not Defined"});
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données de la requête
+    let id_user = req.query['id_user'];
+    let ev_invite = null;
+    let ev_createur = null;
+
+    if(id_user!==undefined&&id_user!==null){
+
+        //Récupère tous les events où il est invité
+        let req1 = "SELECT * FROM events WHERE id IN (SELECT id_event FROM invitation WHERE id_invite='"+id_user+"')";
+        Connection.query(req1, (error, result, fields) => {
+            if(!error){
+                if(result[0]!==undefined && result[0]!==null){
+                    ev_invite = result;
+                }
+
+                //Récupère tous les events créer par l'utilisateur
+                let req2 = "SELECT * FROM events WHERE id_createur='"+id_user+"'";
+                Connection.query(req2, (error, result, fields) => {
+                    if(!error){
+                        if(result[0]!==undefined && result[0]!==null){
+
+                            ev_createur = result;
+
+                            res.status(200).json({"events": ev_invite.concat(ev_createur)});
+
+                        } else{
+                            if(ev_invite===null)
+                                res.status(204).json({"message": "L'utilisateur n'est invité ou n'a créer aucun évenement"});
+                            else
+                                res.status(200).json({"events": ev_invite});
+                        }
+                    } else{
+                        let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                        res.status(500).json(error500(message));
+                    }
+                });
+
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    } else
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
 });
 
 
