@@ -11,7 +11,7 @@
       <div class="d-flex justify-content-center align-items-center mb-3">
         <div class="col-sm-8 text-center">
           <h5 class="text-muted font-weight-normal">
-            Reunionou est la plateforme que permets de gérer vos rencontres. Plus qu'une simple plateforme de gestion de rendez-vous, c'est une planner qui vous feras gagner du temps.
+            Reunionou est la plateforme que permets de gérer vos rencontres. Plus qu'une simple plateforme de gestion de rendez-vous, c'est un planner qui vous fera gagner du temps.
           </h5>
         </div>
       </div>
