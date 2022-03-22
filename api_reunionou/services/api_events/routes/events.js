@@ -21,16 +21,16 @@ router.get('/:id/messages', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
     // Récupère les données
-    let id_event = req.param['id'];
+    let id_event = req.params['id'];
     let id_user = req.query['id_user'];
+
     if(id_user!==undefined&&id_user!==null){
 
-        Connection.query("SELECT id_createur, message, date FROM messages WHERE id_event='"+id_event, (error, result, fields) => {
+        Connection.query("SELECT id_createur, message, date FROM messages WHERE id_event='"+id_event+"'", (error, result, fields) => {
            if(!error){
                let datas = {
-                   "messages": result
+                   "messages": result[0]
                };
-               console.log('1');
 
                //Verifie si l'utilisateur est le créateur de l'evenement
                Connection.query("SELECT * FROM events WHERE id_createur='"+id_user+"'", (error, result, fields) => {
