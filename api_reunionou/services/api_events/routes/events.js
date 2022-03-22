@@ -299,6 +299,13 @@ router.post('/post_message', function(req, res, next) {
 
 
 
+////// Route pour Rejoindre ou decliner une invitation d'un event //////
+
+////// Route pour Supprimer un event ///////
+
+
+
+
 function verifyDataMessage(data){
     const schema = Joi.object().keys({
         id_event: Joi.number().integer().min(1).max(99999999999).required(),

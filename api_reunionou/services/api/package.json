@@ -20,7 +20,10 @@
     "mysql": "~2.10.1",
     "uuid": "~8.3.2",
     "fs": "^0.0.1-security",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "axios": "^0.26.1",
+    "query-string": "^7.1.1"
   },
   "devDependencies": {
     "nodemon": "2.0.15"
