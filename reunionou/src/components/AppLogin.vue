@@ -53,9 +53,9 @@ async handleSubmit() {
         })
         .then((response) => {
           this.infos = response;
-          console.log(response);
           if(response){
-            this.$router.push("/events")
+            this.$parent.token = this.infos.data.token;
+            this.$router.push("/events", this.infos.data.token)
           }else{
             return null;
           }

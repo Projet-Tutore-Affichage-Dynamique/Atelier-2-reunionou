@@ -65,12 +65,26 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      await axios.post("http://localhost:5001/auth/signup", {
-        login: this.login,
-        email: this.email,
-        pwd: this.pwd,
-        conf_pwd: this.conf_pwd,
-      });
+      axios
+        .post("http://localhost:8081/auth/signup", {
+          login: this.login,
+          email: this.email,
+          pwd: this.pwd,
+          conf_pwd: this.conf_pwd
+        })
+        .then((response) => {
+          this.infos = response;
+          console.log(response);
+          if(response){
+            this.$router.push("/events")
+          }else{
+            return null;
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        });
       this.$router.push("/login");
     },
     handleClick() {

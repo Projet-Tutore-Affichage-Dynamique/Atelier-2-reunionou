@@ -1,18 +1,19 @@
 const axios = require('axios');
+const querystring = require("query-string");
 
 module.exports = function(req, res, next){
 
     if((req.url !== '/auth/signin' && req.url !== '/auth/signup')){
 
-        if((typeof req.headers.authorization !== undefined) && (typeof req.headers.authorization !== null)){
+        if((req.headers.authorization !== undefined) && (req.headers.authorization !== null)){
             let token = req.headers.authorization.split(' ')[1];
 
             axios
-                .post('http://api_auth:3000/auth/check', {
-                    body: {
+                .post('http://api_users:3000/auth/check', 
+                    querystring.stringify({
                         'token': token
-                    }
-                })
+                    }),
+                )
                 .then(result => {
                     if(result.status !== 200){
                         res.status(result.status).json(result.data);

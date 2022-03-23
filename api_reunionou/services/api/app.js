@@ -2,7 +2,7 @@ let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
-let cors = require('cors');
+let cors = require('./middleware/cors');
 
 let authRouter = require('./routes/auth');
 let eventsRouter = require('./routes/events');
@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware
 app.use(authMW);
-app.use(cors());
+app.use(cors);
 // routes
 app.use('/events', eventsRouter);
 app.use('/auth', authRouter);
