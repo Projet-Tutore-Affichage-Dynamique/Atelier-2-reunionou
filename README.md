@@ -8,8 +8,9 @@ version mobile (smartphones, tablettes).
 ## Membres du projet
 - AUBERTIN Aubertin
 - FRISSON Pierre-Alexandre
-- LE-NALINEC Leopold 
+- LE NALINEC Leopold 
 - ORIAS Théo
+- WILT Lilian
 
 
 ## Tech Stack
