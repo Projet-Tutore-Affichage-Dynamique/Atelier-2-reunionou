@@ -2,29 +2,39 @@
   <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Création de compte</h1>
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email</label>
+      <label for="email" class="form-label">Email</label>
       <input
         v-model="email"
         type="email"
         class="form-control"
-        id="exampleInputEmail1"
+        id="email"
         aria-describedby="emailHelp"
+        name="email"
       />
       <div id="emailHelp" class="form-text">
         Votre email est votre identifiant de connexion.
       </div>
     </div>
     <div class="mb-3">
-      <label for="name" class="form-label">Nom</label>
-      <input v-model="name" type="text" class="form-control" id="name" />
+      <label for="login" class="form-label">Username</label>
+      <input v-model="login" type="text" class="form-control" id="login" name="login"/>
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+      <label for="pwd" class="form-label">Mot de passe</label>
       <input
-        v-model="password"
+        v-model="pwd"
         type="password"
         class="form-control"
-        id="exampleInputPassword1"
+        id="pwd"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="conf_pwd" class="form-label">Confirmer le mot de passe</label>
+      <input
+        v-model="conf_pwd"
+        type="password"
+        class="form-control"
+        id="conf_pwd"
       />
     </div>
     <div class="my-5">
@@ -47,17 +57,19 @@ export default {
   name: "AppRegister",
   data() {
     return {
-      name: "",
+      login: "",
       email: "",
-      password: "",
+      pwd: "",
+      conf_pwd: ""
     };
   },
   methods: {
     async handleSubmit() {
-      await axios.post("http://localhost:8080/register", {
-        name: this.name,
+      await axios.post("http://localhost:5001/auth/signup", {
+        login: this.login,
         email: this.email,
-        password: this.password,
+        pwd: this.pwd,
+        conf_pwd: this.conf_pwd,
       });
       this.$router.push("/login");
     },

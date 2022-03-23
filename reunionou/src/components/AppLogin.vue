@@ -2,22 +2,22 @@
   <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Connexion</h1>
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
+      <label for="login" class="form-label">Username</label>
       <input
-        v-model="email"
-        type="email"
+        v-model="login"
+        type="text"
         class="form-control"
-        id="email"
-        aria-describedby="emailHelp"
+        id="login"
+        aria-describedby="login"
       />
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+      <label for="pwd" class="form-label">Mot de passe</label>
       <input
-        v-model="password"
+        v-model="pwd"
         type="password"
         class="form-control"
-        id="exampleInputPassword1"
+        id="pwd"
       />
     </div>
     <div class="my-5">
@@ -38,19 +38,20 @@ export default {
   name: "AppLogin",
   data() {
     return {
-      email: "",
-      password: "",
+      login: "",
+      pwd: "",
     };
   },
   methods: {
 async handleSubmit() {
       axios
         .post("http://localhost:8081/auth/signin", {
-          email: this.email,
-          password: this.password
+          login: this.login,
+          pwd: this.pwd
         })
         .then((response) => {
           this.infos = response;
+          console.log(response);
           if(response){
             this.$router.push("/events")
           }else{
