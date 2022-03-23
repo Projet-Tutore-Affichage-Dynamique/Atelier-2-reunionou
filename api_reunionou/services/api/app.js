@@ -2,12 +2,13 @@ let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
-let cors = require('./middleware/cors');
+let cors = require('cors');
 
 let authRouter = require('./routes/auth');
 let eventsRouter = require('./routes/events');
 
 let authMW = require('./middleware/auth');
+let corsMW = require('./middleware/cors');
 
 let app = express();
 
@@ -18,8 +19,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware
+app.use('*', cors());
 app.use(authMW);
-app.use(cors);
 // routes
 app.use('/events', eventsRouter);
 app.use('/auth', authRouter);
