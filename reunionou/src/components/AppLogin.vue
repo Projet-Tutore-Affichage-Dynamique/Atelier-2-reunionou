@@ -43,14 +43,24 @@ export default {
     };
   },
   methods: {
-    async handleSubmit() {
-      const response = await axios.post("login", {
-        email: this.email,
-        password: this.password,
-      });
-
-      localStorage.setItem("token", response.data.token);
-      this.$router.push("/");
+async handleSubmit() {
+      axios
+        .post("http://localhost:8081/auth/signin", {
+          email: this.email,
+          password: this.password
+        })
+        .then((response) => {
+          this.infos = response;
+          if(response){
+            this.$router.push("/events")
+          }else{
+            return null;
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        })
     },
     handleClick() {
       this.$router.push("/register");
