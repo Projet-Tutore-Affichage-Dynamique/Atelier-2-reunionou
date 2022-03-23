@@ -5,7 +5,7 @@ module.exports = function(req, res, next){
 
     if((req.url !== '/auth/signin' && req.url !== '/auth/signup')){
 
-        if((req.headers.authorization !== undefined) && (req.headers.authorization !== null)){
+        if(req.headers.authorization !== undefined && req.headers.authorization !== null){
             let token = req.headers.authorization.split(' ')[1];
 
             axios
