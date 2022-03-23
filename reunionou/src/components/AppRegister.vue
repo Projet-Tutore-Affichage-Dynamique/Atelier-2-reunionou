@@ -54,11 +54,11 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      await axios.post("http://localhost:8080/register", {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-      });
+      await axios.post("http://localhost:5001/auth/signup", {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        });
       this.$router.push("/login");
     },
     handleClick() {

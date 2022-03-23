@@ -40,17 +40,24 @@ export default {
     return {
       email: "",
       password: "",
+      infos: null
     };
   },
   methods: {
     async handleSubmit() {
-      const response = await axios.post("login", {
-        email: this.email,
-        password: this.password,
-      });
-
-      localStorage.setItem("token", response.data.token);
-      this.$router.push("/");
+      axios
+        .post("http://localhost:8081/auth/signin", {
+          email: this.email,
+          password: this.password
+        })
+        .then((response) => {
+          this.infos = response;
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        })
+        .finally(() => (this.$router.push("/events")));
     },
     handleClick() {
       this.$router.push("/register");

@@ -61,7 +61,25 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "AppEvents",
+  methods: {
+    async handleSubmit() {
+      axios
+        .get("http://localhost:8081/events")
+        .then((response) => {
+          this.infos = response;
+        })
+        .catch((error) => {
+          this.errored = true;
+          console.log(error);
+        })
+        .finally();
+    },
+    handleClick() {
+      this.$router.push("/register");
+    },
+  },
 };
 </script>
