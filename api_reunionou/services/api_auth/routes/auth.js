@@ -27,7 +27,7 @@ router.post('/signin', function(req, res, next) {
     let pwd = req.body.pwd;
     let user = null;
 
-    Connection.query("SELECT * FROM utilisateur WHERE login="+"'"+login+"'", (error, result, fields) => {
+    Connection.query("SELECT * FROM utilisateur WHERE login='"+login+"'", (error, result, fields) => {
         if(error){
             res.status(500).json(error500(error+' '+login+' '+pwd));
         } else {
@@ -41,7 +41,7 @@ router.post('/signin', function(req, res, next) {
 
                         let privateKey = fs.readFileSync('./jwt_secret.txt');
 
-                        let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '1h' });
+                        let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '2h' });
                         console.log('token: '+token);
                         res.status(200).json({'token': token});
 
@@ -163,6 +163,81 @@ router.get('/signup', function(req, res, next) {
 
 
 
+
+router.post('/modify_pwd', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    //Récupérer les données du body
+    let id_user = req.body.id_user;
+    let oldPwd = req.body.oldPwd;
+    let newPwd = req.body.newPwd;
+    let confPwd = req.body.confPwd;
+    let user = null;
+
+    if(verifyDataModifyPwd(req.body) && newPwd===confPwd){
+
+        // Récupère l'ancien mdp dans la bdd
+        Connection.query("SELECT pwd FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
+            if(error){
+                res.status(500).json(error500(error));
+            } else {
+                if(result[0] !== null && result[0] !== undefined){
+                    user = result[0];
+
+                    bcrypt.compare(oldPwd, user.pwd).then((ok) => {
+                        if(ok){
+
+                            let salt = bcrypt.genSaltSync(10);
+                            const hash = bcrypt.hashSync(newPwd, salt);
+                            // Insertion du nouvel utilisateur
+                            Connection.query("UPDATE utilisateur SET pwd='"+hash+"' WHERE id='"+id_user+"'", (error, result, fields) => {
+                                if(error)
+                                    res.status(500).json(error500("Modification du mot de passe impossible"));
+                                else{
+                                    let privateKey = fs.readFileSync('./jwt_secret.txt');
+                                    let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '1h' });
+
+                                    res.status(200).json({"message": "Modification du mot de passe réussie", "token": token});
+                                }
+                            });
+
+                        } else {
+                            res.status(401).json(error401("Votre mot de passe n'est pas valide"));
+                        }
+                    });
+                } else {
+                    res.status(401).json(error401("L'utilisateur n'existe pas."));
+                }
+            }
+        });
+
+    } else{
+        res.status(401).json(error401('Données fausses ou manquantes'));
+    }
+});
+
+
+
+
+
+function verifyDataModifyPwd(data){
+    const schema = Joi.object().keys({
+        id_user: Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required(),
+        oldPwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9\_\*\!\.]{3,30}$')).required(),
+        newPwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9\_\*\!\.]{3,30}$')).required(),
+        confPwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9\_\*\!\.]{3,30}$')).required(),
+    });
+
+
+    const res = schema.validate(data);
+    const { value, error } = res;
+    const valid = error == null;
+    if (!valid) {
+        return false
+    } else {
+        return true;
+    }
+}
 
 function verifyDataSignUp(data){
 
