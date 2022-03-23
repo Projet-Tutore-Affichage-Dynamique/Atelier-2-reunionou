@@ -45,9 +45,11 @@ export default {
   methods: {
 async handleSubmit() {
       axios
-        .post("http://localhost:8081/auth/signin", {
-          login: this.login,
-          pwd: this.pwd
+        .post("http://localhost:8081/auth/signin", {}, {
+          auth: {
+            username: this.login,
+            password: this.pwd
+          }
         })
         .then((response) => {
           this.infos = response;
@@ -61,8 +63,8 @@ async handleSubmit() {
         .catch((error) => {
           console.log(error)
           this.errored = true;
-        })
-    },
+        });
+  },
     handleClick() {
       this.$router.push("/register");
     },
