@@ -349,7 +349,7 @@ function verifyDataCreate(data){
 
 function dateToMysqlFormat(date) {
     return date.toISOString().slice(0, 19).replace('T', ' ');
-};
+}
 
 function error401(error){
     return {

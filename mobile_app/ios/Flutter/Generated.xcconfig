@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/home/leopold/snap/flutter/common/flutter
-FLUTTER_APPLICATION_PATH=/home/leopold/Documents/Depots/Atelier-2-reunionou/mobile_app
+FLUTTER_ROOT=/home/oriastheo/snap/flutter/common/flutter
+FLUTTER_APPLICATION_PATH=/home/oriastheo/WebstormProjects/Atelier-2-reunionou/mobile_app
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
