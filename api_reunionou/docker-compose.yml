@@ -58,9 +58,25 @@ services:
     networks:
       - backend_reunionou
 
+  api_mobile:
+    container_name: api.mobile
+    image: node:lts
+    env_file:
+      - ./services/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./services/api_gtw_mobile
+    ports:
+      - '8082:3000'
+    command: npm run watch
+    depends_on:
+      - api_users
+      - api_events
+    networks:
+      - backend_reunionou
 
 
-  #DATABASE
+    #DATABASE
   db_reunionou:
     container_name: database.reunionou
     image: mariadb:latest

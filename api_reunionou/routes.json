@@ -21,7 +21,7 @@
 
       {
         "description": "Envoie toutes les infos du user et renvoie une confirmation",
-        "url": "http://localhost:5001/auth/signup",
+        "url": "http://localhost:8081/auth/signup",
         "method": "POST",
         "datas": {
           "body": {
@@ -58,7 +58,7 @@
 
       {
         "description": "Pour récupérer les données d'un evement par son id",
-        "url": "http://localhost:5002/events/[id_event]",
+        "url": "http://localhost:8081/events/[id_event]",
         "method": "GET",
         "datas": {
           "Authorization": {
@@ -73,7 +73,7 @@
 
       {
         "description": "Pour récupérer les messages d'un evenement avec son id",
-        "url": "http://localhost:5002/events/[id_event]/messages",
+        "url": "http://localhost:8081/events/[id_event]/messages",
         "method": "GET",
         "datas": {
           "Authorization": {
@@ -88,7 +88,7 @@
 
       {
         "description": "Pour invité un utilisateur avec son id dans un evement",
-        "url": "http://localhost:5002/events/invite",
+        "url": "http://localhost:8081/events/invite",
         "method": "POST",
         "datas": {
           "Authorization": {
@@ -110,7 +110,7 @@
 
       {
         "description": "Pour créer un evenement",
-        "url": "http://localhost:5002/events/create",
+        "url": "http://localhost:8081/events/create",
         "method": "POST",
         "datas": {
           "Authorization": {
@@ -125,6 +125,52 @@
             "date": "[date]", /* Format : 22 Mars, 2022 */
             "heure": "[heure]", /* Format : 23:56 */
             "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
+          }
+        },
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      },
+
+
+
+      {
+        "description": "Pour accepter l'invitation à un évenement",
+        "url": "http://localhost:8081/events/accept",
+        "method": "POST",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          },
+          "body": {
+            "id_event": "[id_event]",
+            "message": "[message]"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      },
+
+
+
+      {
+        "description": "Pour décliner l'invitation à un évenement",
+        "url": "http://localhost:8081/events/decline",
+        "method": "POST",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          },
+          "body": {
+            "id_event": "[id_event]",
+            "message": "[message]"
           }
         },
         "headers": {
