@@ -93,6 +93,31 @@
           "id_user": "[id_user]"
         }
       }
+
+
+      {
+        "description": "Pour accepter l'invitation",
+        "url": "http://localhost:5002/events/accept",
+        "method": "POST",
+        "datas": {
+          "id_user": "[id_user]",
+          "id_event": "[id_event]",
+          "message": "[message]"
+        }
+      },
+
+
+
+      {
+        "description": "Pour décline l'invitation",
+        "url": "http://localhost:5002/events/decline",
+        "method": "POST",
+        "datas": {
+          "id_user": "[id_user]",
+          "id_event": "[id_event]",
+          "message": "[message]"
+        }
+      }
     ]
   }
 }
