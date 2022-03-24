@@ -4,6 +4,7 @@ import AppLogin from "./components/AppLogin.vue";
 import AppRegister from "./components/AppRegister.vue";
 import AppEvents from "./components/AppEvents.vue";
 import AppAccount from "./components/AppAccount.vue";
+import AppNewEvent from './components/AppNewEvent.vue';
 import AppNotFound from "./components/_partials/AppNotFound.vue";
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: "/account",
     name: "Account",
     component: AppAccount,
+  },
+  {
+    path: "/new_event",
+    name: "NewEvent",
+    component: AppNewEvent,
   },
   {
     path: "/:pathMatch(.*)*",
