@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/accordion.dart';
+import 'package:mobile_app/components/accordion.dart';
 import 'package:mobile_app/screens/ConnexionPage.dart';
 
 class MyApp extends StatelessWidget {
