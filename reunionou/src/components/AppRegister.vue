@@ -2,7 +2,7 @@
   <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Création de compte</h1>
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
+      <label for="email" class="form-label required">Email</label>
       <input
         v-model="email"
         type="email"
@@ -16,11 +16,11 @@
       </div>
     </div>
     <div class="mb-3">
-      <label for="login" class="form-label">Username</label>
+      <label for="login" class="form-label required">Username</label>
       <input v-model="login" type="text" class="form-control" id="login" name="login"/>
     </div>
     <div class="mb-3">
-      <label for="pwd" class="form-label">Mot de passe</label>
+      <label for="pwd" class="form-label required">Mot de passe</label>
       <input
         v-model="pwd"
         type="password"
@@ -29,7 +29,7 @@
       />
     </div>
     <div class="mb-3">
-      <label for="conf_pwd" class="form-label">Confirmer le mot de passe</label>
+      <label for="conf_pwd" class="form-label required">Confirmer le mot de passe</label>
       <input
         v-model="conf_pwd"
         type="password"
@@ -93,3 +93,6 @@ export default {
   },
 };
 </script>
+<style>
+@import './_partials/style.css';
+</style>
