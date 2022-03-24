@@ -1,10 +1,13 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mobile_app/components/accordion.dart';
+import 'package:mobile_app/components/connexion.dart';
 
 void main() {
   runApp(const MaterialApp(
-    title: 'Reunionou',
-    home: FirstRoute(),
+    title: '🤝 Reunionou',
+    home: MyApp(),
   ));
 }
 
@@ -15,31 +18,12 @@ class FirstRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text('🤝 Reunionou'),
+        title: const Text('🤝 Reunionou'),
         backgroundColor: Colors.grey,
       ),
 
       body: Center(
-
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
             Text(
@@ -69,11 +53,7 @@ class FirstRoute extends StatelessWidget {
       ),
 
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const SizedBox(
@@ -88,36 +68,29 @@ class FirstRoute extends StatelessWidget {
             ListTile(
               title: const Text('Me connecter',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ConnexionPage()),
+                );
               },
             ),
             ListTile(
               title: const Text('Créer un compte',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
+                Navigator.of(context).pushNamed("/Connexion");
               },
             ),
             ListTile(
               title: const Text('Mon compte',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('Mes rendez-vous',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
@@ -136,26 +109,93 @@ class FirstRoute extends StatelessWidget {
   }
 }
 
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({Key? key}) : super(key: key);
+class ConnexionPage extends StatefulWidget {
+  const ConnexionPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
-  }
+  State<ConnexionPage> createState() => _ConnexionPageState();
 }
+
+var id = "";
+var mdp = "";
+var token;
+
+class _ConnexionPageState extends State<ConnexionPage> {
+
+  @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+          title: const Text('Page Connexion'),
+        ),
+        body: Center(
+          child: Padding(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Connexion',
+                    style: TextStyle(fontSize: 40),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Text(
+                    'Renseignez votre identifiant et votre mot de passe pour vous connecter.',
+                    style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    width: 300,
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Identifiant ou E-mail',
+                      ),
+                      onChanged: (value) {
+                        id = value;
+                      },
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: 300,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Mot de passe',
+                      ),
+                      onChanged: (value) {
+                        mdp = value;
+                      },
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        postConnexion();
+                      });
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                      );
+                    },
+                    child: const Text('Connexion'),
+                  ),
+                ],
+              ),
+        ),
+
+        ),
+      );
+    }
+  }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -164,17 +204,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: '🤝 Reunionou',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: '🤝 Reunionou'),
@@ -185,15 +217,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -201,54 +224,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('🤝 Reunionou'),
         backgroundColor: Colors.grey,
       ),
 
       body: Center(
-
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
             Text(
@@ -262,8 +248,8 @@ class _MyHomePageState extends State<MyHomePage> {
               textAlign: TextAlign.center,
             ),
             Accordion(
-                title: "Est-ce que Reunionou est gratuit ?",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem, vitae lacinia libero massa eget nibh. ",
+              title: "Est-ce que Reunionou est gratuit ?",
+              content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem, vitae lacinia libero massa eget nibh. ",
             ),
             Accordion(
               title: "Comment je peux créer un événement ?",
@@ -278,11 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       drawer: Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
         child: ListView(
-        // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const SizedBox(
@@ -294,53 +276,60 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(0.0),
               ),
             ),
-              ListTile(
-                title: const Text('Me connecter',style: TextStyle(fontSize: 20)),
-                onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: const Text('Créer un compte',style: TextStyle(fontSize: 20)),
-                onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
+            ListTile(
+              title: const Text('Me connecter',style: TextStyle(fontSize: 20)),
+              onTap: () {
                 Navigator.pop(context);
-                },
-              ),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ConnexionPage()),
+                );
+              },
+            ),
             ListTile(
               title: const Text('Mon compte',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('Mes rendez-vous',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text('Déconnexion',style: TextStyle(fontSize: 20)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
               },
             ),],
-          ),
-        ),// This trailing comma makes auto-formatting nicer for build methods.
-      );
+        ),
+      ),// This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+Future<Connexion> postConnexion() async{
+  final response = await http.post(
+      Uri.parse('http://192.168.42.185:5001/auth/signin'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': "*/*",
+        'connection': 'keep-alive',
+        'Accept-Encoding' : 'gzip, deflate, br',
+      },
+      body: jsonEncode(<String, String>{
+        'login': id,
+        'pwd': mdp,
+      })
+  );
+
+  if (response.statusCode == 200) {
+    var res = Connexion.fromJson(jsonDecode(response.body));
+    token = res.token;
+    return res;
+  } else {
+    throw Exception('Failed to create album.');
   }
 }

@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mobile_app">
-   <application
-        android:label="mobile_app"
-        android:name="${applicationName}"
+
+    <!-- Required to fetch data from the internet. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="Reunionou"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
