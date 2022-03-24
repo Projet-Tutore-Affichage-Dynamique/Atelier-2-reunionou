@@ -192,6 +192,70 @@ router.post('/post_message', function(req, res, next){
 
 
 
+router.post('/accept', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+    axios
+        .post('http://api_events:3000/events/accept',
+            querystring.stringify({
+                'id_event': req.body.id_event,
+                'message': req.body.message,
+                'id_user': id_user
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+        )
+        .then(result => {
+            res.status(result.status).json(result.data);
+        })
+        .catch(error => {
+            if(error.response)
+                res.status(error.response.status).json(error.response.data);
+            else
+                res.status(500).json(error);
+        });
+});
+
+
+
+
+router.post('/decline', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+    axios
+        .post('http://api_events:3000/events/decline',
+            querystring.stringify({
+                'id_event': req.body.id_event,
+                'message': req.body.message,
+                'id_user': id_user
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+        )
+        .then(result => {
+            res.status(result.status).json(result.data);
+        })
+        .catch(error => {
+            if(error.response)
+                res.status(error.response.status).json(error.response.data);
+            else
+                res.status(500).json(error);
+        });
+});
+
+
+
+
 
 
 

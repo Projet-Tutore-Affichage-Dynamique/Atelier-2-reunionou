@@ -1,5 +1,5 @@
 const axios = require('axios');
-const querystring = require("query-string");
+const querystring = require("querystring");
 
 module.exports = function(req, res, next){
 
