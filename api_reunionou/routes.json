@@ -1,0 +1,136 @@
+{
+  "routes": {
+    "api_auth": [
+      {
+        "description": "Envoie login et mdp, renvoie token de connection",
+        "url": "http://localhost:8081/auth/signin",
+        "method": "POST",
+        "datas": {
+          "Authorization": {
+            "type": "Basic Auth",
+            "data": {
+              "Username": "[login]",
+              "Password": "[password]"
+            }
+          },
+          "body": {}
+        }
+      },
+
+
+
+      {
+        "description": "Envoie toutes les infos du user et renvoie une confirmation",
+        "url": "http://localhost:5001/auth/signup",
+        "method": "POST",
+        "datas": {
+          "body": {
+            "login": "[id_user]",
+            "pwd": "[pwd_user]",
+            "conf_pwd": "[pwd_user]",
+            "email": "[email_user]"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    ],
+
+
+
+
+    "api_events": [
+      {
+        "description": "Pour récupérer tous les evenements de l'utilisateur",
+        "url": "http://localhost:8081/events",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
+
+
+      {
+        "description": "Pour récupérer les données d'un evement par son id",
+        "url": "http://localhost:5002/events/[id_event]",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
+
+
+      {
+        "description": "Pour récupérer les messages d'un evenement avec son id",
+        "url": "http://localhost:5002/events/[id_event]/messages",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
+
+
+      {
+        "description": "Pour invité un utilisateur avec son id dans un evement",
+        "url": "http://localhost:5002/events/invite",
+        "method": "POST",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          },
+          "body": {
+            "id_event": "[id_event]",
+            "id_invite": "[id_user]"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      },
+
+
+      {
+        "description": "Pour créer un evenement",
+        "url": "http://localhost:5002/events/create",
+        "method": "POST",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          },
+          "body": {
+            "titre": "[titre]",
+            "description": "[description]",
+            "date": "[date]", /* Format : 22 Mars, 2022 */
+            "heure": "[heure]", /* Format : 23:56 */
+            "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
+          }
+        },
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    ]
+  }
+}

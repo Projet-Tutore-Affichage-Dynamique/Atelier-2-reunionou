@@ -5,8 +5,9 @@
       <button class="btn btn-success">Créer un nouvel événement</button>
     </aside>
     <h4>Ils arrivent bientôt</h4>
-    <div class="row row-cols-1 row-cols-md-5 g-4">
-      <div class="col">
+    {{events}}
+    <!--<div class="row row-cols-1 row-cols-md-5 g-4">
+       <div class="col">
         <div class="card h-100">
           <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
           <div class="card-body">
@@ -56,12 +57,36 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "AppEvents",
+  data() {
+    return {
+      events: null,
+      token: this.$parent.token
+    };
+  },
+  beforeMount(){
+      console.log(this.token);
+      axios
+        .get("http://localhost:8081/events", {
+          headers: { 
+            'Authorization': `token ${this.token}` 
+          }
+        })
+        .then((response) => {
+          this.events = response;
+          console.log(this.events);
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        });
+  },
 };
 </script>

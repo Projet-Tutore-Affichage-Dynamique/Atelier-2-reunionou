@@ -17,13 +17,13 @@
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <li v-if="this.$parent.token" class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
           </li>
-          <li class="nav-item">
+          <li v-if="this.$parent.token" class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/events">Mes rendez-vous</router-link>
           </li>
-          <li class="nav-item">
+          <li v-if="this.$parent.token" class="nav-item">
             <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion</a>
           </li>
         </ul>
