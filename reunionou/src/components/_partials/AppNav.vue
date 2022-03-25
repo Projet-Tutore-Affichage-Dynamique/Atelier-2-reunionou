@@ -15,6 +15,9 @@
           <li v-if="this.token == null" class="nav-item">
             <a class="nav-link active" aria-current="page" href="/register">Créer un compte</a>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link active" aria-current="page" to="/faq">F.A.Q.</router-link>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li v-if="this.token" class="nav-item">

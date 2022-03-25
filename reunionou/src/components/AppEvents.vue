@@ -3,7 +3,7 @@
   <main class="container">
     <h1>Mes événements</h1>
     <aside class="mb-5">
-      <button class="btn btn-success">Créer un nouvel événement</button>
+      <button class="btn btn-success"><router-link class="nav-link active" aria-current="page" to="/new_event" style="color:white">Créer un nouvel événement</router-link></button>
     </aside>
     <h4>Ils arrivent bientôt</h4>
     <div class="row row-cols-1 row-cols-md-5 g-4">

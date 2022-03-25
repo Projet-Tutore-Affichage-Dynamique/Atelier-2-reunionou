@@ -3,7 +3,8 @@ const connection = mysql.createConnection({
     host: 'db_reunionou',
     user: 'user',
     password: 'pwd',
-    database: 'db'
+    database: 'db',
+    multipleStatements: true
 });
 
 connection.connect(function(err) {

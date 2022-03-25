@@ -51,6 +51,19 @@
         "datas": {}
       },
 
+      {
+        "description": "Pour récupérer tous les evenements passées et créés par l'utilisateur",
+        "url": "http://localhost:5002/events/eventsexpired?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+      {
+        "description": "Pour récupérer tous les evenements passées auxquels l'utilisateur est invité",
+        "url": "http://localhost:5002/events/eventsinvitedexpired?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
 
       {
         "description": "Pour récupérer les données d'un evement par son id",
@@ -91,6 +104,31 @@
           "heure": "[heure]", /* Format : 23:56 */
           "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
           "id_user": "[id_user]"
+        }
+      }
+
+
+      {
+        "description": "Pour accepter l'invitation",
+        "url": "http://localhost:5002/events/accept",
+        "method": "POST",
+        "datas": {
+          "id_user": "[id_user]",
+          "id_event": "[id_event]",
+          "message": "[message]"
+        }
+      },
+
+
+
+      {
+        "description": "Pour décline l'invitation",
+        "url": "http://localhost:5002/events/decline",
+        "method": "POST",
+        "datas": {
+          "id_user": "[id_user]",
+          "id_event": "[id_event]",
+          "message": "[message]"
         }
       }
     ]
