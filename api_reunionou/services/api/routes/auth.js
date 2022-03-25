@@ -16,8 +16,6 @@ router.post('/signin', function(req, res, next) {
         const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
         [login, password] = credentials.split(':');
 
-        console.log("login: "+login+"  mdp: "+password);
-
         axios
             .post('http://api_users:3000/auth/signin',
                 querystring.stringify({

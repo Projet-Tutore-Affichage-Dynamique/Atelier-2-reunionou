@@ -251,7 +251,6 @@ router.post('/create', function(req, res, next) {
     if(verifyDataCreate(req.body)){
 
         let date_RV = dateToMysqlFormat(new Date(date+" "+heure+":00"));
-        console.log("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+lieu+"')");
 
         Connection.query("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+lieu+"')", (error, result, fields) => {
             if(!error){

@@ -15,6 +15,9 @@ const routes = [
   {
     path: "/login",
     name: "Login",
+    meta: {
+      reload: true
+    },
     component: AppLogin,
   },
   {
@@ -25,6 +28,7 @@ const routes = [
   {
     path: "/events",
     name: "Events",
+
     component: AppEvents,
   },
   {
@@ -42,6 +46,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  meta: {
+    reload: true
+  },
 });
 
 export default router;
