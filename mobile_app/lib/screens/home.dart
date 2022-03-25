@@ -1,23 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/components/accordion.dart';
 import 'package:mobile_app/screens/ConnexionPage.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: '🤝 Reunionou',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: '🤝 Reunionou'),
-    );
-  }
-}
+import 'package:mobile_app/screens/FAQPage.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -34,8 +17,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('🤝 Reunionou'),
-        backgroundColor: Colors.grey,
+        title: const Text('🤝 Reunionou'),
+        backgroundColor: Colors.blue,
       ),
 
       body: Center(
@@ -52,18 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 25),
               textAlign: TextAlign.center,
             ),
-            Accordion(
-              title: "Est-ce que Reunionou est gratuit ?",
-              content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem, vitae lacinia libero massa eget nibh. ",
-            ),
-            Accordion(
-              title: "Comment je peux créer un événement ?",
-              content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem, vitae lacinia libero massa eget nibh. ",
-            ),
-            Accordion(
-              title: "Je dois obligatoirement créer un compte ?",
-              content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem, vitae lacinia libero massa eget nibh. ",
-            ),
           ],
         ),
       ),
@@ -76,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 100.0,
               child: DrawerHeader(
                 child: Text('🤝 Reunionou', style: TextStyle(color: Colors.white,fontSize: 50)),
-                decoration: BoxDecoration(color: Colors.grey),
+                decoration: BoxDecoration(color: Colors.blue),
                 margin: EdgeInsets.all(0.0),
                 padding: EdgeInsets.all(0.0),
               ),
@@ -101,6 +72,16 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Mes rendez-vous',style: TextStyle(fontSize: 20)),
               onTap: () {
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('F.A.Q',style: TextStyle(fontSize: 20)),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FAQPage()),
+                );
               },
             ),
             ListTile(

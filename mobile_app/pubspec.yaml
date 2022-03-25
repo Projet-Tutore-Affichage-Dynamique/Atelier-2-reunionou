@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   http: ^0.13.4
+  accordion: ^1.0.3
 
   flutter:
     sdk: flutter

@@ -18,8 +18,8 @@ class _RendezVousState extends State<RendezVous>{
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
+          children: const [
+            Text(
               "Creation d'un rendez vous",
               style: TextStyle(fontSize: 40),
               textAlign: TextAlign.center,
@@ -27,7 +27,7 @@ class _RendezVousState extends State<RendezVous>{
             SizedBox(
               width: 300,
               child: TextField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: ''
                 ),
