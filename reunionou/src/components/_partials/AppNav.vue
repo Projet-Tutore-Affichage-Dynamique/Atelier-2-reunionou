@@ -15,6 +15,9 @@
           <li class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/register">Créer un compte</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link active" aria-current="page" to="/faq">F.A.Q.</router-link>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li v-if="this.$parent.token" class="nav-item">

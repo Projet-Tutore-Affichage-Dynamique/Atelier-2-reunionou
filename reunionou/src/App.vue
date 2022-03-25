@@ -22,3 +22,6 @@ export default {
     },
 }
 </script>
+<style>
+@import './components/_partials/style.css';
+</style>

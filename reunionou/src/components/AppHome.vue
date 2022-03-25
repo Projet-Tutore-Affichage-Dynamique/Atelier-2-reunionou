@@ -23,102 +23,10 @@
       <a
         href="javascript:void(0)"
         @click="handleClick"
-        class="btn btn-lg btn-primary"
+        class="btn btn-lg btn-primary me-2"
         >Créer un compte</a
       >
-    </div>
-    <div class="accordion container py-5" id="accordionExample">
-      <h2 class="my-5 text-center">Questions fréquemment posées</h2>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button
-            class="accordion-button"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-            Est-ce que Reunionou est gratuit ?
-          </button>
-        </h2>
-        <div
-          id="collapseOne"
-          class="accordion-collapse collapse show"
-          aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-            vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem,
-            vitae lacinia libero massa eget nibh. Quisque dignissim leo massa,
-            at efficitur mauris sagittis elementum. Nullam porttitor maximus
-            pharetra. Nulla tristique elementum mi, et semper massa. Vivamus at
-            nisl tincidunt, interdum lectus a, scelerisque elit. Fusce sit amet
-            sem luctus, maximus magna sed, egestas ante.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseTwo"
-            aria-expanded="false"
-            aria-controls="collapseTwo"
-          >
-            Comment je peux créer un événément ?
-          </button>
-        </h2>
-        <div
-          id="collapseTwo"
-          class="accordion-collapse collapse"
-          aria-labelledby="headingTwo"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-            vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem,
-            vitae lacinia libero massa eget nibh. Quisque dignissim leo massa,
-            at efficitur mauris sagittis elementum. Nullam porttitor maximus
-            pharetra. Nulla tristique elementum mi, et semper massa. Vivamus at
-            nisl tincidunt, interdum lectus a, scelerisque elit. Fusce sit amet
-            sem luctus, maximus magna sed, egestas ante.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseThree"
-            aria-expanded="false"
-            aria-controls="collapseThree"
-          >
-            Je dois obligatoirement créer un comtpe ?
-          </button>
-        </h2>
-        <div
-          id="collapseThree"
-          class="accordion-collapse collapse"
-          aria-labelledby="headingThree"
-          data-bs-parent="#accordionExample"
-        >
-          <div class="accordion-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-            vestibulum, mi vitae vulputate sodales, sem sem consectetur lorem,
-            vitae lacinia libero massa eget nibh. Quisque dignissim leo massa,
-            at efficitur mauris sagittis elementum. Nullam porttitor maximus
-            pharetra. Nulla tristique elementum mi, et semper massa. Vivamus at
-            nisl tincidunt, interdum lectus a, scelerisque elit. Fusce sit amet
-            sem luctus, maximus magna sed, egestas ante.
-          </div>
-        </div>
-      </div>
+      <a href="javascript:void(0)" @click="handleClick2" class="btn btn-outline-secondary">F.A.Q.</a>
     </div>
   </section>
 </template>
@@ -130,6 +38,9 @@ export default {
   methods: {
     handleClick() {
       this.$router.push("/register");
+    },
+    handleClick2() {
+      this.$router.push("/faq");
     },
   },
 };
