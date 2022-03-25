@@ -27,7 +27,7 @@
           "body": {
             "login": "[id_user]",
             "pwd": "[pwd_user]",
-            "conf_pwd": "[pwd_user]",
+            "confpwd": "[pwduser]",
             "email": "[email_user]"
           }
         },
