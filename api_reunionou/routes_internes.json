@@ -51,6 +51,19 @@
         "datas": {}
       },
 
+      {
+        "description": "Pour récupérer tous les evenements passées et créés par l'utilisateur",
+        "url": "http://localhost:5002/events/eventsexpired?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+      {
+        "description": "Pour récupérer tous les evenements passées auxquels l'utilisateur est invité",
+        "url": "http://localhost:5002/events/eventsinvitedexpired?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
 
       {
         "description": "Pour récupérer les données d'un evement par son id",

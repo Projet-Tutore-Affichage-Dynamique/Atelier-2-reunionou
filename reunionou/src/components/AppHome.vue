@@ -20,12 +20,8 @@
       </div>
     </div>
     <div class="text-center mb-5">
-      <a
-        href="javascript:void(0)"
-        @click="handleClick"
-        class="btn btn-lg btn-primary"
-        >Créer un compte</a
-      >
+     <router-link class="btn btn-lg btn-primary mx-2" aria-current="page" to="/register">Créer un compte</router-link>
+     <router-link class="btn btn-lg btn-outline-primary mx-2" aria-current="page" to="/login">Me connecter</router-link>
     </div>
     <div class="accordion container py-5" id="accordionExample">
       <h2 class="my-5 text-center">Questions fréquemment posées</h2>
@@ -126,11 +122,5 @@
 <script>
 export default {
   name: "AppHome",
-  props: ["user"],
-  methods: {
-    handleClick() {
-      this.$router.push("/register");
-    },
-  },
 };
 </script>

@@ -1,4 +1,5 @@
 <template>
+<div>
   <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Connexion</h1>
     <div class="mb-3">
@@ -30,10 +31,12 @@
       >
     </div>
   </form>
+</div>
 </template>
 
 <script>
 import axios from "axios";
+
 export default {
   name: "AppLogin",
   data() {
@@ -43,7 +46,7 @@ export default {
     };
   },
   methods: {
-async handleSubmit() {
+  async handleSubmit() {
       axios
         .post("http://localhost:8081/auth/signin", {}, {
           auth: {
@@ -54,8 +57,11 @@ async handleSubmit() {
         .then((response) => {
           this.infos = response;
           if(response){
-            this.$parent.token = this.infos.data.token;
-            this.$router.push("/events", this.infos.data.token)
+            localStorage.token = this.infos.data.token;
+            localStorage.login = this.infos.data.user.login;
+            localStorage.id = this.infos.data.user.id;
+            this.$router.push({ name: 'Events' })
+
           }else{
             return null;
           }
@@ -65,7 +71,7 @@ async handleSubmit() {
           this.errored = true;
         });
   },
-    handleClick() {
+  handleClick() {
       this.$router.push("/register");
     },
   },

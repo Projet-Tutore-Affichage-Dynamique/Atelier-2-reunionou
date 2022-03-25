@@ -34,7 +34,6 @@ router.post('/signin', function(req, res, next) {
             if(result[0] !== null && result[0] !== undefined){
 
                 user = result[0];
-                console.log('user.pwd: '+user.pwd);
 
                 bcrypt.compare(pwd, user.pwd).then((ok) => {
                     if(ok){
@@ -42,8 +41,7 @@ router.post('/signin', function(req, res, next) {
                         let privateKey = fs.readFileSync('./jwt_secret.txt');
 
                         let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '2h' });
-                        console.log('token: '+token);
-                        res.status(200).json({'token': token});
+                        res.status(200).json({'token': token, 'user': user});
 
                     } else {
                         res.status(401).json(error401("Le mot de passe n'est pas valide"));
@@ -79,7 +77,6 @@ router.post('/check', function(req, res, next) {
        else{
            //Validity uuid
            if(typeof decoded.sub !== undefined){
-               console.log(decoded.sub);
 
                // Validity user
                Connection.query("SELECT * FROM utilisateur WHERE id="+"'"+decoded.sub+"'", (error, result, fields) => {

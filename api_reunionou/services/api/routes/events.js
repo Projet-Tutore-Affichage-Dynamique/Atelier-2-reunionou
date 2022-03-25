@@ -26,7 +26,41 @@ router.get('/', function(req, res, next){
         });
 });
 
+router.get('/eventsexpired', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+    axios
+        .get('http://api_events:3000/events/eventsexpired?id_user='+id_user)
+        .then(result => {
+            res.status(result.status).json(result.data);
+        })
+        .catch(error => {
+            if(error.response)
+                res.status(error.response.status).json(error.response.data);
+            else
+                res.status(500).json(error);
+        });
+});
+
+router.get('/eventsinvitedexpired', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+    axios
+        .get('http://api_events:3000/events/eventsinvitedexpired?id_user='+id_user)
+        .then(result => {
+            res.status(result.status).json(result.data);
+        })
+        .catch(error => {
+            if(error.response)
+                res.status(error.response.status).json(error.response.data);
+            else
+                res.status(500).json(error);
+        });
+});
 
 router.get('/:id', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');

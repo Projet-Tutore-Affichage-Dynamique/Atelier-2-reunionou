@@ -68,6 +68,3 @@ export default {
     }
 };
 </script>
-<style>
-@import './_partials/style.css';
-</style>

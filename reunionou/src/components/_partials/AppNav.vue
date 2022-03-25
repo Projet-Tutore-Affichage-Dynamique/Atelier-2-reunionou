@@ -9,22 +9,25 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/login">Me connecter</router-link>
+          <li v-if="this.token == null" class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/login">Me connecter</a>
+          </li>
+          <li v-if="this.token == null" class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/register">Créer un compte</a>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/register">Créer un compte</router-link>
+            <router-link class="nav-link active" aria-current="page" to="/faq">F.A.Q.</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li v-if="this.$parent.token" class="nav-item">
+          <li v-if="this.token" class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
           </li>
-          <li v-if="this.$parent.token" class="nav-item">
+          <li v-if="this.token" class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/events">Mes rendez-vous</router-link>
           </li>
-          <li v-if="this.$parent.token" class="nav-item">
-            <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion</a>
+          <li v-if="this.token" class="nav-item">
+            <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion ({{this.login}})</a>
           </li>
         </ul>
       </div>
@@ -35,12 +38,26 @@
 <script>
 export default {
     return: 'AppNav',
-    props: ['user'],
+    data() {
+      return {
+        token: null,
+        login: null,
+        id: null
+      };
+    },
+    beforeMount() {
+      if(localStorage.token && localStorage.login && localStorage.id){
+        this.login = localStorage.login;
+        this.token = localStorage.token;
+        this.id = localStorage.id;
+      }
+    },
     methods: {
       handleClick(){
-        localStorage.removeItem('token')
-        this.$router.push('/')
-      }
+        localStorage.removeItem('token');
+        localStorage.removeItem('login');
+        localStorage.removeItem('id'); 
+        this.$router.push({ name: 'Home' })      }
     }
 }
 </script>

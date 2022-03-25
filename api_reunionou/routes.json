@@ -55,6 +55,34 @@
         }
       },
 
+      {
+        "description": "Pour récupérer tous les evenements passés et créer par l'utilisateur",
+        "url": "http://localhost:8081/events/eventsexpired",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
+
+      {
+        "description": "Pour récupérer tous les evenements passés auxquels l'utilisateur est invité",
+        "url": "http://localhost:8081/events/eventsinvitedexpired",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
+
 
       {
         "description": "Pour récupérer les données d'un evement par son id",
