@@ -18,21 +18,7 @@ class _RendezVousState extends State<RendezVous>{
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              "Creation d'un rendez vous",
-              style: TextStyle(fontSize: 40),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              width: 300,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: ''
-                ),
-              ),
-            )
+          children: [
           ],
         ),
       ),
@@ -40,3 +26,4 @@ class _RendezVousState extends State<RendezVous>{
   }
 }
 
+//quand get event => token auth

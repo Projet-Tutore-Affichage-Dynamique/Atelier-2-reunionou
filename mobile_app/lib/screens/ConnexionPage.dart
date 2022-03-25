@@ -95,17 +95,14 @@ class _ConnexionPageState extends State<ConnexionPage> {
 
 Future<Connexion> postConnexion() async{
   final response = await http.post(
-      Uri.parse('http://192.168.42.185:5001/auth/signin'),
+      Uri.parse('http://192.168.42.44:8082/auth/signin'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': "*/*",
         'connection': 'keep-alive',
         'Accept-Encoding' : 'gzip, deflate, br',
+        'authorization': 'Basic '+ base64Encode(utf8.encode('$id:$mdp'))
       },
-      body: jsonEncode(<String, String>{
-        'login': id,
-        'pwd': mdp,
-      })
   );
 
   if (response.statusCode == 200) {
@@ -113,6 +110,6 @@ Future<Connexion> postConnexion() async{
     token = res.token;
     return res;
   } else {
-    throw Exception('Failed to create album.');
+    throw Exception('Failed to get token');
   }
 }

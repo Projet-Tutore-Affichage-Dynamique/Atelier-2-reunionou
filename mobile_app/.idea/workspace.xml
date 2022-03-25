@@ -12,21 +12,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff048931-eb5b-4c2d-b485-2b9e9a9569ef" name="Default Changelist" comment="Structuration des fichiers de mobile_app #2">
-      <change afterPath="$PROJECT_DIR$/lib/screens/FAQPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/version" afterDir="false" />
+    <list default="true" id="ff048931-eb5b-4c2d-b485-2b9e9a9569ef" name="Default Changelist" comment="FAQ+Page de creation de rdv+du style">
+      <change beforePath="$PROJECT_DIR$/../api_reunionou/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../api_reunionou/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/components/accordion.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/ConnexionPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/ConnexionPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/RendezVous.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/RendezVous.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648033651275</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="FAQ+Page de creation de rdv+du style">
+      <created>1648217941629</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1648217941629</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -120,6 +117,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Debut de la mobile_app" />
-    <option name="LAST_COMMIT_MESSAGE" value="Debut de la mobile_app" />
+    <MESSAGE value="FAQ+Page de creation de rdv+du style" />
+    <option name="LAST_COMMIT_MESSAGE" value="FAQ+Page de creation de rdv+du style" />
   </component>
 </project>

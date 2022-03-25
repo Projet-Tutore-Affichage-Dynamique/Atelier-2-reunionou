@@ -65,7 +65,7 @@ services:
       - ./services/.env
     working_dir: /usr/src/app
     volumes:
-      - ./services/api_gtw_mobile
+      - ./services/api_gtw_mobile:/usr/src/app
     ports:
       - '8082:3000'
     command: npm run watch
