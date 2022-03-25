@@ -97,9 +97,14 @@ export default {
       modifOK: false,
     };
   },
+  mounted() {
+      if(localStorage.token){
+        this.user = localStorage.user;
+        this.token = localStorage.token;
+      } 
+    },
   methods: {
     validModif() {
-      //TODO if/else en fonction de réussite/échec
       this.modifOK = !this.modifOK;
       this.modif = !this.modif;
     },

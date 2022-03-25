@@ -1,29 +1,19 @@
 <template>
   <div id="app">
-    <AppNav :user="user"/>
-    <div class="p-5">
-    <router-view :user="user"/>
-    </div>
+    <AppNav />
+    <router-view />
   </div>
 </template>
 
 <script>
-import AppNav from './components/_partials/AppNav.vue'
-import axios from 'axios'
-
+import AppNav from "./components/_partials/AppNav.vue";
 export default {
-  name: 'App',
-    components: {
-      AppNav
-    },
-    data() {
-        return {
-            user: null
-        }
-    },
-    async created() {
-        const response = await axios.get('user')
-        this.user = response.data
-    }
-}
+  name: "App",
+  components: {
+    AppNav,
+  },
+};
 </script>
+<style>
+@import './components/_partials/style.css';
+</style>

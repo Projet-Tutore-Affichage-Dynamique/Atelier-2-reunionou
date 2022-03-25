@@ -1,0 +1,136 @@
+{
+  "routes": {
+    "api_auth": [
+      {
+        "description": "Envoie login et mdp, renvoie token de connection",
+        "url": "http://localhost:5001/auth/signin",
+        "method": "POST",
+        "datas": {
+          "body": {
+            "login": "[id_user]",
+            "pwd": "[pwd_user]"
+          }
+        }
+      },
+
+
+      {
+        "description": "Envoie token de connection, renvoie si le token est toujours valide",
+        "url": "http://localhost:5001/auth/check",
+        "method": "POST",
+        "datas": {
+          "body": {
+            "token": "[token_jwt]"
+          }
+        }
+      },
+
+
+      {
+        "description": "Envoie toutes les infos du user et renvoie une confirmation",
+        "url": "http://localhost:5001/auth/signup",
+        "method": "POST",
+        "datas": {
+          "body": {
+            "login": "[id_user]",
+            "pwd": "[pwd_user]",
+            "conf_pwd": "[pwd_user]",
+            "email": "[email_user]"
+          }
+        }
+      }
+    ],
+
+
+
+    "api_events": [
+      {
+        "description": "Pour récupérer tous les evenements de l'utilisateur",
+        "url": "http://localhost:5002/events?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+      {
+        "description": "Pour récupérer tous les evenements passées et créés par l'utilisateur",
+        "url": "http://localhost:5002/events/eventsexpired?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+      {
+        "description": "Pour récupérer tous les evenements passées auxquels l'utilisateur est invité",
+        "url": "http://localhost:5002/events/eventsinvitedexpired?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+      {
+        "description": "Pour récupérer les données d'un evement par son id",
+        "url": "http://localhost:5002/events/[id_event]?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+
+      {
+        "description": "Pour récupérer les messages d'un evenement avec son id",
+        "url": "http://localhost:5002/events/[id_event]/messages?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
+
+
+      {
+        "description": "Pour invité un utilisateur avec son id dans un evement",
+        "url": "http://localhost:5002/events/invite",
+        "method": "POST",
+        "datas": {
+          "id_event": "[id_event]",
+          "id_user": "[id_createur]",
+          "id_invite": "[id_user]"
+        }
+      },
+
+
+      {
+        "description": "Pour créer un evenement",
+        "url": "http://localhost:5002/events/create",
+        "method": "POST",
+        "datas": {
+          "titre": "[titre]",
+          "description": "[description]",
+          "date": "[date]", /* Format : 22 Mars, 2022 */
+          "heure": "[heure]", /* Format : 23:56 */
+          "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
+          "id_user": "[id_user]"
+        }
+      }
+
+
+      {
+        "description": "Pour accepter l'invitation",
+        "url": "http://localhost:5002/events/accept",
+        "method": "POST",
+        "datas": {
+          "id_user": "[id_user]",
+          "id_event": "[id_event]",
+          "message": "[message]"
+        }
+      },
+
+
+
+      {
+        "description": "Pour décline l'invitation",
+        "url": "http://localhost:5002/events/decline",
+        "method": "POST",
+        "datas": {
+          "id_user": "[id_user]",
+          "id_event": "[id_event]",
+          "message": "[message]"
+        }
+      }
+    ]
+  }
+}
