@@ -73,12 +73,12 @@ export default {
           login: this.login,
           email: this.email,
           pwd: this.pwd,
-          conf_pwd: this.conf_pwd
+          confpwd: this.conf_pwd
         })
         .then((response) => {
           this.infos = response;
           if(response){
-            this.$router.push("/events")
+            this.$router.push("/login")
           }else{
             return null;
           }
@@ -87,7 +87,6 @@ export default {
           console.log(error)
           this.errored = true;
         });
-      this.$router.push("/login");
     },
     handleClick() {
       this.$router.push("/login");

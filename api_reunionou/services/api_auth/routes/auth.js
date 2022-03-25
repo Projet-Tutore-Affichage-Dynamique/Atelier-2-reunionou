@@ -245,7 +245,6 @@ function verifyDataSignUp(data){
         email: Joi.string().email().required()
     });
 
-
     const res = schema.validate(data);
     const { value, error } = res;
     const valid = error == null;
