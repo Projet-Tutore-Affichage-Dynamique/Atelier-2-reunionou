@@ -42,7 +42,7 @@ router.post('/signin', function(req, res, next) {
 
                         let privateKey = fs.readFileSync('./jwt_secret.txt');
 
-                        let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '2h' });
+                        let token = jwt.sign({ admin: result[0].admin, sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '2h' });
                         res.status(200).json({'token': token, 'user': user});
 
                     } else {

@@ -4,6 +4,28 @@ const Joi = require('joi');
 const Connection = require("../config/connection");
 var router = express.Router();
 
+
+router.get('/all', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    Connection.query("SELECT * FROM events", (error, result, fields) => {
+        if(!error){
+
+            if(result[0]!==undefined && result[0]!==null){
+
+                res.status(200).json({"events": result});
+
+            } else{
+                res.status(404).json(error401("Il n'y a aucun évenement"));
+            }
+        } else{
+            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+            res.status(500).json(error500(message));
+        }
+    });
+});
+
+
 /* Récupère tous les évenements de l'utilisateur */
 router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -35,7 +57,7 @@ router.get('/', function(req, res, next) {
 
                         } else{
                             if(ev_invite===null)
-                                res.status(204).json({"message": "L'utilisateur n'est invité ou n'a créer aucun évenement"});
+                                res.status(204).json({"message": "L'utilisateur n'est pas invité ou n'a créer aucun évenement"});
                             else
                                 res.status(200).json({"events": ev_invite});
                         }
