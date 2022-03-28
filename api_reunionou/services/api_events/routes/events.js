@@ -496,9 +496,60 @@ router.post("/decline", function(req, res, next){
         }
     });
 });
+
+/** Permet de supprimer les évènements passés et créés par l'utilisateur */
+router.delete('/refresheventsexpired', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données de la requête
+    let id_user = req.query['id_user'];
+
+    // Date au format datetime pour comparer avec bdd
+    let today=new Date();
+    today = today.getUTCFullYear() + '-' +
+    ('00' + (today.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + today.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + today.getUTCHours()).slice(-2) + ':' + 
+    ('00' + today.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + today.getUTCSeconds()).slice(-2);
+
+    if(id_user!==undefined&&id_user!==null){
+       
+        Connection.query("DELETE invitation FROM invitation INNER JOIN events ON invitation.id_event=events.id WHERE events.date_rv<'"+today+"' AND events.id_createur='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                
+                Connection.query("DELETE messages FROM messages INNER JOIN events ON messages.id_event=events.id WHERE events.date_rv<'"+today+"' AND events.id_createur='"+id_user+"'", (error, result, fields) => {
+                    if(!error){
+                        
+                        Connection.query("DELETE FROM events WHERE events.date_rv<'"+today+"' AND events.id_createur='"+id_user+"'", (error, result, fields) => {
+                            if(!error){
+                                res.status(200).json({"message": "Events expirés de l'utilisateur supprimés"});
+    
+                            }else{
+                                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                                res.status(500).json(error500(message));
+                            }
+                        });
+                        
+                    }else{
+                        let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                        res.status(500).json(error500(message));
+                    }
+                });
+                
+            }else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    }else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
+
 ////// Route pour Rejoindre ou decliner une invitation d'un event //////
 
-////// Route pour Supprimer un event ///////
 
 
 
