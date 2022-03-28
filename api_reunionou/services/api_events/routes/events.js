@@ -209,6 +209,74 @@ router.get('/:id', function(req, res, next) {
     } else
         res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
 });
+router.delete('/:id', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    let id_event = req.params['id'];
+    let id_user = req.body.id_user;
+
+    if(id_user!==null && id_user!==undefined){
+
+        // Vérifie que l'utilisateur est un admin ou le créateur de l'evenement
+        Connection.query("SELECT admin FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                let rq = "DELETE FROM events WHERE id="+id_event;
+                if(result[0]!==undefined && result[0]!==null){
+                    console.log('admin: '+result[0].admin);
+                    if(result[0].admin){
+                        Connection.query(rq, (error, result, fields) => {
+                            if(!error)
+                                res.status(200).json(error401("Suppression de l'evenement réussie"));
+                            else
+                                res.status(500).json(error401("Erreur lors de la suppression de l'evenement"));
+                        });
+                    } else{
+
+                        //Vérifie si l'utilisateur est le créateur de l'evenement
+                        Connection.query("SELECT id_createur FROM events WHERE id="+id_event, (error, result, fields) => {
+                            if(!error){
+
+                                if(result[0]!==undefined){
+                                    if(result[0].id_createur === id_user){
+
+                                        Connection.query(rq, (error, result, fields) => {
+                                            if(!error)
+                                                res.status(200).json(error401("Suppression de l'evenement réussie"));
+                                            else
+                                                res.status(500).json(error401("Erreur lors de la suppression de l'evenement"));
+                                        });
+
+                                    } else{
+                                        res.status(401).json(error401("Vous n'etes pas le créateur de l'evenement"));
+                                    }
+                                } else{
+                                    res.status(401).json(error401("Cet utilisateur n'existe pas"));
+                                }
+
+
+                            } else{
+                                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                                res.status(500).json(error500(message));
+                            }
+                        });
+
+                    }
+                } else{
+                    res.status(401).json(error401("Cet utilisateur n'existe pas"));
+                }
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table utilisateur";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    } else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
+
+
+
 
 
 // Récupère tous les messages de l'event  --  URL = localhost/events/:id/messages?id_user='[id_user]'
