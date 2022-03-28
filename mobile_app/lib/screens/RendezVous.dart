@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/screens/ConnexionPage.dart';
 import 'package:mobile_app/screens/CreationRendezVous.dart';
 
 class RendezVous extends StatefulWidget {
@@ -9,8 +10,54 @@ class RendezVous extends StatefulWidget {
 }
 
 class _RendezVousState extends State<RendezVous>{
+
+  final List<Widget> _eventsList = [];
+
+  Widget _event(currentEvent) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SizedBox(
+          width: 300,
+          child: Column(
+            children: [
+              Text(
+                'titre'+currentEvent.titre,
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                'description'+currentEvent.description,
+                style: const TextStyle(fontSize: 15),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                'date'+currentEvent.date_RV,
+                style: const TextStyle(fontSize: 10),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _addAllEvents() {
+    setState(() {
+      for(var adding in eventList){
+        _eventsList.add(_event(adding));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _addAllEvents();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -61,43 +108,12 @@ class _RendezVousState extends State<RendezVous>{
                 textAlign: TextAlign.center,
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  width: 300,
-                  child: Column(
-                    children: const [
-                      Text(
-                        'titre',
-                        style: TextStyle(fontSize: 30),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        'description',
-                        style: TextStyle(fontSize: 20),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            Column(
+              children: _eventsList,
             ),
           ],
         ),
       ),
     );
   }
-}
-
-List<Widget> _cardList = [];
-
-void _addCardWidget() {
-  setState(() {
-    _cardList.add(_card());
-  });
 }

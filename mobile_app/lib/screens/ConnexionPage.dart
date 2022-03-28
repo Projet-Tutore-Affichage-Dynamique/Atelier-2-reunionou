@@ -15,7 +15,7 @@ class ConnexionPage extends StatefulWidget {
 var id = "";
 var mdp = "";
 var tokenauth;
-var events = [];
+var eventList = [];
 
 class _ConnexionPageState extends State<ConnexionPage> {
 
@@ -143,7 +143,7 @@ Future<Events> getUserEvents() async{
 
   if (response.statusCode == 200) {
     var res = Events.fromJson(jsonDecode(response.body));
-    events = res.events;
+    eventList = res.events;
     return res;
   } else {
     throw Exception('Failed to get events');
