@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/screens/ConnexionPage.dart';
 import 'package:mobile_app/screens/FAQPage.dart';
+import 'package:mobile_app/screens/RendezVous.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -24,13 +25,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             Text(
-              'Les Amis sont ceux qui font la vie. ',
-              style: TextStyle(fontSize: 40),
+              'Les Amis sont ceux qui font la vie $tokenauth',
+              style: const TextStyle(fontSize: 40),
               textAlign: TextAlign.center,
             ),
-            Text(
+            const Text(
               "Reunionou est la plateforme que permets de gérer vos rencontres. Plus qu'une simple plateforme de gestion de rendez-vous, c'est un planner qui vous fera gagner du temps. ",
               style: TextStyle(fontSize: 25),
               textAlign: TextAlign.center,
@@ -52,28 +53,43 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(0.0),
               ),
             ),
-            ListTile(
-              title: const Text('Me connecter',style: TextStyle(fontSize: 20)),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ConnexionPage()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Mon compte',style: TextStyle(fontSize: 20)),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Mes rendez-vous',style: TextStyle(fontSize: 20)),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            if (checkConnection()) ... [
+              ListTile(
+                title: const Text('Mon compte',style: TextStyle(fontSize: 20)),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Mes rendez-vous',style: TextStyle(fontSize: 20)),
+                onTap: () {
+                  Navigator.pop(context);
+                  getUserEvents();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RendezVous()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Déconnexion',style: TextStyle(fontSize: 20)),
+                onTap: () {
+                  Navigator.pop(context);
+                  disconnectUser();
+                },
+              ),
+            ] else ... [
+              ListTile(
+                title: const Text('Connexion',style: TextStyle(fontSize: 20)),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ConnexionPage()),
+                  );
+                },
+              ),
+            ],
             ListTile(
               title: const Text('F.A.Q',style: TextStyle(fontSize: 20)),
               onTap: () {
@@ -84,12 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            ListTile(
-              title: const Text('Déconnexion',style: TextStyle(fontSize: 20)),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),],
+          ],
         ),
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );

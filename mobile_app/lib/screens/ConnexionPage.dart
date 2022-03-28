@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/models/connexion.dart';
 import 'package:mobile_app/main.dart';
+import 'package:mobile_app/models/events.dart';
 
 class ConnexionPage extends StatefulWidget {
   const ConnexionPage({Key? key}) : super(key: key);
@@ -13,7 +14,8 @@ class ConnexionPage extends StatefulWidget {
 
 var id = "";
 var mdp = "";
-var token;
+var tokenauth;
+var events = [];
 
 class _ConnexionPageState extends State<ConnexionPage> {
 
@@ -21,7 +23,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.blue,
         title: const Text('Page Connexion'),
       ),
       body: Center(
@@ -68,14 +70,13 @@ class _ConnexionPageState extends State<ConnexionPage> {
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
                   setState(() {
                     postConnexion();
                   });
-                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const MyApp()),
@@ -95,7 +96,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
 
 Future<Connexion> postConnexion() async{
   final response = await http.post(
-      Uri.parse('http://192.168.42.44:8082/auth/signin'),
+      Uri.parse('http://docketu.iutnc.univ-lorraine.fr:62441/auth/signin'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': "*/*",
@@ -107,9 +108,50 @@ Future<Connexion> postConnexion() async{
 
   if (response.statusCode == 200) {
     var res = Connexion.fromJson(jsonDecode(response.body));
-    token = res.token;
+    tokenauth = res.token;
     return res;
   } else {
     throw Exception('Failed to get token');
+  }
+}
+
+checkConnection() {
+  if (tokenauth != null){
+    return true;
+  }else {
+    return false;
+  }
+}
+
+getUserCredentials() {
+  if (checkConnection()){
+    return {id,mdp};
+  }
+}
+
+Future<Events> getUserEvents() async{
+  final response = await http.get(
+    Uri.parse('http://docketu.iutnc.univ-lorraine.fr:62441/events'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': "*/*",
+      'connection': 'keep-alive',
+      'Accept-Encoding' : 'gzip, deflate, br',
+      'authorization': 'Bearer $tokenauth'
+    },
+  );
+
+  if (response.statusCode == 200) {
+    var res = Events.fromJson(jsonDecode(response.body));
+    events = res.events;
+    return res;
+  } else {
+    throw Exception('Failed to get events');
+  }
+}
+
+disconnectUser() {
+  if (checkConnection()){
+    tokenauth = "";
   }
 }
