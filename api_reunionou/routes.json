@@ -160,7 +160,19 @@
         }
       },
 
-
+      {
+        "description": "Pour supprimer events passés et créés par un utilisateur",
+        "url": "http://localhost:8081/events/refresheventsexpired",
+        "method": "DELETE",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
 
       {
         "description": "Pour accepter l'invitation à un évenement",
