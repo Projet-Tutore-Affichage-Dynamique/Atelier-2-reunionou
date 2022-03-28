@@ -4,6 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 
 let authRouter = require('./routes/auth');
+let usersRouter = require('./routes/users');
 
 let app = express();
 
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/auth', authRouter);
+app.use('/users', usersRouter);
 /* ----- GESTION DES MAUVAISES URL's ------ */
 app.use('*', function(req, res, next){
   res.status(400).json({

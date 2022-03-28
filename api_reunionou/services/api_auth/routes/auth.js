@@ -38,6 +38,8 @@ router.post('/signin', function(req, res, next) {
                 bcrypt.compare(pwd, user.pwd).then((ok) => {
                     if(ok){
 
+                        updated_lastConnection(result[0].id);
+
                         let privateKey = fs.readFileSync('./jwt_secret.txt');
 
                         let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '2h' });
@@ -132,7 +134,7 @@ router.post('/signup', function(req, res, next) {
                let salt = bcrypt.genSaltSync(10);
                const hash = bcrypt.hashSync(pwd, salt);
                // Insertion du nouvel utilisateur
-               Connection.query("INSERT INTO utilisateur (`id`,`login`,`pwd`,`email`,`admin`) VALUES ('"+id+"', '"+login+"', '"+hash+"', '"+email+"', "+0+")", (error, result, fields) => {
+               Connection.query("INSERT INTO utilisateur (`id`,`login`,`pwd`,`email`,`admin`,`last_connected`) VALUES ('"+id+"', '"+login+"', '"+hash+"', '"+email+"', "+0+", NOW())", (error, result, fields) => {
                     if(error)
                         res.status(500).json(error500("Création de l'utilisateur impossible"));
                     else
@@ -217,6 +219,18 @@ router.post('/modify_pwd', function(req, res, next){
 
 
 
+function updated_lastConnection(id){
+    let rq = "UPDATE utilisateur SET last_connected = NOW() WHERE id='"+id+"'";
+
+    Connection.query(rq, (error, result, fields) => {
+        if(!error)
+            return true;
+        else
+            return false;
+    });
+}
+
+
 function verifyDataModifyPwd(data){
     const schema = Joi.object().keys({
         id_user: Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required(),
@@ -239,7 +253,7 @@ function verifyDataModifyPwd(data){
 function verifyDataSignUp(data){
 
     const schema = Joi.object().keys({
-        login: Joi.string().min(1).pattern(/^[a-zA-Z]+/).required(),
+        login: Joi.string().min(1).pattern(/^[a-zA-Z0-9]+/).required(),
         pwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
         confpwd: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
         email: Joi.string().email().required()
