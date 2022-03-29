@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/screens/ConnexionPage.dart';
 import 'package:mobile_app/screens/FAQPage.dart';
 import 'package:mobile_app/screens/RendezVous.dart';
+import 'package:mobile_app/data/dataMethodes.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -26,13 +27,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Les Amis sont ceux qui font la vie $tokenauth',
-              style: const TextStyle(fontSize: 40),
+            const Text(
+              'Les Amis sont ceux qui font la vie',
+              style: TextStyle(fontSize: 40),
               textAlign: TextAlign.center,
             ),
-            const Text(
-              "Reunionou est la plateforme que permets de gérer vos rencontres. Plus qu'une simple plateforme de gestion de rendez-vous, c'est un planner qui vous fera gagner du temps. ",
+            Text(
+              "Reunionou"+ dataEventList.length.toString(),
               style: TextStyle(fontSize: 25),
               textAlign: TextAlign.center,
             ),
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(0.0),
               ),
             ),
-            if (checkConnection()) ... [
+            if (DataMethodes().checkConnection()) ... [
               ListTile(
                 title: const Text('Mon compte',style: TextStyle(fontSize: 20)),
                 onTap: () {
@@ -64,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: const Text('Mes rendez-vous',style: TextStyle(fontSize: 20)),
                 onTap: () {
                   Navigator.pop(context);
-                  getUserEvents();
+                  DataMethodes().getUserEvents();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const RendezVous()),
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: const Text('Déconnexion',style: TextStyle(fontSize: 20)),
                 onTap: () {
                   Navigator.pop(context);
-                  disconnectUser();
+                  DataMethodes().disconnectUser();
                 },
               ),
             ] else ... [
