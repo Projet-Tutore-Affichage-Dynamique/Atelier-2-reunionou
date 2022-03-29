@@ -18,6 +18,19 @@
       </div>
       <div class="border-top mt-5">
         <h2>Invitations</h2>
+        <article v-for='user in users' :key='user._id'>
+          <div v-if="user.id != this.id">
+          {{user.login}} 
+            <span class="badge bg-secondary">{{user.email}}</span>
+                                       <a href="javascript:void(0)"
+                    @click="sendInvite(user.id)">inviter</a>
+            <span v-for="invit in invitations" :key='invit._id'> 
+              <span v-if="invit.id_invite == user.id">
+                {{getStatus(invit.status)}}
+              </span>
+            </span>
+          </div>
+        </article>
       </div>
     </aside>
   </div>
@@ -27,13 +40,15 @@
 import axios from 'axios'
 
 export default {
-  name: "AppEvents",
+  name: "AppEventDetail",
   data() {
     return {
       event: null,
       token: null,
       id: null,
-      messages: null
+      messages: null,
+      users: null,
+      invitations: null
     };
   },
   beforeMount(){
@@ -67,12 +82,92 @@ export default {
         })
         .then((response) => {
           this.messages = response.data;
-          console.log(this.messages);
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        });
+
+        axios
+        .get("http://localhost:8081/auth/users", {
+          headers: { 
+            'Authorization': `token ${this.token}` 
+          }
+        })
+        .then((response) => {
+          this.users = response.data.users;
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        });
+
+        axios
+        .get("http://localhost:8081/events/"+this.$route.params.id+"/invitations",
+          {
+            headers: {
+              "Authorization": `token ${localStorage.token}`,
+            },
+          })
+        .then((response) => {
+          this.invitations = response.data.invitation;
         })
         .catch((error) => {
           console.log(error)
           this.errored = true;
         });
   },
+  methods: {
+    async sendInvite(invite_id){
+       axios
+        .post(
+          "http://localhost:8081/events/invite",
+          {
+            id_event: this.event.id,
+            id_invite: invite_id,
+            id_user: this.id
+          },
+          {
+            headers: {
+              "Authorization": `token ${localStorage.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          this.infos = response;
+          console.log(response);
+          if (response) {
+            this.$router.push("/events");
+          } else {
+            return null;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        });
+    },
+    getStatus(status){
+      let str ="";
+      switch (status) {
+        case 0:
+            str = 'Invité';
+          break;
+        case 1:
+            str = 'Intéressé';
+          break;
+        case 2:
+            str = 'Viens';
+          break;
+        case 3:
+            str = 'Ne viens pas';
+          break;
+        default:
+            str = null;
+          break;
+      }
+      return str;
+    }
+  }
 };
 </script>

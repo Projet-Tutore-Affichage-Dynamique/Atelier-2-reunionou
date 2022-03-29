@@ -115,6 +115,24 @@ router.post('/profile', function(req, res, next) {
     }
 });
 
+router.get('/users', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+                Connection.query("SELECT * FROM utilisateur", (error, result, fields) => {
+                    if(!error){
+
+                        res.status(200).json({"users": result});
+
+                    } else{
+                        let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                        res.status(500).json(error500(message));
+                    }
+                });
+            }
+});
+
 
 router.post('/check', function(req, res, next) {
 
@@ -206,7 +224,7 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/modify_pwd', function(req, res, next){
-    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    // res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
     //Récupérer les données du body
     let id_user = req.body.id_user;

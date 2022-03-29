@@ -21,13 +21,14 @@
         </ul>
         <ul class="navbar-nav">
           <li v-if="this.token" class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
+            <a class="nav-link active" aria-current="page" href="/account">account</a>
           </li>
           <li v-if="this.token" class="nav-item">
-            <a href="javascript:void(0)" @click="handleClickEvent" class="nav-link">Mes rendez-vous</a>
+            <a class="nav-link active" aria-current="page" href="/events">events</a>
+
           </li>
           <li v-if="this.token" class="nav-item">
-            <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion ({{this.login}})</a>
+            <a href="javascript:void(0)" @click="logout" class="nav-link" >Déconnexion ({{this.login}})</a>
           </li>
         </ul>
       </div>
@@ -53,12 +54,11 @@ export default {
       }
     },
     methods: {
-      handleClick(){
+      logout(){
         localStorage.removeItem('token');
         localStorage.removeItem('login');
         localStorage.removeItem('id'); 
         this.$router.push({ name: 'Home' })
-        this.$router.go()
         },
             handleClickEvent(){
           this.$router.push({ name: 'Events'});

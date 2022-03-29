@@ -382,7 +382,24 @@ router.post('/post_message', function(req, res, next) {
     }
 });
 
+router.get('/:id/invitations', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    // Récupère les données de la requête
+    let id_event = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+        Connection.query("SELECT * FROM invitation WHERE id_event='"+id_event+"'", (error, result, fields) => {
+            if(!error){
+                res.status(200).json({"invitation": result});
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                res.status(500).json(error500(message));
+            }
+        });
+    }
+});
 
 
 router.post('/accept', function(req, res, next){

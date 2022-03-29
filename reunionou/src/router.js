@@ -5,7 +5,8 @@ import AppRegister from './components/AppRegister.vue';
 import AppEvents from './components/AppEvents.vue';
 import AppAccount from './components/AppAccount.vue';
 import AppNewEvent from './components/AppNewEvent.vue';
-import EventDetail from './components/AppEventDetail.vue';
+import AppEventDetail from './components/AppEventDetail.vue';
+import AppAccountPassword from './components/AppAccountPassword.vue'
 import AppFAQ from './components/AppFAQ.vue';
 import AppNotFound from './components/_partials/AppNotFound.vue';
 
@@ -36,14 +37,19 @@ const routes = [
         component: AppAccount
     },
     {
+        path: '/account/password',
+        name: 'AccountPassword',
+        component: AppAccountPassword
+    },
+    {
         path: '/new_event',
         name: 'NewEvent',
         component: AppNewEvent
     },
     {
-        path: '/events/:id?',
+        path: '/events/:id',
         name: 'EventDetail',
-        component: EventDetail
+        component: AppEventDetail
     },
     {
         path: '/faq',

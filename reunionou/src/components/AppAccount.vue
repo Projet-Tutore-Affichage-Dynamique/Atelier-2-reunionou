@@ -1,6 +1,5 @@
 <template>
   <div class="container w-50 my-5">
-    {{profile}}
     <h1 class="mb-5 border-bottom pb-2">Mon compte</h1>
     <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <div class="mb-3">
@@ -22,36 +21,7 @@
         id="name"
       />
     </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label"
-        >Ancien mot de passe</label
-      >
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-      />
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label"
-        >Nouveau mot de passe</label
-      >
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-      />
-    </div>
-    <div class="mb-3" >
-      <label for="exampleInputPassword1" class="form-label"
-        >Confirmation mot de passe</label
-      >
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-      />
-    </div>
+    <a href="/account/password" class="btn btn-outline-primary">modifier mon mot de passe</a>
     <button type="submit" class="btn btn-primary">
       Modifier mon compte
     </button>
