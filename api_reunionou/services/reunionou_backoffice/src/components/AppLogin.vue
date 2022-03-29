@@ -24,7 +24,7 @@
     <div class="my-5">
       <button class="btn btn-primary me-2">Connexion</button>
       <a
-        href="/events"
+        href="javascript:void(0)"
         @click="handleClick"
         class="btn btn-outline-secondary"
         >Créer un compte</a
@@ -48,7 +48,7 @@ export default {
   methods: {
   async handleSubmit() {
       axios
-        .post("http://localhost:8081/auth/signin", {}, {
+        .post("http://localhost:8083/auth/signin", {}, {
           auth: {
             username: this.login,
             password: this.pwd
@@ -57,7 +57,6 @@ export default {
         .then((response) => {
           this.infos = response;
           if(response){
-            console.log('TOKEN '+this.infos.data.token);
             localStorage.token = this.infos.data.token;
             localStorage.login = this.infos.data.user.login;
             localStorage.id = this.infos.data.user.id;

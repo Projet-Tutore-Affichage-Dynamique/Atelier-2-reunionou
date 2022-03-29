@@ -6,8 +6,6 @@ let fs = require('fs');
 let Joi = require('joi');
 let router = express.Router();
 
-
-
 router.get('/', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -88,7 +86,30 @@ router.get('/:id', function(req, res, next){
 
 });
 
+router.get('/:id/invites', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    let id_event = parseInt(req.params['id'], 10);
+    if(verifyDataIdEvent(id_event) && !isNaN(id_event)){
+
+        let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+        axios
+            .get('http://api_events:3000/events/'+id_event+"/invites?id_user="+id_user)
+            .then(result => {
+                res.status(result.status).json(result.data);
+            })
+            .catch(error => {
+                if(error.response)
+                    res.status(error.response.status).json(error.response.data);
+                else
+                    res.status(500).json(error);
+            });
+
+    } else{
+        res.status(401).json(error401('Id event non valide'));
+    }
+});
 
 router.get('/:id/messages', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -115,7 +136,30 @@ router.get('/:id/messages', function(req, res, next){
     }
 });
 
+router.get('/:id/invitations', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    let id_event = parseInt(req.params['id'], 10);
+    if(verifyDataIdEvent(id_event) && !isNaN(id_event)){
+
+        let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+        axios
+            .get('http://api_events:3000/events/'+id_event+"/invitations?id_user="+id_user)
+            .then(result => {
+                res.status(result.status).json(result.data);
+            })
+            .catch(error => {
+                if(error.response)
+                    res.status(error.response.status).json(error.response.data);
+                else
+                    res.status(500).json(error);
+            });
+
+    } else{
+        res.status(401).json(error401('Id event non valide'));
+    }
+});
 
 router.post('/invite', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -156,9 +200,6 @@ router.post('/invite', function(req, res, next){
     }
 });
 
-
-
-
 router.post('/create', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -171,7 +212,7 @@ router.post('/create', function(req, res, next){
                 'description': req.body.description,
                 'date': req.body.date,
                 'heure': req.body.heure,
-                'lieu': req.body.lieu,
+                'geoloc': req.body.geoloc,
                 'id_user': id_user
             }),
             {
@@ -190,9 +231,6 @@ router.post('/create', function(req, res, next){
                 res.status(500).json(error);
         });
 });
-
-
-
 
 router.post('/post_message', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -225,12 +263,16 @@ router.post('/post_message', function(req, res, next){
 
 
 router.delete('/refresheventsexpired', function(req, res, next){
-    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
     let id_user = getUUIDFromAuthorization(req.headers.authorization);
 
     axios
-        .delete('http://api_events:3000/events/refresheventsexpired?id_user='+id_user)
+        .delete('http://api_events:3000/events/refresheventsexpired?id_user='+id_user),
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
         .then(result => {
             res.status(result.status).json(result.data);
         })
@@ -240,6 +282,7 @@ router.delete('/refresheventsexpired', function(req, res, next){
             else
                 res.status(500).json(error);
         });
+        
 });
 
 
@@ -272,9 +315,6 @@ router.post('/accept', function(req, res, next){
         });
 });
 
-
-
-
 router.post('/decline', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -304,12 +344,6 @@ router.post('/decline', function(req, res, next){
         });
 });
 
-
-
-
-
-
-
 function verifyDataIdUser(id){
     const schema = Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required();
 
@@ -322,7 +356,6 @@ function verifyDataIdUser(id){
         return true;
     }
 }
-
 
 function verifyDataIdEvent(id){
     const schema = Joi.number().integer().min(1).max(99999999999).required();

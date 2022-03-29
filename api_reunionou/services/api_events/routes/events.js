@@ -298,6 +298,39 @@ router.delete('/:id', function(req, res, next){
 });
 
 
+// Récupère tous les invités de l'event  --  URL = localhost/events/:id/invites?id_user='[id_user]'
+router.get('/:id/invites', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données
+    let id_event = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+
+        //Récupère tous les events passés par rapport à la date du jour et créer par l'utilisateur
+       
+        Connection.query("SELECT utilisateur.id, login, email FROM utilisateur INNER JOIN invitation ON invitation.id_invite=utilisateur.id INNER JOIN events ON invitation.id_event=events.id WHERE events.id='"+id_event+"'", (error, result, fields) => {
+            if(!error){
+                if(result==undefined && result==null){
+                    res.status(200).json({"invites":result});
+                }else{
+                    if(result==null){
+                        res.status(204).json({"message": "Personne n'est invité / Evenements probablement inexistant"});
+                    }else{
+                        res.status(200).json({"invites": result});
+                    }
+                }
+            }else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    }else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
 
 
 
@@ -412,7 +445,6 @@ router.post('/invite', function(req, res, next) {
     });
 });
 
-
 /* Créer un nouvel évenement */
 router.post('/create', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -422,14 +454,14 @@ router.post('/create', function(req, res, next) {
     let description = req.body.description;
     let date = req.body.date;
     let heure = req.body.heure;
-    let lieu = req.body.lieu;
+    let geoloc = req.body.geoloc;
     let id_user = req.body.id_user;
 
     if(verifyDataCreate(req.body)){
 
         let date_RV = dateToMysqlFormat(new Date(date+" "+heure+":00"));
 
-        Connection.query("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+lieu+"')", (error, result, fields) => {
+        Connection.query("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+geoloc+"')", (error, result, fields) => {
             if(!error){
 
                 res.status(200).json({"message": "Création du nouvel evenement réussie"});
@@ -473,7 +505,24 @@ router.post('/post_message', function(req, res, next) {
     }
 });
 
+router.get('/:id/invitations', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    // Récupère les données de la requête
+    let id_event = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+        Connection.query("SELECT * FROM invitation WHERE id_event='"+id_event+"'", (error, result, fields) => {
+            if(!error){
+                res.status(200).json({"invitation": result});
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                res.status(500).json(error500(message));
+            }
+        });
+    }
+});
 
 
 router.post('/accept', function(req, res, next){
@@ -670,7 +719,7 @@ function verifyDataCreate(data){
         description: Joi.string().min(1).max(256).required(),
         date: Joi.string().required(),
         heure: Joi.string().pattern(/^[0-9]{2}:{1}[0-9]{2}/).required(),
-        lieu: Joi.string().min(1).max(256).required(),
+        geoloc: Joi.string().min(1).max(256).required(),
         id_user: Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required(),
     });
 

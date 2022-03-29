@@ -98,6 +98,19 @@
         }
       },
 
+      {
+        "description": "Pour récupérer les invités d'un evenement avec son id",
+        "url": "http://localhost:8081/events/[id_event]/invites",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
 
       {
         "description": "Pour récupérer les messages d'un evenement avec son id",

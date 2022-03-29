@@ -72,6 +72,12 @@
         "datas": {}
       },
 
+      {
+        "description": "Pour récupérer les invites d'un evenement avec son id",
+        "url": "http://localhost:5002/events/[id_event]/invites?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
 
       {
         "description": "Pour récupérer les messages d'un evenement avec son id",

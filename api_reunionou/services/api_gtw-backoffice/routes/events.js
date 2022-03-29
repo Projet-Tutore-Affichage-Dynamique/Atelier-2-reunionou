@@ -1,19 +1,21 @@
 let express = require('express');
 let axios = require('axios');
 let querystring = require('querystring');
-const fs = require("fs");
-const jwt = require("jsonwebtoken");
-const Joi = require('joi');
+let jwt = require('jsonwebtoken');
+let fs = require('fs');
+let Joi = require('joi');
 let router = express.Router();
 
 
 
-router.get('/', function(req, res, next){
+router.get('/all', function(req, res, next){
 
+    console.log(verify_adminUser(req.headers.authorization));
     if(verify_adminUser(req.headers.authorization)){
+        console.log('coucou');
 
         axios
-            .get('http://api_users:3000/users/'+req.url, {})
+            .get('http://api_events:3000/events/all')
             .then(result => {
                 res.status(result.status).json(result.data);
             })
@@ -30,50 +32,18 @@ router.get('/', function(req, res, next){
 });
 
 
-router.delete('/deleteinactiveusers', function(req, res, next){
-
-    if(verify_adminUser(req.headers.authorization)){
-
-        let id = getUUIDFromAuthorization(req.headers.authorization);
-        //let id_user = verify_IdUser(req.params['id']);
-
-        axios
-            .delete('http://api_users:3000/users',
-                querystring.stringify({
-                    "id": id
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
-            )
-            .then(result => {
-                res.status(result.status).json(result.data);
-            })
-            .catch(error => {
-                if(error.response)
-                    res.status(error.response.status).json(error.response.data);
-                else
-                    res.status(500).json(error);
-            });
-
-    } else{
-        res.status(401).json({"error": "Vous n'etes pas authorisé à accéder à l'api pour admin"});
-    }
-});
 
 router.delete('/:id', function(req, res, next){
 
     if(verify_adminUser(req.headers.authorization)){
 
         let id = getUUIDFromAuthorization(req.headers.authorization);
-        let id_user = verify_IdUser(req.params['id']);
+        let id_user = verifyDataIdEvent(req.params['id']);
 
         axios
-            .delete('http://api_users:3000/users/'+id_user,
+            .delete('http://api_users:3000/events/'+id_user,
                 querystring.stringify({
-                    "id": id
+                    "id_user": id
                 }),
                 {
                     headers: {
@@ -99,7 +69,18 @@ router.delete('/:id', function(req, res, next){
 
 
 
+function verifyDataIdUser(id){
+    const schema = Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required();
 
+    const res = schema.validate(id);
+    const { value, error } = res;
+    const valid = error == null;
+    if (!valid) {
+        return false
+    } else {
+        return true;
+    }
+}
 
 function verify_adminUser(autho){
     let token = autho.split(' ')[1];
@@ -114,9 +95,8 @@ function verify_adminUser(autho){
     }
 }
 
-
-function verify_IdUser(id){
-    const schema = Joi.string().pattern(/^[a-zA-Z0-9\-]+/).required();
+function verifyDataIdEvent(id){
+    const schema = Joi.number().integer().min(1).max(99999999999).required();
 
     const res = schema.validate(id);
     const { value, error } = res;
@@ -127,7 +107,6 @@ function verify_IdUser(id){
         return true;
     }
 }
-
 
 function getUUIDFromAuthorization(autho){
     let token = autho.split(' ')[1];
@@ -140,6 +119,12 @@ function getUUIDFromAuthorization(autho){
     return id_user;
 }
 
-
+function error401(error){
+    return {
+        "type": "error",
+        "error": "401",
+        "message": error
+    };
+}
 
 module.exports = router;
