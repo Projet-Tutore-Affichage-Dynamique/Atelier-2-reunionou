@@ -72,6 +72,12 @@
         "datas": {}
       },
 
+      {
+        "description": "Pour récupérer les invites d'un evenement avec son id",
+        "url": "http://localhost:5002/events/[id_event]/invites?id_user=[id_user]",
+        "method": "GET",
+        "datas": {}
+      },
 
       {
         "description": "Pour récupérer les messages d'un evenement avec son id",
@@ -105,8 +111,15 @@
           "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
           "id_user": "[id_user]"
         }
-      }
+      },
 
+      {
+        "description": "Pour supprimer events passés et créés par un utilisateur",
+        "url": "http://localhost:5002/events/refresheventsexpired?id_user=[id_user]",
+        "method": "DELETE",
+        "datas": {}
+      
+      },
 
       {
         "description": "Pour accepter l'invitation",

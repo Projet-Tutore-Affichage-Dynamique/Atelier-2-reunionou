@@ -4,6 +4,28 @@ const Joi = require('joi');
 const Connection = require("../config/connection");
 var router = express.Router();
 
+
+router.get('/all', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    Connection.query("SELECT * FROM events", (error, result, fields) => {
+        if(!error){
+
+            if(result[0]!==undefined && result[0]!==null){
+
+                res.status(200).json({"events": result});
+
+            } else{
+                res.status(404).json(error401("Il n'y a aucun évenement"));
+            }
+        } else{
+            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+            res.status(500).json(error500(message));
+        }
+    });
+});
+
+
 /* Récupère tous les évenements de l'utilisateur */
 router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -35,7 +57,7 @@ router.get('/', function(req, res, next) {
 
                         } else{
                             if(ev_invite===null)
-                                res.status(204).json({"message": "L'utilisateur n'est invité ou n'a créer aucun évenement"});
+                                res.status(204).json({"message": "L'utilisateur n'est pas invité ou n'a créer aucun évenement"});
                             else
                                 res.status(200).json({"events": ev_invite});
                         }
@@ -209,6 +231,107 @@ router.get('/:id', function(req, res, next) {
     } else
         res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
 });
+router.delete('/:id', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    let id_event = req.params['id'];
+    let id_user = req.body.id_user;
+
+    if(id_user!==null && id_user!==undefined){
+
+        // Vérifie que l'utilisateur est un admin ou le créateur de l'evenement
+        Connection.query("SELECT admin FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                let rq = "DELETE FROM events WHERE id="+id_event;
+                if(result[0]!==undefined && result[0]!==null){
+                    console.log('admin: '+result[0].admin);
+                    if(result[0].admin){
+                        Connection.query(rq, (error, result, fields) => {
+                            if(!error)
+                                res.status(200).json(error401("Suppression de l'evenement réussie"));
+                            else
+                                res.status(500).json(error401("Erreur lors de la suppression de l'evenement"));
+                        });
+                    } else{
+
+                        //Vérifie si l'utilisateur est le créateur de l'evenement
+                        Connection.query("SELECT id_createur FROM events WHERE id="+id_event, (error, result, fields) => {
+                            if(!error){
+
+                                if(result[0]!==undefined){
+                                    if(result[0].id_createur === id_user){
+
+                                        Connection.query(rq, (error, result, fields) => {
+                                            if(!error)
+                                                res.status(200).json(error401("Suppression de l'evenement réussie"));
+                                            else
+                                                res.status(500).json(error401("Erreur lors de la suppression de l'evenement"));
+                                        });
+
+                                    } else{
+                                        res.status(401).json(error401("Vous n'etes pas le créateur de l'evenement"));
+                                    }
+                                } else{
+                                    res.status(401).json(error401("Cet utilisateur n'existe pas"));
+                                }
+
+
+                            } else{
+                                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                                res.status(500).json(error500(message));
+                            }
+                        });
+
+                    }
+                } else{
+                    res.status(401).json(error401("Cet utilisateur n'existe pas"));
+                }
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table utilisateur";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    } else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
+
+
+// Récupère tous les invités de l'event  --  URL = localhost/events/:id/invites?id_user='[id_user]'
+router.get('/:id/invites', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données
+    let id_event = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+
+        //Récupère tous les events passés par rapport à la date du jour et créer par l'utilisateur
+       
+        Connection.query("SELECT utilisateur.id, login, email FROM utilisateur INNER JOIN invitation ON invitation.id_invite=utilisateur.id INNER JOIN events ON invitation.id_event=events.id WHERE events.id='"+id_event+"'", (error, result, fields) => {
+            if(!error){
+                if(result==undefined && result==null){
+                    res.status(200).json({"invites":result});
+                }else{
+                    if(result==null){
+                        res.status(204).json({"message": "Personne n'est invité / Evenements probablement inexistant"});
+                    }else{
+                        res.status(200).json({"invites": result});
+                    }
+                }
+            }else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    }else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
+
 
 
 // Récupère tous les messages de l'event  --  URL = localhost/events/:id/messages?id_user='[id_user]'
@@ -512,9 +635,60 @@ router.post("/decline", function(req, res, next){
         }
     });
 });
+
+/** Permet de supprimer les évènements passés et créés par l'utilisateur */
+router.delete('/refresheventsexpired', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données de la requête
+    let id_user = req.query['id_user'];
+
+    // Date au format datetime pour comparer avec bdd
+    let today=new Date();
+    today = today.getUTCFullYear() + '-' +
+    ('00' + (today.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + today.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + today.getUTCHours()).slice(-2) + ':' + 
+    ('00' + today.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + today.getUTCSeconds()).slice(-2);
+
+    if(id_user!==undefined&&id_user!==null){
+       
+        Connection.query("DELETE invitation FROM invitation INNER JOIN events ON invitation.id_event=events.id WHERE events.date_rv<'"+today+"' AND events.id_createur='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                
+                Connection.query("DELETE messages FROM messages INNER JOIN events ON messages.id_event=events.id WHERE events.date_rv<'"+today+"' AND events.id_createur='"+id_user+"'", (error, result, fields) => {
+                    if(!error){
+                        
+                        Connection.query("DELETE FROM events WHERE events.date_rv<'"+today+"' AND events.id_createur='"+id_user+"'", (error, result, fields) => {
+                            if(!error){
+                                res.status(200).json({"message": "Events expirés de l'utilisateur supprimés"});
+    
+                            }else{
+                                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                                res.status(500).json(error500(message));
+                            }
+                        });
+                        
+                    }else{
+                        let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                        res.status(500).json(error500(message));
+                    }
+                });
+                
+            }else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    }else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
+
 ////// Route pour Rejoindre ou decliner une invitation d'un event //////
 
-////// Route pour Supprimer un event ///////
 
 
 

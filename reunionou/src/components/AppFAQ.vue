@@ -106,6 +106,9 @@
             </div>
         </div>
     </div>
+    <div class="text-center py-3">
+      <router-link class="btn btn-outline-secondary" aria-current="page" to="/">Retour</router-link>
+    </div>
 </template>
 
 <script>

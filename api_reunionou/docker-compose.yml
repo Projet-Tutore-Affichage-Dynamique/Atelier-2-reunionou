@@ -65,13 +65,48 @@ services:
       - ./services/.env
     working_dir: /usr/src/app
     volumes:
-      - ./services/api_gtw_mobile
+      - ./services/api_gtw_mobile:/usr/src/app
     ports:
       - '8082:3000'
     command: npm run watch
     depends_on:
       - api_users
       - api_events
+    networks:
+      - backend_reunionou
+
+  api_gtw-backoffice:
+    container_name: api.gtw-backoffice
+    image: node:lts
+    env_file:
+      - ./services/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./services/api_gtw-backoffice:/usr/src/app
+    ports:
+      - '8083:3000'
+    command: npm run watch
+    depends_on:
+      - api_users
+      - api_events
+    networks:
+      - backend_reunionou
+
+
+  # APP BACKOFFICE
+  app_backoffice:
+    container_name: app.backoffice
+    image: node:lts
+    env_file:
+      - ./services/.env
+    working_dir: /usr/src/app
+    volumes:
+      - ./services/reunionou_backoffice:/usr/src/app
+    ports:
+      - '3333:8080'
+    command: bash -c 'npm i && npm run serve'
+    depends_on:
+      - api_gtw-backoffice
     networks:
       - backend_reunionou
 

@@ -2,18 +2,27 @@ let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
+let cors = require('cors');
 
 let authRouter = require('./routes/auth');
 let usersRouter = require('./routes/users');
+let eventsRouter = require('./routes/events');
+
+let authMW = require('./middleware/auth');
 
 let app = express();
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// Middleware
+app.use('*', cors());
+app.use(authMW);
+// routes
+app.use('/events', eventsRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 /* ----- GESTION DES MAUVAISES URL's ------ */

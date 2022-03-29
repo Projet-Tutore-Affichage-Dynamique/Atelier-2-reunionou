@@ -1,5 +1,4 @@
 <template>
-<div>
   <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Création de compte</h1>
     <div class="mb-3">
@@ -50,12 +49,10 @@
       >
     </div>
   </form>
-</div>
 </template>
 
 <script>
 import axios from "axios";
-
 export default {
   name: "AppRegister",
   data() {
@@ -77,6 +74,7 @@ export default {
         })
         .then((response) => {
           this.infos = response;
+          console.log(response);
           if(response){
             this.$router.push("/login")
           }else{

@@ -27,7 +27,7 @@
           "body": {
             "login": "[id_user]",
             "pwd": "[pwd_user]",
-            "conf_pwd": "[pwd_user]",
+            "confpwd": "[pwduser]",
             "email": "[email_user]"
           }
         },
@@ -98,6 +98,19 @@
         }
       },
 
+      {
+        "description": "Pour récupérer les invités d'un evenement avec son id",
+        "url": "http://localhost:8081/events/[id_event]/invites",
+        "method": "GET",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
 
       {
         "description": "Pour récupérer les messages d'un evenement avec son id",
@@ -160,7 +173,19 @@
         }
       },
 
-
+      {
+        "description": "Pour supprimer events passés et créés par un utilisateur",
+        "url": "http://localhost:8081/events/refresheventsexpired",
+        "method": "DELETE",
+        "datas": {
+          "Authorization": {
+            "type": "Bearer Token",
+            "data": {
+              "Token": "[token]"
+            }
+          }
+        }
+      },
 
       {
         "description": "Pour accepter l'invitation à un évenement",

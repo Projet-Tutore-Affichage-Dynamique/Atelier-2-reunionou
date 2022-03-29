@@ -1,0 +1,7 @@
+.required:after {
+    content: ' *';
+    color: red;
+}
+.faq {
+    background-color: lightgray;
+}

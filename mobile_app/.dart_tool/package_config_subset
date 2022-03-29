@@ -2,6 +2,10 @@ mobile_app
 2.16
 file:///home/valentin/Workspace/Cours/atelier2/Atelier-2-reunionou/mobile_app/
 file:///home/valentin/Workspace/Cours/atelier2/Atelier-2-reunionou/mobile_app/lib/
+accordion
+2.12
+file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/accordion-1.0.4/
+file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/accordion-1.0.4/lib/
 async
 2.12
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2/
@@ -38,6 +42,10 @@ flutter_lints
 2.12
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/lib/
+get
+2.12
+file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/get-4.6.1/
+file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/get-4.6.1/lib/
 http
 2.14
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/
@@ -66,6 +74,10 @@ path
 2.12
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0/
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0/lib/
+scroll_to_index
+2.12
+file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/scroll_to_index-2.1.1/
+file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/scroll_to_index-2.1.1/lib/
 source_span
 2.12
 file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.1/

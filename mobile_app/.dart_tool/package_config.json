@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "accordion",
+      "rootUri": "file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/accordion-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2",
       "packageUri": "lib/",
@@ -68,6 +74,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "get",
+      "rootUri": "file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/get-4.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "http",
       "rootUri": "file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4",
       "packageUri": "lib/",
@@ -106,6 +118,12 @@
     {
       "name": "path",
       "rootUri": "file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "scroll_to_index",
+      "rootUri": "file:///home/valentin/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/scroll_to_index-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -170,7 +188,7 @@
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-03-25T13:43:55.618599Z",
+  "generated": "2022-03-29T15:04:44.201145Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

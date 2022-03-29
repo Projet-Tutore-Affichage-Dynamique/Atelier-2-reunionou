@@ -12,23 +12,19 @@
           <li v-if="this.token == null" class="nav-item">
             <a class="nav-link active" aria-current="page" href="/login">Me connecter</a>
           </li>
-          <li v-if="this.token == null" class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/register">Créer un compte</a>
-          </li>
-          <li v-if="this.token == null" class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/faq">F.A.Q.</router-link>
-          </li>
         </ul>
         <ul class="navbar-nav">
           <li v-if="this.token" class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/account">account</a>
+            <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/events">events</a>
-
+            <router-link class="nav-link" aria-current="page" to="/events">Evenements</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
-            <a href="javascript:void(0)" @click="logout" class="nav-link" >Déconnexion ({{this.login}})</a>
+            <router-link class="nav-link" aria-current="page" to="/users">Utilisateurs</router-link>
+          </li>
+          <li v-if="this.token" class="nav-item">
+            <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion ({{this.login}})</a>
           </li>
         </ul>
       </div>
@@ -54,15 +50,11 @@ export default {
       }
     },
     methods: {
-      logout(){
+      handleClick(){
         localStorage.removeItem('token');
         localStorage.removeItem('login');
         localStorage.removeItem('id'); 
-        this.$router.push({ name: 'Home' })
-        },
-            handleClickEvent(){
-          this.$router.push({ name: 'Events'});
-    }
+        this.$router.push({ name: 'Home' })      }
     }
 }
 </script>

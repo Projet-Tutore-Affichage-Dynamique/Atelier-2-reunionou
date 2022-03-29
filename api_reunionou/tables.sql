@@ -9,7 +9,8 @@ CREATE TABLE `utilisateur` (
     `login` varchar(128) NOT NULL,
     `pwd` varchar(256) NOT NULL,
     `email` varchar(256) NOT NULL,
-    `admin` bit,
+    `admin` tinyint NOT NULL,
+    `last_connected` datetime NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
