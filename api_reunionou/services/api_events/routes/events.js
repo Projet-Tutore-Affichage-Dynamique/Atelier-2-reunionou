@@ -298,6 +298,39 @@ router.delete('/:id', function(req, res, next){
 });
 
 
+// Récupère tous les invités de l'event  --  URL = localhost/events/:id/invites?id_user='[id_user]'
+router.get('/:id/invites', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données
+    let id_event = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+
+        //Récupère tous les events passés par rapport à la date du jour et créer par l'utilisateur
+       
+        Connection.query("SELECT utilisateur.id, login, email FROM utilisateur INNER JOIN invitation ON invitation.id_invite=utilisateur.id INNER JOIN events ON invitation.id_event=events.id WHERE events.id='"+id_event+"'", (error, result, fields) => {
+            if(!error){
+                if(result==undefined && result==null){
+                    res.status(200).json({"invites":result});
+                }else{
+                    if(result==null){
+                        res.status(204).json({"message": "Personne n'est invité / Evenements probablement inexistant"});
+                    }else{
+                        res.status(200).json({"invites": result});
+                    }
+                }
+            }else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+                res.status(500).json(error500(message));
+            }
+        });
+
+    }else{
+        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
+    }
+});
 
 
 

@@ -88,7 +88,30 @@ router.get('/:id', function(req, res, next){
 
 });
 
+router.get('/:id/invites', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
+    let id_event = parseInt(req.params['id'], 10);
+    if(verifyDataIdEvent(id_event) && !isNaN(id_event)){
+
+        let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+        axios
+            .get('http://api_events:3000/events/'+id_event+"/invites?id_user="+id_user)
+            .then(result => {
+                res.status(result.status).json(result.data);
+            })
+            .catch(error => {
+                if(error.response)
+                    res.status(error.response.status).json(error.response.data);
+                else
+                    res.status(500).json(error);
+            });
+
+    } else{
+        res.status(401).json(error401('Id event non valide'));
+    }
+});
 
 router.get('/:id/messages', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -224,12 +247,16 @@ router.post('/post_message', function(req, res, next){
 });
 
 router.delete('/refresheventsexpired', function(req, res, next){
-    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
     let id_user = getUUIDFromAuthorization(req.headers.authorization);
 
     axios
-        .delete('http://api_events:3000/events/refresheventsexpired?id_user='+id_user)
+        .delete('http://api_events:3000/events/refresheventsexpired?id_user='+id_user),
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
         .then(result => {
             res.status(result.status).json(result.data);
         })
@@ -239,6 +266,7 @@ router.delete('/refresheventsexpired', function(req, res, next){
             else
                 res.status(500).json(error);
         });
+        
 });
 
 

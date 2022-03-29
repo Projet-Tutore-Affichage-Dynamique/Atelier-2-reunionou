@@ -31,6 +31,48 @@ router.get('/', function(req, res, next){
 });
 
 
+/**
+ * Permet à un admin de supprimer les utilisateurs inactifs depuis 1 mois
+ */
+
+ router.delete('/deleteinactiveusers', function(req, res, next){
+
+    // Récupérer les données
+    //let id_user = req.params['id'];
+    let id = req.body.id;
+
+    let dateUnactive=new Date();
+    dateUnactive = dateUnactive.getUTCFullYear() + '-' +
+    ('00' + (dateUnactive.getUTCMonth())).slice(-2) + '-' +
+    ('00' + dateUnactive.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + dateUnactive.getUTCHours()).slice(-2) + ':' + 
+    ('00' + dateUnactive.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + dateUnactive.getUTCSeconds()).slice(-2);
+
+
+    // Vérifie que l'utilisateur connecté est bien un admin
+    Connection.query("SELECT admin FROM utilisateur WHERE id='"+id+"'", (error, result, fields) => {
+        if(!error){
+            console.log(result[0])
+            if(result[0].admin===1){
+
+                //Supprimer l'utilisateur selectionné
+                Connection.query("DELETE FROM utilisateur WHERE last_connected<='"+dateUnactive+"'", (error, result, fields) => {
+                    if(!error)
+                        res.status(200).json(error401("Suppression des utilisateurs inactifs réussie"));
+                    else
+                        res.status(500).json(error401("Erreur lors de la suppression des utilisateur"));
+                });
+
+            } else
+                res.status(401).json(error401("Vous n'etes pas autorisé à supprimer un utilisateur"));
+        } else {
+            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table utilisateur";
+            res.status(500).json(error500(message));
+        }
+    });
+
+});
 
 
 router.delete('/:id', function(req, res, next){

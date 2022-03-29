@@ -30,7 +30,38 @@ router.get('/', function(req, res, next){
 });
 
 
+router.delete('/deleteinactiveusers', function(req, res, next){
 
+    if(verify_adminUser(req.headers.authorization)){
+
+        let id = getUUIDFromAuthorization(req.headers.authorization);
+        //let id_user = verify_IdUser(req.params['id']);
+
+        axios
+            .delete('http://api_users:3000/users',
+                querystring.stringify({
+                    "id": id
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            )
+            .then(result => {
+                res.status(result.status).json(result.data);
+            })
+            .catch(error => {
+                if(error.response)
+                    res.status(error.response.status).json(error.response.data);
+                else
+                    res.status(500).json(error);
+            });
+
+    } else{
+        res.status(401).json({"error": "Vous n'etes pas authorisé à accéder à l'api pour admin"});
+    }
+});
 
 router.delete('/:id', function(req, res, next){
 
