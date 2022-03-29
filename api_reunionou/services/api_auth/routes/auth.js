@@ -19,7 +19,6 @@ router.get('/', function(req, res, next) {
 
 });
 
-
 router.post('/signin', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -54,6 +53,7 @@ router.post('/signin', function(req, res, next) {
         }
     });
 });
+
 router.get('/signin', function(req, res, next) {
     res.status(405).json({
         "type": "error",
@@ -62,8 +62,58 @@ router.get('/signin', function(req, res, next) {
     });
 });
 
+router.get('/profile', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    let id_user = req.query['id_user'];
 
+    if(id_user!==undefined&&id_user!==null){
+                Connection.query("SELECT * FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
+                    if(!error){
 
+                        res.status(200).json({"user": result[0]});
+
+                    } else{
+                        let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                        res.status(500).json(error500(message));
+                    }
+                });
+            }
+});
+
+router.post('/profile', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    let id_user = req.body.id_user;
+    let login = req.body.login;
+    let email = req.body.email;
+
+    // je vais check
+    let confpwd = req.body.confpwd;
+    let oldpwd = req.body.oldpwd;
+    let pwd = req.body.pwd;
+
+    if(id_user!==undefined&&id_user!==null){
+        Connection.query("SELECT * FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+
+                Connection.query("UPDATE utilisateur SET login='"+login+"', email='"+email+"' WHERE id='"+id_user+"'", (error, result, fields) => {
+                    if(error)
+                        res.status(500).json(error500("Modification de l'utilisateur impossible"));
+                    else{
+                        let privateKey = fs.readFileSync('./jwt_secret.txt');
+                        let token = jwt.sign({ sub: user.id }, privateKey, { algorithm: 'HS256', expiresIn: '1h' });
+
+                        res.status(200).json({"message": "Modification de l'utilisateur réussie", "token": token});
+                    }
+
+                });
+
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                res.status(500).json(error500(message));
+            }
+        });
+    }
+});
 
 
 router.post('/check', function(req, res, next) {
@@ -100,6 +150,7 @@ router.post('/check', function(req, res, next) {
        }
     });
 });
+
 router.get('/check', function(req, res, next) {
     res.status(405).json({
         "type": "error",
@@ -107,9 +158,6 @@ router.get('/check', function(req, res, next) {
         "message": "Méthode non autorisée pour cette URL"
     });
 });
-
-
-
 
 router.post('/signup', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -148,6 +196,7 @@ router.post('/signup', function(req, res, next) {
         res.status(401).json(error401('Données fausses ou manquantes'));
     }
 });
+
 router.get('/signup', function(req, res, next) {
     res.status(405).json({
         "type": "error",
@@ -155,11 +204,6 @@ router.get('/signup', function(req, res, next) {
         "message": "Méthode non autorisée pour cette URL"
     });
 });
-
-
-
-
-
 
 router.post('/modify_pwd', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -212,10 +256,6 @@ router.post('/modify_pwd', function(req, res, next){
         res.status(401).json(error401('Données fausses ou manquantes'));
     }
 });
-
-
-
-
 
 function verifyDataModifyPwd(data){
     const schema = Joi.object().keys({
@@ -270,6 +310,5 @@ function error500(error){
         "message": error
     };
 }
-
 
 module.exports = router;

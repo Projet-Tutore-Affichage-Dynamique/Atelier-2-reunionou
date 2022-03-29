@@ -43,8 +43,6 @@ router.post('/signin', function(req, res, next) {
     }
 });
 
-
-
 router.post('/signup', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -67,8 +65,6 @@ router.post('/signup', function(req, res, next){
                 res.status(500).json(error);
         });
 });
-
-
 
 router.post('/modify_pwd', function(res, req , next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -104,8 +100,60 @@ router.post('/modify_pwd', function(res, req , next){
         });
 });
 
+router.get('/profile', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    // Récupère les données de la requête
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
 
+    axios
+    .get('http://api_users:3000/auth/profile?id_user='+id_user)
+    .then(result => {
+        res.status(result.status).json(result.data);
+    })
+    .catch(error => {
+        if(error.response)
+            res.status(error.response.status).json(error.response.data);
+        else
+            res.status(500).json(error);
+    });
+});
 
+router.post('/profile', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    let oldPwd = req.body.oldPwd;
+    let newPwd = req.body.newPwd;
+    let confPwd = req.body.confPwd;
+    let login = req.body.login;
+    let email = req.body.email;
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+    axios
+    .post('http://api_users:3000/auth/profile',
+        querystring.stringify({
+            "id_user": id_user,
+            "login": login,
+            "email": email,
+            "oldPwd": oldPwd,
+            "newPwd": newPwd,
+            "confPwd": confPwd
+        }),
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+    )
+    .then(result => {
+        res.status(result.status).json(result.data);
+    })
+    .catch(error => {
+        if(error.response)
+            res.status(error.response.status).json(error.response.data);
+        else
+            res.status(500).json(error);
+    });
+});
 
 function getUUIDFromAuthorization(autho){
     let token = autho.split(' ')[1];
@@ -117,6 +165,5 @@ function getUUIDFromAuthorization(autho){
 
     return id_user;
 }
-
 
 module.exports = router;

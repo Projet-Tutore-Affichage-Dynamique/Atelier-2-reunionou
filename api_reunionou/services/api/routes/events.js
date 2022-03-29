@@ -6,8 +6,6 @@ let fs = require('fs');
 let Joi = require('joi');
 let router = express.Router();
 
-
-
 router.get('/', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -88,8 +86,6 @@ router.get('/:id', function(req, res, next){
 
 });
 
-
-
 router.get('/:id/messages', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -114,8 +110,6 @@ router.get('/:id/messages', function(req, res, next){
         res.status(401).json(error401('Id event non valide'));
     }
 });
-
-
 
 router.post('/invite', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -156,9 +150,6 @@ router.post('/invite', function(req, res, next){
     }
 });
 
-
-
-
 router.post('/create', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -191,9 +182,6 @@ router.post('/create', function(req, res, next){
         });
 });
 
-
-
-
 router.post('/post_message', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -222,9 +210,6 @@ router.post('/post_message', function(req, res, next){
                 res.status(500).json(error);
         });
 });
-
-
-
 
 router.post('/accept', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -255,9 +240,6 @@ router.post('/accept', function(req, res, next){
         });
 });
 
-
-
-
 router.post('/decline', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -287,12 +269,6 @@ router.post('/decline', function(req, res, next){
         });
 });
 
-
-
-
-
-
-
 function verifyDataIdUser(id){
     const schema = Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required();
 
@@ -305,7 +281,6 @@ function verifyDataIdUser(id){
         return true;
     }
 }
-
 
 function verifyDataIdEvent(id){
     const schema = Joi.number().integer().min(1).max(99999999999).required();

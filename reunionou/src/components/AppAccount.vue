@@ -1,113 +1,128 @@
 <template>
   <div class="container w-50 my-5">
+    {{profile}}
     <h1 class="mb-5 border-bottom pb-2">Mon compte</h1>
+    <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email</label>
       <input
-        v-if="!modif"
         v-model="email"
         type="email"
         class="form-control"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
-        readonly
       />
-      <input
-        v-model="email"
-        v-if="modif"
-        type="email"
-        class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
-      />
-      <div id="emailHelp" class="form-text">
-        Votre email est votre identifiant de connexion.
-      </div>
     </div>
     <div class="mb-3">
       <label for="name" class="form-label">Nom</label>
       <input
-        v-if="!modif"
-        v-model="name"
-        type="text"
-        class="form-control"
-        id="name"
-        readonly
-      />
-      <input
-        v-if="modif"
-        v-model="name"
+        v-model="login"
         type="text"
         class="form-control"
         id="name"
       />
     </div>
-    <div class="mb-3" v-if="modif">
+    <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label"
         >Ancien mot de passe</label
       >
       <input
-        v-model="password"
         type="password"
         class="form-control"
         id="exampleInputPassword1"
       />
     </div>
-    <div class="mb-3" v-if="modif">
+    <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label"
         >Nouveau mot de passe</label
       >
       <input
-        v-model="password"
         type="password"
         class="form-control"
         id="exampleInputPassword1"
       />
     </div>
-    <div class="mb-3" v-if="modif">
+    <div class="mb-3" >
       <label for="exampleInputPassword1" class="form-label"
         >Confirmation mot de passe</label
       >
       <input
-        v-model="password"
         type="password"
         class="form-control"
         id="exampleInputPassword1"
       />
     </div>
-    <button class="btn btn-primary" v-if="!modif" @click="modif = !modif">
+    <button type="submit" class="btn btn-primary">
       Modifier mon compte
     </button>
-    <button class="btn btn-primary" v-if="modif" @click="validModif">
-      Confirmer
-    </button>
-    <p v-if="modifOK">Vos modifications ont bien étaient prises en compte.</p>
+    </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "AppAccount",
   data() {
     return {
-      name: "nom",
-      email: "mail",
-      password: "mdp",
-      modif: false,
-      modifOK: false,
+      token: null,
+      login: "",
+      email: "",
+      pwd: "",
+      oldpwd: "",
+      confpwd: "",
+      profile: null
     };
   },
-  mounted() {
-      if(localStorage.token){
-        this.user = localStorage.user;
-        this.token = localStorage.token;
-      } 
-    },
-  methods: {
-    validModif() {
-      this.modifOK = !this.modifOK;
-      this.modif = !this.modif;
-    },
+  beforeMount(){
+      if(!localStorage.token){
+        this.$router.go('/login')
+      }
+
+      this.token = localStorage.token;
+      
+      axios
+        .get("http://localhost:8081/auth/profile", {
+          headers: { 
+            'Authorization': `token ${localStorage.token}` 
+          }
+        })
+        .then((response) => {
+          this.profile = response.data.user;
+          this.email = this.profile.email;
+          this.login = this.profile.login;
+        })
+        .catch((error) => {
+          console.log(error)
+          this.errored = true;
+        });
   },
+    methods: {
+      async handleSubmit() {
+        axios
+          .post("http://localhost:8081/auth/profile", 
+          {
+            login: this.login,
+            email: this.email,
+            oldpwd: this.oldpwd,
+            pwd: this.pwd,
+            confpwd: this.conf_pwd
+          },
+          {
+            headers: {
+              "Authorization": `token ${localStorage.token}`,
+            },
+          })
+          .then((response) => {
+            this.profile = response;
+            this.$router.push({ name: 'Events' })
+
+          })
+          .catch((error) => {
+            console.log(error)
+            this.errored = true;
+          });
+      },
+    }
 };
 </script>
