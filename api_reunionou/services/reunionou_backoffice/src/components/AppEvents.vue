@@ -1,7 +1,7 @@
 <template>
 <div>
   <main class="container">
-    <h1>Mes événements</h1>
+    <h1>Evénements</h1>
     <aside class="mb-5">
       <button class="btn btn-success"><router-link class="nav-link active" aria-current="page" to="/new_event" style="color:white">Créer un nouvel événement</router-link></button>
     </aside>
@@ -52,13 +52,14 @@ export default {
       this.id = localStorage.id;
       
       axios
-        .get("http://localhost:8081/events", {
+        .get("http://localhost:8083/events/all", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
         })
         .then((response) => {
           this.events = response;
+          console.log(response);
         })
         .catch((error) => {
           console.log(error)

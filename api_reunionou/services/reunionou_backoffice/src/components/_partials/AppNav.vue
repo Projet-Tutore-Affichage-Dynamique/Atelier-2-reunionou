@@ -12,19 +12,16 @@
           <li v-if="this.token == null" class="nav-item">
             <a class="nav-link active" aria-current="page" href="/login">Me connecter</a>
           </li>
-          <li v-if="this.token == null" class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/register">Créer un compte</a>
-          </li>
-          <li v-if="this.token == null" class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/faq">F.A.Q.</router-link>
-          </li>
         </ul>
         <ul class="navbar-nav">
           <li v-if="this.token" class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/events">Mes rendez-vous</router-link>
+            <router-link class="nav-link" aria-current="page" to="/events">Evenements</router-link>
+          </li>
+          <li v-if="this.token" class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/users">Utilisateurs</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
             <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion ({{this.login}})</a>
