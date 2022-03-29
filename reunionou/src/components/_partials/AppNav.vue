@@ -24,7 +24,7 @@
             <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/events">Mes rendez-vous</router-link>
+            <a href="javascript:void(0)" @click="handleClickEvent" class="nav-link">Mes rendez-vous</a>
           </li>
           <li v-if="this.token" class="nav-item">
             <a href="javascript:void(0)" @click="handleClick" class="nav-link" >Déconnexion ({{this.login}})</a>
@@ -57,7 +57,12 @@ export default {
         localStorage.removeItem('token');
         localStorage.removeItem('login');
         localStorage.removeItem('id'); 
-        this.$router.push({ name: 'Home' })      }
+        this.$router.push({ name: 'Home' })
+        this.$router.go()
+        },
+            handleClickEvent(){
+          this.$router.push({ name: 'Events'});
+    }
     }
 }
 </script>

@@ -11,7 +11,7 @@
         <div class="card h-100">
           <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
           <div class="card-body">
-            <h5 class="card-title">{{ event.description }}</h5>
+            <h5 class="card-title"><a v-bind:href="'/events/'+ event.id">{{ event.description }}</a></h5>
             <p class="card-text">
               This is a wider card with supporting text below as a natural
               lead-in to additional content. This content is a little bit
@@ -38,13 +38,13 @@ export default {
       events: null,
       token: null,
       login: null,
-      id: null
+      id: null,
+      event: null
     };
   },
   beforeMount(){
       if(!localStorage.token){
-        // this.$router.go('/')
-        console.log('ici')
+        this.$router.go('/login')
       }
 
       this.token = localStorage.token;

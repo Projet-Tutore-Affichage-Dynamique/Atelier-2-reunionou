@@ -171,7 +171,7 @@ router.post('/create', function(req, res, next){
                 'description': req.body.description,
                 'date': req.body.date,
                 'heure': req.body.heure,
-                'lieu': req.body.lieu,
+                'geoloc': req.body.geoloc,
                 'id_user': id_user
             }),
             {

@@ -322,7 +322,6 @@ router.post('/invite', function(req, res, next) {
     });
 });
 
-
 /* Créer un nouvel évenement */
 router.post('/create', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -332,14 +331,14 @@ router.post('/create', function(req, res, next) {
     let description = req.body.description;
     let date = req.body.date;
     let heure = req.body.heure;
-    let lieu = req.body.lieu;
+    let geoloc = req.body.geoloc;
     let id_user = req.body.id_user;
 
     if(verifyDataCreate(req.body)){
 
         let date_RV = dateToMysqlFormat(new Date(date+" "+heure+":00"));
 
-        Connection.query("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+lieu+"')", (error, result, fields) => {
+        Connection.query("INSERT INTO events (`id_createur`, `titre`, `description`, `date_RV`, `geoloc`) VALUES ('"+id_user+"', '"+titre+"', '"+description+"', '"+date_RV+"', '"+geoloc+"')", (error, result, fields) => {
             if(!error){
 
                 res.status(200).json({"message": "Création du nouvel evenement réussie"});
@@ -529,7 +528,7 @@ function verifyDataCreate(data){
         description: Joi.string().min(1).max(256).required(),
         date: Joi.string().required(),
         heure: Joi.string().pattern(/^[0-9]{2}:{1}[0-9]{2}/).required(),
-        lieu: Joi.string().min(1).max(256).required(),
+        geoloc: Joi.string().min(1).max(256).required(),
         id_user: Joi.string().pattern(/^[a-zA-Z0-9\-]{36}/).required(),
     });
 

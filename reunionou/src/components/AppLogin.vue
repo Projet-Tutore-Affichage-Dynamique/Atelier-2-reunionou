@@ -57,6 +57,7 @@ export default {
         .then((response) => {
           this.infos = response;
           if(response){
+            console.log('TOKEN '+this.infos.data.token);
             localStorage.token = this.infos.data.token;
             localStorage.login = this.infos.data.user.login;
             localStorage.id = this.infos.data.user.id;
