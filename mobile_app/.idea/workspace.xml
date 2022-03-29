@@ -12,11 +12,25 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff048931-eb5b-4c2d-b485-2b9e9a9569ef" name="Default Changelist" comment="FAQ+Page de creation de rdv+du style">
-      <change beforePath="$PROJECT_DIR$/../api_reunionou/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../api_reunionou/docker-compose.yml" afterDir="false" />
+    <list default="true" id="ff048931-eb5b-4c2d-b485-2b9e9a9569ef" name="Default Changelist" comment="pages de rdv">
+      <change afterPath="$PROJECT_DIR$/lib/data/dataMethodes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/eventDetail.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/RendezVousDetail.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/events.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/events.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/ConnexionPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/ConnexionPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/CreationRendezVous.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/CreationRendezVous.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/RendezVous.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/RendezVous.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +102,21 @@
       <option name="project" value="LOCAL" />
       <updated>1648217941629</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="changement de la conection">
+      <created>1648220582852</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1648220582852</updated>
+    </task>
+    <task id="LOCAL-00004" summary="pages de rdv">
+      <created>1648461247657</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1648461247657</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,6 +146,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Debut de la mobile_app" />
     <MESSAGE value="FAQ+Page de creation de rdv+du style" />
-    <option name="LAST_COMMIT_MESSAGE" value="FAQ+Page de creation de rdv+du style" />
+    <MESSAGE value="changement de la conection" />
+    <MESSAGE value="pages de rdv" />
+    <option name="LAST_COMMIT_MESSAGE" value="pages de rdv" />
   </component>
 </project>

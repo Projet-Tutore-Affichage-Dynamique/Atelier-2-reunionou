@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:mobile_app/screens/ConnexionPage.dart';
+import 'package:mobile_app/data/dataMethodes.dart';
 import 'package:mobile_app/screens/CreationRendezVous.dart';
+import 'package:mobile_app/screens/RendezVousDetail.dart';
 
 class RendezVous extends StatefulWidget {
   const RendezVous({Key? key}) : super(key: key);
@@ -13,44 +16,65 @@ class _RendezVousState extends State<RendezVous>{
 
   final List<Widget> _eventsList = [];
 
-  Widget _event(currentEvent) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            children: [
-              Text(
-                'titre'+currentEvent.titre,
-                style: const TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'description'+currentEvent.description,
-                style: const TextStyle(fontSize: 15),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'date'+currentEvent.date_RV,
-                style: const TextStyle(fontSize: 10),
-                textAlign: TextAlign.center,
-              ),
-            ],
+  Widget _event(i) {
+    var currentTitre = "";
+    var currentDescr = "";
+    var currentDate = "";
+    if(dataEventList[i]['titre'] != null){
+      currentTitre = dataEventList[i]['titre'];
+    }
+    if(dataEventList[i]['description'] != null){
+      currentDescr = dataEventList[i]['description'];
+    }
+    if(dataEventList[i]['date'] != null){
+      currentDate = dataEventList[i]['date'];
+    }
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SizedBox(
+            width: 300,
+            child: Column(
+              children: [
+                Text(
+                  'titre'+ currentTitre,
+                  style: const TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'description'+ currentDescr,
+                  style: const TextStyle(fontSize: 15),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'date'+ currentDate,
+                  style: const TextStyle(fontSize: 10),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      onTap: () {
+        DataMethodes().getEventDetails(dataEventList[i]['id']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RendezVousDetail(dataEventList[i]['id'])),
+        );
+      },
     );
   }
 
   void _addAllEvents() {
     setState(() {
-      for(var adding in eventList){
-        _eventsList.add(_event(adding));
+      for (var i=0; i < dataEventList.length; i++){
+        _eventsList.add(_event(i));
       }
     });
   }
