@@ -12,7 +12,7 @@ router.get('/all', function(req, res, next){
 
     console.log(verify_adminUser(req.headers.authorization));
     if(verify_adminUser(req.headers.authorization)){
-        console.log('coucou');
+        //console.log('coucou');
 
         axios
             .get('http://api_events:3000/events/all')
@@ -35,13 +35,13 @@ router.get('/all', function(req, res, next){
 
 router.delete('/:id', function(req, res, next){
 
-    if(verify_adminUser(req.headers.authorization)){
+    if(verify_adminUser(req.headers.authorization) && verifyDataIdEvent(req.params['id'])){
 
         let id = getUUIDFromAuthorization(req.headers.authorization);
-        let id_user = verifyDataIdEvent(req.params['id']);
+        let id_event = req.params['id'];
 
         axios
-            .delete('http://api_users:3000/events/'+id_user,
+            .delete('http://api_events:3000/events/'+id_event,
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -87,6 +87,7 @@ function verify_adminUser(autho){
     try{
         let decoded = jwt.verify(token, pKey, {algorithm: 'HS256'});
 
+        console.log(decoded.admin);
         return (decoded.admin === 1);
     } catch(err){
         return false;

@@ -242,15 +242,15 @@ router.delete('/:id', function(req, res, next){
         // Vérifie que l'utilisateur est un admin ou le créateur de l'evenement
         Connection.query("SELECT admin FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
             if(!error){
-                let rq = "DELETE FROM events WHERE id="+id_event;
+                let rq = "DELETE FROM messages WHERE id_event="+id_event+"; DELETE FROM invitation WHERE id_event="+id_event+"; DELETE FROM events WHERE id="+id_event;
                 if(result[0]!==undefined && result[0]!==null){
                     console.log('admin: '+result[0].admin);
                     if(result[0].admin){
                         Connection.query(rq, (error, result, fields) => {
                             if(!error)
-                                res.status(200).json(error401("Suppression de l'evenement réussie"));
+                                res.status(200).json({"message": "Suppression de l'evenement réussie"});
                             else
-                                res.status(500).json(error401("Erreur lors de la suppression de l'evenement"));
+                                res.status(500).json(error500("Erreur lors de la suppression de l'evenement"));
                         });
                     } else{
 
@@ -263,9 +263,9 @@ router.delete('/:id', function(req, res, next){
 
                                         Connection.query(rq, (error, result, fields) => {
                                             if(!error)
-                                                res.status(200).json(error401("Suppression de l'evenement réussie"));
+                                                res.status(200).json({"message": "Suppression de l'evenement réussie"});
                                             else
-                                                res.status(500).json(error401("Erreur lors de la suppression de l'evenement"));
+                                                res.status(500).json(error500("Erreur lors de la suppression de l'evenement"));
                                         });
 
                                     } else{

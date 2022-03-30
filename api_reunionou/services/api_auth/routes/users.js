@@ -11,7 +11,7 @@ let router = express.Router();
 
 router.get('/', function(req, res, next){
 
-    Connection.query("SELECT id, login, email, last_connected FROM utilisateur WHERE admin!="+1, (error, result, fields) => {
+    Connection.query("SELECT id, login, email, last_connected FROM utilisateur WHERE admin="+0, (error, result, fields) => {
         if(!error){
 
             if(result!==undefined && result!==null){

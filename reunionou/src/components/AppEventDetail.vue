@@ -6,6 +6,11 @@
       <div class="">
         <p><span class="fw-bold">date :</span> {{event.date_RV}}</p>
         <p><span class="fw-bold">Géolocalisation :</span> {{event.geoloc}}</p>
+        <p>
+          <span class="fw-bold">Lien de partage : </span>
+          <input class="fake-link" v-on:focus="$event.target.select()" ref="clone" readonly :value="text"/>
+          &nbsp;
+          <button class="btn btn-outline-secondary" @click="copyToClipboard()">Copier le lien</button></p>
       </div>
       <div v-if="event.id_createur != this.id">
         <h4>Réponse</h4>
@@ -62,7 +67,8 @@ export default {
       users: null,
       invitations: null,
       choice: null,
-      names: []
+      names: [],
+      text: null,
     };
   },
   beforeMount(){
@@ -82,6 +88,7 @@ export default {
         })
         .then((response) => {
           this.event = response.data.event;
+          this.text = "http://localhost:8080/event_join/" + this.event.id_createur + "/" + this.event.id;
         })
         .catch((error) => {
           console.log(error)
@@ -231,6 +238,10 @@ export default {
           console.log(error)
           this.errored = true;
         });
+    },
+    copyToClipboard() {
+    this.$refs.clone.focus();
+      document.execCommand('copy');
     },
   }
 };
