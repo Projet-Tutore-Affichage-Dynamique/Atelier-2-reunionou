@@ -122,6 +122,7 @@ export default {
     },
 
     deleteEvent(){
+      console.log('id_event: '+this.event_idSuppr);
       axios
           .delete("http://localhost:8083/events/"+this.event_idSuppr, {
             headers: {

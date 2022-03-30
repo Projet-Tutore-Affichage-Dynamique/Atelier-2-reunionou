@@ -35,10 +35,10 @@ router.get('/all', function(req, res, next){
 
 router.delete('/:id', function(req, res, next){
 
-    if(verify_adminUser(req.headers.authorization)){
+    if(verify_adminUser(req.headers.authorization) && verifyDataIdEvent(req.params['id'])){
 
         let id = getUUIDFromAuthorization(req.headers.authorization);
-        let id_event = verifyDataIdEvent(req.params['id']);
+        let id_event = req.params['id'];
 
         axios
             .delete('http://api_events:3000/events/'+id_event,
