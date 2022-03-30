@@ -38,10 +38,10 @@ router.delete('/:id', function(req, res, next){
     if(verify_adminUser(req.headers.authorization)){
 
         let id = getUUIDFromAuthorization(req.headers.authorization);
-        let id_user = verifyDataIdEvent(req.params['id']);
+        let id_event = verifyDataIdEvent(req.params['id']);
 
         axios
-            .delete('http://api_users:3000/events/'+id_user,
+            .delete('http://api_events:3000/events/'+id_event,
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
