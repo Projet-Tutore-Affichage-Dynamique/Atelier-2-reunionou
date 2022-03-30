@@ -66,7 +66,6 @@ router.get('/inactiveusers', function(req, res, next){
  router.delete('/deleteinactiveusers', function(req, res, next){
 
     // Récupérer les données
-    //let id_user = req.params['id'];
     let id = req.body.id;
 
     let dateUnactive=new Date();

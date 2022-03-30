@@ -78,7 +78,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-/**Recupere les evenements passés */
+/**Récupère les événements passés */
 router.get('/eventsexpired', function(req, res, next) {
 
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -111,7 +111,7 @@ router.get('/eventsexpired', function(req, res, next) {
 
 
 
-/* Récupère les données de l'évenement */
+/* Récupère les données de l'événement */
 router.get('/:id', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -244,7 +244,7 @@ router.delete('/:id', function(req, res, next){
 });
 
 
-// Récupère tous les invités de l'event  --  URL = localhost/events/:id/invites?id_user='[id_user]'
+// Récupère tous les invités de l'événement  --  URL = localhost/events/:id/invites?id_user='[id_user]'
 router.get('/:id/invites', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -280,7 +280,7 @@ router.get('/:id/invites', function(req, res, next) {
 
 
 
-// Récupère tous les messages de l'event  --  URL = localhost/events/:id/messages?id_user='[id_user]'
+// Récupère tous les messages de l'événement  --  URL = localhost/events/:id/messages?id_user='[id_user]'
 router.get('/:id/messages', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -339,7 +339,7 @@ router.get('/:id/messages', function(req, res, next) {
 });
 
 
-/* Invite un utilisateur dans l'évenement */
+/* Invite un utilisateur à l'événement */
 router.post('/invite', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
