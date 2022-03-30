@@ -12,7 +12,7 @@ services:
       - ./services/api_auth:/usr/src/app
     ports:
       - '5001:3000'
-    command: npm run watch
+    command: bash -c 'npm i && npm run watch'
     depends_on:
       - db_reunionou
     links:
@@ -30,7 +30,7 @@ services:
       - ./services/api_events:/usr/src/app
     ports:
       - '5002:3000'
-    command: npm run watch
+    command: bash -c 'npm i && npm run watch'
     depends_on:
       - db_reunionou
     links:
@@ -51,7 +51,7 @@ services:
       - ./services/api:/usr/src/app
     ports:
       - '8081:3000'
-    command: npm run watch
+    command: bash -c 'npm i && npm run watch'
     depends_on:
       - api_users
       - api_events
@@ -68,7 +68,7 @@ services:
       - ./services/api_gtw_mobile:/usr/src/app
     ports:
       - '8082:3000'
-    command: npm run watch
+    command: bash -c 'npm i && npm run watch'
     depends_on:
       - api_users
       - api_events
@@ -85,7 +85,7 @@ services:
       - ./services/api_gtw-backoffice:/usr/src/app
     ports:
       - '8083:3000'
-    command: npm run watch
+    command: bash -c 'npm i && npm run watch'
     depends_on:
       - api_users
       - api_events
