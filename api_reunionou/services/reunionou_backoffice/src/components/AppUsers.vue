@@ -14,7 +14,7 @@
               <h5 class="card-title">{{ user.login }}</h5>
               <p class="card-text">Email : {{ user.email }}</p>
               <br>
-              <small class="text-muted">Dernièrement connecté : {{ convert_dateLastConnection(user.last_connected) }}</small>
+              <small class="text-muted">Dernière connexion : {{ convert_dateLastConnection(user.last_connected) }}</small>
             </div>
             <div class="card-footer">
               <!--<button type="button" class="btn btn-danger me-2" v-on:click="show_Toast(user)">Supprimer</button>-->
@@ -34,7 +34,7 @@
               <h5 class="card-title">{{ user.login }}</h5>
               <p class="card-text">Email : {{ user.email }}</p>
               <br>
-              <small class="text-muted">Dernièrement connecté : {{ convert_dateLastConnection(user.last_connected) }}</small>
+              <small class="text-muted">Dernièrement connexion : {{ convert_dateLastConnection(user.last_connected) }}</small>
             </div>
             <div class="card-footer">
               <button type="button" class="btn btn-danger me-2" v-on:click="show_Toast(user)">Supprimer</button>

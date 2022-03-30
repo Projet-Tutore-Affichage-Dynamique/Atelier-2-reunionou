@@ -1,7 +1,7 @@
 <template>
 <div>
   <main class="container">
-    <h1>Evénements</h1>
+    <h1>Evenements</h1>
     <aside class="mb-5">
       <!-- <button class="btn btn-success"><router-link class="nav-link active" aria-current="page" to="/new_event" style="color:white">Créer un nouvel événement</router-link></button> -->
     </aside>
@@ -15,7 +15,7 @@
             <p class="card-text">{{ event.description }}</p>
             <br>
             <small v-if="(new Date(event.date_RV)) > (new Date())" class="text-muted">{{ new Date(event.date_RV).toDateString() }}</small>
-            <small v-else class="text-danger">expiré depuis {{ convert_dateExpired(event.date_RV) }}</small>
+            <small v-else class="text-danger">Expiré depuis {{ convert_dateExpired(event.date_RV) }}</small>
           </div>
           <div class="card-footer">
             <!--<button type="button" class="btn btn-danger me-2" v-if="(new Date(event.date_RV).getTime()) < (new Date().getTime())" v-on:click="show_Toast(event)">Supprimer</button>-->
@@ -25,7 +25,7 @@
     </div>
     <br>
     <br>
-    <h1>Evénements expirés</h1>
+    <h1>Evenements expirés</h1>
     <div class="row row-cols-1 row-cols-md-5 g-4">
        <div class="col" v-for='event in expiredEvents.data.events' :key='event._id'  >
         <div class="card h-100">
@@ -35,7 +35,7 @@
             <p class="card-text">{{ event.description }}</p>
             <br>
             <small v-if="(new Date(event.date_RV)) > (new Date())" class="text-muted">{{ new Date(event.date_RV).toDateString() }}</small>
-            <small v-else class="text-danger">expiré depuis {{ convert_dateExpired(event.date_RV) }}</small>
+            <small v-else class="text-danger">Expiré depuis {{ convert_dateExpired(event.date_RV) }}</small>
           </div>
           <div class="card-footer">
             <button type="button" class="btn btn-danger me-2" v-if="(new Date(event.date_RV).getTime()) < (new Date().getTime())" v-on:click="show_Toast(event)">Supprimer</button>
@@ -56,7 +56,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
       <div class="toast-body">
-        Voulez-vous vraiment supprimer l'utilisateur suivant : {{ this.event_suppr }}
+        Voulez-vous vraiment supprimer l'évènement suivant : {{ this.event_suppr }}
 
         <div class="mt-2 pt-2 border-top">
           <button type="button" class="btn btn-primary btn-sm" v-on:click="deleteEvent">OUI</button>

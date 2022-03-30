@@ -3,7 +3,7 @@
   <form class="container w-50 my-5" @submit.prevent="handleSubmit">
     <h1 class="mb-5 border-bottom pb-2">Connexion</h1>
     <div class="mb-3">
-      <label for="login" class="form-label">Username</label>
+      <label for="login" class="form-label">Identifiant</label>
       <input
         v-model="login"
         type="text"
