@@ -98,7 +98,7 @@ router.get('/eventsexpired', function(req, res, next) {
                 res.status(200).json({"events": result});
 
             } else{
-                res.status(404).json(error401("Il n'y a aucun évènements expirés"));
+                res.status(200).json({"events": result});
             }
         } else{
             let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
