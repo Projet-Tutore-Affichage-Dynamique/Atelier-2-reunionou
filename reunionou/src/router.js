@@ -6,7 +6,9 @@ import AppEvents from './components/AppEvents.vue';
 import AppAccount from './components/AppAccount.vue';
 import AppNewEvent from './components/AppNewEvent.vue';
 import AppEventDetail from './components/AppEventDetail.vue';
-import AppAccountPassword from './components/AppAccountPassword.vue'
+import AppInvitations from './components/AppInvitations.vue'
+import AppAccountPassword from './components/AppAccountPassword.vue';
+import AppEventJoin from './components/AppEventJoin';
 import AppFAQ from './components/AppFAQ.vue';
 import AppNotFound from './components/_partials/AppNotFound.vue';
 
@@ -32,6 +34,11 @@ const routes = [
         component: AppEvents
     },
     {
+        path: '/invitations',
+        name: 'Invitations',
+        component: AppInvitations
+    },
+    {
         path: '/account',
         name: 'Account',
         component: AppAccount
@@ -50,6 +57,11 @@ const routes = [
         path: '/events/:id',
         name: 'EventDetail',
         component: AppEventDetail
+    },
+    {
+        path: '/event_join/:id_createur/:id',
+        name: 'EventJoin',
+        component: AppEventJoin
     },
     {
         path: '/faq',

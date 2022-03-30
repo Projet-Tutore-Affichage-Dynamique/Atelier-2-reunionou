@@ -2,6 +2,11 @@
     content: ' *';
     color: red;
 }
+.fake-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
 .faq {
     background-color: lightgray;
 }

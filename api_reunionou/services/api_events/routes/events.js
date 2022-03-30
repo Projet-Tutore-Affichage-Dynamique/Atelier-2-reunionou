@@ -291,10 +291,10 @@ router.get('/:id/messages', function(req, res, next) {
     if(id_user!==undefined&&id_user!==null){
 
         //Récupère tous les messages de l'evenement
-        Connection.query("SELECT id_createur, message, date FROM messages WHERE id_event='"+id_event+"'", (error, result, fields) => {
+        Connection.query("SELECT id_createur, message, date FROM messages WHERE id_event='"+id_event+"' ORDER BY date DESC", (error, result, fields) => {
            if(!error){
                let datas = {
-                   "messages": result[0]
+                   "messages": result
                };
 
                //Verifie si l'utilisateur est le créateur de l'evenement
@@ -470,6 +470,26 @@ router.get('/:id/invitations', function(req, res, next) {
     }
 });
 
+router.get('/invitations/all', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données de la requête
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+        Connection.query("SELECT * FROM invitation WHERE id_invite='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                res.status(200).json({"invitations": result});
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                res.status(500).json(error500(message));
+            }
+        });
+    }else{
+        res.status(401).json(error401('Utilisateur'));
+    }
+});
+
 
 router.post('/accept', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
@@ -495,6 +515,60 @@ router.post('/accept', function(req, res, next){
 
                             // Modifie le status d'invitation de l'utilisateur et insert un message
                             msg = login+" participe a l evenement. "+msg;
+                            let rq = "UPDATE invitation SET status="+2+" WHERE id_event="+id_event+" AND id_invite='"+id_user+"'; INSERT INTO messages VALUES ("+id_event+", '"+id_user+"', '"+msg+"', NOW())";
+                            console.log(rq);
+
+                            Connection.query(rq, (error, result, fields) => {
+                                if(!error){
+
+                                    res.status(200).json({"message": "Vous avez accepter l'invitation"});
+
+                                } else {
+                                    let message = req.app.get('env') === 'development' ? error : "Erreur, vous ne pouvez pas rejoindre l'evenement pour l'instant";
+                                    res.status(500).json(error500(message))
+                                }
+                            });
+
+                        } else
+                            res.status(401).json(error401("L'utilisateur n'est pas invité à l'evenement"));
+                    } else{
+                        let message = req.app.get('env') === 'development' ? error : "Erreur lors la vérification dans la table invitation";
+                        res.status(500).json(error500(message));
+                    }
+                });
+            } else
+                res.status(401).json(error401('Utilisateur non trouvé'));
+        } else {
+            let message = req.app.get('env') === 'development' ? error : "Erreur lors de la récupération du login utilisateur";
+            res.status(500).json(error500(message));
+        }
+    });
+});
+
+router.post('/interested', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    //Récupérer les données
+    let msg = " ";
+    if(req.body.message!==undefined) msg = req.body.message;
+    let id_user = req.body.id_user;
+    let id_event = req.body.id_event;
+
+    // Récupérer le nom de l'utilisateur
+    Connection.query("SELECT login FROM utilisateur WHERE id='"+id_user+"'", (error, result, fields) => {
+        if(!error){
+
+            let login = result[0].login;
+
+            if(login!==null && login!==undefined){
+
+                // Vérifie si l'utilisateur est invité à l'evenement
+                Connection.query("SELECT * FROM invitation WHERE id_event='"+id_event+"' AND id_invite='"+id_user+"'", (error, result, fields) => {
+                    if(!error){
+                        if(result[0]!==undefined && result[0]!==null){
+
+                            // Modifie le status d'invitation de l'utilisateur et insert un message
+                            msg = login+" est intéressé par l evenement. "+msg;
                             let rq = "UPDATE invitation SET status="+1+" WHERE id_event="+id_event+" AND id_invite='"+id_user+"'; INSERT INTO messages VALUES ("+id_event+", '"+id_user+"', '"+msg+"', NOW())";
                             console.log(rq);
 
@@ -525,9 +599,6 @@ router.post('/accept', function(req, res, next){
     });
 });
 
-
-
-
 router.post("/decline", function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -552,7 +623,7 @@ router.post("/decline", function(req, res, next){
 
                             // Modifie le status d'invitation de l'utilisateur et insert un message
                             msg = login+" ne participe pas a l evenement. "+msg;
-                            let rq = "UPDATE invitation SET status="+2+" WHERE id_event="+id_event+" AND id_invite='"+id_user+"'; INSERT INTO messages VALUES ("+id_event+", '"+id_user+"', '"+msg+"', NOW())";
+                            let rq = "UPDATE invitation SET status="+3+" WHERE id_event="+id_event+" AND id_invite='"+id_user+"'; INSERT INTO messages VALUES ("+id_event+", '"+id_user+"', '"+msg+"', NOW())";
                             console.log(rq);
 
                             Connection.query(rq, (error, result, fields) => {

@@ -5,7 +5,7 @@
         🤝 Reunionou
       </a>    
       <a class="navbar-brand" href="/account" v-if="this.token != null">
-        🤝 Reunionou
+        🤝 Reunionou - Mon compte
       </a>    
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
             <a class="nav-link active" aria-current="page" href="/events">Mes événements</a>
           </li>
           <li v-if="this.token" class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/events">Mes invitations</a>
+            <a class="nav-link active" aria-current="page" href="/invitations">Mes invitations</a>
           </li>
         </ul>          
         <ul class="navbar-nav">
