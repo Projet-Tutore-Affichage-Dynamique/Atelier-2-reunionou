@@ -41,3 +41,8 @@ L'application est disponible en version web et en version mobile.
 - Créer un événement
 - Visualisation des événements auxquels ont a été invités (qu'on ait choisi d'y participer ou non)
 - Visualisation des détails d'un événement en particulier
+
+**Données de test :**
+Pour se connecter :
+- Identifiant : Leopold
+- Mot de passe : password
