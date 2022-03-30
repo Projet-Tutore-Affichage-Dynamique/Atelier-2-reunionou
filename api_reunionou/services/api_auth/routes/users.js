@@ -30,6 +30,34 @@ router.get('/', function(req, res, next){
 
 });
 
+router.get('/inactiveusers', function(req, res, next){
+
+    let today=new Date();
+    today = today.getUTCFullYear() + '-' +
+    ('00' + (today.getUTCMonth())).slice(-2) + '-' +
+    ('00' + today.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + today.getUTCHours()).slice(-2) + ':' + 
+    ('00' + today.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + today.getUTCSeconds()).slice(-2);
+    Connection.query("SELECT * FROM utilisateur WHERE last_connected<='"+today+"'", (error, result, fields) => {
+        if(!error){
+
+            if(result!==undefined && result!==null){
+
+                res.status(200).json({'users': result});
+
+            } else{
+                res.status(401).json(error401("Il n'y a pas d'utilisateur inactifs"));
+            }
+
+        } else{
+            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table utilisateur";
+            res.status(500).json(error500(message));
+        }
+    });
+
+});
+
 
 /**
  * Permet à un admin de supprimer les utilisateurs inactifs depuis 1 mois

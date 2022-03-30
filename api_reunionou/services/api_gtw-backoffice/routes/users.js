@@ -30,6 +30,28 @@ router.get('/', function(req, res, next){
 });
 
 
+
+router.get('/inactiveusers', function(req, res, next){
+
+    if(verify_adminUser(req.headers.authorization)){
+
+        axios
+            .get('http://api_users:3000/users/inactiveusers/')
+            .then(result => {
+                res.status(result.status).json(result.data);
+            })
+            .catch(error => {
+                if(error.response)
+                    res.status(error.response.status).json(error.response.data);
+                else
+                    res.status(500).json(error);
+            });
+
+    } else{
+        res.status(401).json({"error": "Vous n'etes pas authorisé à accéder à l'api pour admin"});
+    }
+});
+
 router.delete('/deleteinactiveusers', function(req, res, next){
 
     if(verify_adminUser(req.headers.authorization)){

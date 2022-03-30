@@ -12,9 +12,9 @@
       <div class="d-flex justify-content-center align-items-center mb-3">
         <div class="col-sm-8 text-center">
           <h5 class="text-muted font-weight-normal">
-            Reunionou BackOffice est la plateforme pour les admins qui permet de gérer et supprimer les evenement et compte inactifs pour mettre un peut d'ordre.
+            Reunionou BackOffice est la plateforme pour les admins qui permet de gérer et supprimer les évènement et compte inactifs pour mettre un peu d'ordre.
             Vous pourrez aussi gérer votre compte,
-            mais si vous voulez participer aux évenement même en tant qu'admin il faudra passer par la platforme utilisateur.
+            mais si vous voulez participer aux évènement même en tant qu'admin il faudra passer par la platforme utilisateur.
           </h5>
         </div>
       </div>

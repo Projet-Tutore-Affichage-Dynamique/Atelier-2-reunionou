@@ -17,6 +17,26 @@
               <small class="text-muted">Dernièrement connecté : {{ convert_dateLastConnection(user.last_connected) }}</small>
             </div>
             <div class="card-footer">
+              <!--<button type="button" class="btn btn-danger me-2" v-on:click="show_Toast(user)">Supprimer</button>-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <br>
+    <br>
+    <h1>Utilisateur inactifs</h1>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col" v-for='user in inactiveUsers.data.users' :key='user._id'  >
+          <div class="card h-100">
+            <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">{{ user.login }}</h5>
+              <p class="card-text">Email : {{ user.email }}</p>
+              <br>
+              <small class="text-muted">Dernièrement connecté : {{ convert_dateLastConnection(user.last_connected) }}</small>
+            </div>
+            <div class="card-footer">
               <button type="button" class="btn btn-danger me-2" v-on:click="show_Toast(user)">Supprimer</button>
             </div>
           </div>
@@ -57,6 +77,7 @@ export default {
       token: null,
       login: null,
       id: null,
+      inactiveUsers:null,
 
       user_suppr: '',
       user_idSuppr: ''
@@ -84,6 +105,22 @@ export default {
           this.errored = true;
           console.log(error);
         });
+
+
+     axios
+      .get("http://localhost:8083/users/inactiveusers/", {
+          headers: {
+            'Authorization': `token ${this.token}`
+          }
+        })
+      .then((response) => {
+          console.log(response)
+          this.inactiveUsers = response;
+      })
+      .catch((error) => {
+          this.errored = true;
+          console.log(error);
+      });
   },
 
   methods: {
@@ -128,6 +165,7 @@ export default {
             this.hide_Toast();
             this.reload_Users();
             console.log("Utilisateur supprimé !" + response);
+            this.$router.go();
           })
           .catch((error) => {
             this.errored = true;
