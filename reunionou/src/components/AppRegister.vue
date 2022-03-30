@@ -11,12 +11,9 @@
         aria-describedby="emailHelp"
         name="email"
       />
-      <div id="emailHelp" class="form-text">
-        Votre email est votre identifiant de connexion.
-      </div>
     </div>
     <div class="mb-3">
-      <label for="login" class="form-label required">Username</label>
+      <label for="login" class="form-label required">Identifiant</label>
       <input v-model="login" type="text" class="form-control" id="login" name="login"/>
     </div>
     <div class="mb-3">

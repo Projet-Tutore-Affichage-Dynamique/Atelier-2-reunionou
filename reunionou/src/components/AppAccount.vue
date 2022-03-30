@@ -13,7 +13,7 @@
       />
     </div>
     <div class="mb-3">
-      <label for="name" class="form-label">Nom</label>
+      <label for="name" class="form-label">Identifiant</label>
       <input
         v-model="login"
         type="text"

@@ -1,30 +1,28 @@
 <template>
-<div>
-  <main class="container">
-    <h1>Mes événements</h1>
-    <aside class="mb-5">
-      <button class="btn btn-success"><router-link class="nav-link active" aria-current="page" to="/new_event" style="color:white">Créer un nouvel événement</router-link></button>
-    </aside>
-    <h4>Ils arrivent bientôt</h4>
-    <div class="row row-cols-1 row-cols-md-5 g-4">
-       <div class="col" v-for='event in events' :key='event._id'  >
-        <div class="card h-100">
-          <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title"><a v-bind:href="'/events/'+ event.id">{{ event.description }}</a></h5>
-            <p class="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Dans 3 jours · 23/03/22</small>
+  <div>
+    <main class="container">
+      <h1>Mes événements</h1>
+      <aside class="mb-5">
+        <button class="btn btn-success"><router-link class="nav-link active" aria-current="page" to="/new_event" style="color:white">Créer un nouvel événement</router-link></button>
+      </aside>
+      <h4>Ils arrivent bientôt</h4>
+      <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col" v-for='event in events' :key='event._id'  >
+          <div class="card h-100">
+            <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title"><a v-bind:href="'/events/'+ event.id">{{event.titre}}</a></h5>
+              <p class="card-text">
+                {{event.description}}
+              </p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">{{event.date_RV}}</small>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
   </div>
 </template>
 

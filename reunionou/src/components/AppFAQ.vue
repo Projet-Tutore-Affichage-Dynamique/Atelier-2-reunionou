@@ -46,8 +46,8 @@
                 data-bs-parent="#accordionExample"
             >
                 <div class="accordion-body faq">
-                    Oui, c'est la seule condition pour pouvoir utiliser notre application. Cela nous permet de savoir
-                    quels événements vous avez créé, ainsi que ceux auxquels vous êtes invité.
+                    Un compte est nécessaire afin de pouvoir bénéficier de l'entièreté des fonctionnalités de l'application. <br>
+                    Sans cela, vous pouvez uniquement rejoindre un événement via un lien que l'organisateur vous aura envoyé.
                 </div>
             </div>
         </div>
