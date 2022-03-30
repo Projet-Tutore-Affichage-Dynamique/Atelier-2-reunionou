@@ -122,7 +122,7 @@ router.get('/users', function(req, res, next) {
     let id_user = req.query['id_user'];
 
     if(id_user!==undefined&&id_user!==null){
-                Connection.query("SELECT * FROM utilisateur", (error, result, fields) => {
+                Connection.query("SELECT login, id FROM utilisateur", (error, result, fields) => {
                     if(!error){
 
                         res.status(200).json({"users": result});
