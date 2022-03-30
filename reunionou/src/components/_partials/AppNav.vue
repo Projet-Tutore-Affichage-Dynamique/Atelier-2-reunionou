@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid d-flex justify-content-between">
       <a class="navbar-brand" href="/" v-if="this.token == null">
-        🤝 Reunionou
+        🤝 Reunionou - Accueil
       </a>    
       <a class="navbar-brand" href="/account" v-if="this.token != null">
         🤝 Reunionou - Mon compte
