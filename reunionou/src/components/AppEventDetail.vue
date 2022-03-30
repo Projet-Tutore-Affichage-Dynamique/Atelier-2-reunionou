@@ -6,7 +6,7 @@
       <div class="">
         <p><span class="fw-bold">date :</span> {{event.date_RV}}</p>
         <p><span class="fw-bold">Géolocalisation :</span> {{event.geoloc}}</p>
-        <p>
+        <p v-if="event.id_createur == this.id">
           <span class="fw-bold">Lien de partage : </span>
           <input class="fake-link" v-on:focus="$event.target.select()" ref="clone" readonly :value="text"/>
           &nbsp;
