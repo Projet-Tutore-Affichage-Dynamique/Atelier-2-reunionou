@@ -18,3 +18,7 @@ INSERT INTO `invitation` (`id_event`,`id_invite`,`status`) VALUES
 INSERT INTO `messages` (`id_event`,`id_createur`,`message`, `date`) VALUES
 (00000000001, 'a368a7e6-3a83-4398-8797-2905e4ee6b6f', 'n oubliez pas les cadeaux', NOW()),
 (00000000002, '6962e727-486c-4f97-9e9a-ca68899e6ae8', 'premier rendez vous tres important', NOW());
+
+INSERT INTO `utilisateur_invite` (`id`,`nom_prenom`,`email`,`created`) VALUES
+('84846ba0-a096-46f0-881a-73a18080036e','Jean Valjean', 'jeanvaljean@hugo.fr' NOW()),
+('02ad4c8a-eb05-48b4-8e8d-c4836957a9eb','Candide','candide@voltaire.fr', NOW()),

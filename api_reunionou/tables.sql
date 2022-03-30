@@ -46,3 +46,12 @@ CREATE TABLE `messages` (
     FOREIGN KEY (`id_event`) REFERENCES events(`id`),
     FOREIGN KEY (`id_createur`) REFERENCES utilisateur(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `utilisateur_invite`;
+CREATE TABLE `utilisateur_invite` (
+    `id` varchar(36) NOT NULL,
+    `nom_prenom` varchar(128) NOT NULL,
+    `email` varchar(256) NOT NULL,
+    `created` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
