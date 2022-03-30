@@ -10,8 +10,6 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./services/api_auth:/usr/src/app
-    ports:
-      - '5001:3000'
     command: bash -c 'npm i && npm run watch'
     depends_on:
       - db_reunionou
@@ -28,8 +26,6 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./services/api_events:/usr/src/app
-    ports:
-      - '5002:3000'
     command: bash -c 'npm i && npm run watch'
     depends_on:
       - db_reunionou

@@ -93,7 +93,7 @@ export default {
     this.id = localStorage.id;
 
     axios
-        .get("http://localhost:8083/users", {
+        .get("http://51.210.15.53:8083/users", {
           headers: {
             'Authorization': `token ${this.token}`
           }
@@ -108,7 +108,7 @@ export default {
 
 
      axios
-      .get("http://localhost:8083/users/inactiveusers/", {
+      .get("http://51.210.15.53:8083/users/inactiveusers/", {
           headers: {
             'Authorization': `token ${this.token}`
           }
@@ -156,7 +156,7 @@ export default {
 
     deleteUser(){
       axios
-          .delete("http://localhost:8083/users/"+this.user_idSuppr, {
+          .delete("http://51.210.15.53:8083/users/"+this.user_idSuppr, {
             headers: {
               'Authorization': `token ${this.token}`
             }
@@ -176,7 +176,7 @@ export default {
 
     reload_Users(){
       axios
-          .get("http://localhost:8083/users", {
+          .get("http://51.210.15.53:8083/users", {
             headers: {
               'Authorization': `token ${this.token}`
             }

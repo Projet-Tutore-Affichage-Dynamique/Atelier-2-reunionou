@@ -98,7 +98,7 @@ export default {
       this.$root.$refs.nav.$forceUpdate;
 
       axios
-        .get("http://localhost:8083/events/all", {
+        .get("http://51.210.15.53:8083/events/all", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
@@ -114,7 +114,7 @@ export default {
         });
 
       axios
-        .get("http://localhost:8083/events/eventsexpired", {
+        .get("http://51.210.15.53:8083/events/eventsexpired", {
             headers: {
               'Authorization': `token ${this.token}`
             }
@@ -163,7 +163,7 @@ export default {
     deleteEvent(){
       console.log('id_event: '+this.event_idSuppr);
       axios
-          .delete("http://localhost:8083/events/"+this.event_idSuppr, {
+          .delete("http://51.210.15.53:8083/events/"+this.event_idSuppr, {
             headers: {
               'Authorization': `token ${this.token}`
             }
@@ -184,7 +184,7 @@ export default {
     getExpiredEvent(){
       //console.log('id_event: '+this.event_idSuppr);
       axios
-          .get("http://localhost:8083/events/eventsexpired", {
+          .get("http://51.210.15.53:8083/events/eventsexpired", {
             headers: {
               'Authorization': `token ${this.token}`
             }
@@ -202,7 +202,7 @@ export default {
 
     reload_Events(){
       axios
-          .get("http://localhost:8083/events/all", {
+          .get("http://51.210.15.53:8083/events/all", {
             headers: {
               'Authorization': `token ${this.token}`
             }
