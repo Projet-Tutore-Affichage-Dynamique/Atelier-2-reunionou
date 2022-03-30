@@ -1,0 +1,12 @@
+version: '2.3'
+
+services:
+  app_backoffice:
+    container_name: app.backoffice
+    image: node:lts
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '2222:8080'
+    command: bash -c 'npm i && npm run serve'

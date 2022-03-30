@@ -42,7 +42,19 @@ L'application est disponible en version web et en version mobile.
 - Visualisation des événements auxquels ont a été invités (qu'on ait choisi d'y participer ou non)
 - Visualisation des détails d'un événement en particulier
 
+
 **Données de test :**
-Pour se connecter :
+Pour se connecter à l'application Web:
+
+- URL : http://51.210.15.53:2222/
 - Identifiant : Leopold
 - Mot de passe : password
+
+
+
+Pour se connecter à l'application BackOffice:
+
+- URL : http://51.210.15.53:3333/
+- Identifiant : Valentin
+- Mot de passe : password
+

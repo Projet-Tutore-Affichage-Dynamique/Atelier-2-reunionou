@@ -1,235 +1,582 @@
 {
   "routes": {
-    "api_auth": [
-      {
-        "description": "Envoie login et mdp, renvoie token de connection",
-        "url": "http://localhost:8081/auth/signin",
-        "method": "POST",
-        "datas": {
-          "Authorization": {
-            "type": "Basic Auth",
-            "data": {
-              "Username": "[login]",
-              "Password": "[password]"
-            }
-          },
-          "body": {}
-        }
-      },
+    
+    "AppWeb": {
+	    "api_auth": [
+	      {
+		"description": "Envoie login et mdp, renvoie token de connection",
+		"url": "http://localhost:8081/auth/signin",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Basic Auth",
+		    "data": {
+		      "Username": "[login]",
+		      "Password": "[password]"
+		    }
+		  },
+		  "body": {}
+		}
+	      },
 
 
 
-      {
-        "description": "Envoie toutes les infos du user et renvoie une confirmation",
-        "url": "http://localhost:8081/auth/signup",
-        "method": "POST",
-        "datas": {
-          "body": {
-            "login": "[id_user]",
-            "pwd": "[pwd_user]",
-            "confpwd": "[pwduser]",
-            "email": "[email_user]"
-          }
-        },
-        "headers": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }
-    ],
+	      {
+		"description": "Envoie toutes les infos du user et renvoie une confirmation",
+		"url": "http://localhost:8081/auth/signup",
+		"method": "POST",
+		"datas": {
+		  "body": {
+		    "login": "[id_user]",
+		    "pwd": "[pwd_user]",
+		    "confpwd": "[pwduser]",
+		    "email": "[email_user]"
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	      
+	      
+	      
+	      {
+		"description": "Modifier son mot de passe",
+		"url": "http://localhost:8081/auth/modify_pwd",
+		"method": "POST",
+		"datas": {
+		  "body": {
+		    "oldpwd": "[oldpwd]",
+		    "newpwd": "[newpwd]",
+		    "confPwd": "[confPwd]",
+		  },
+		  
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	      
+	      
+	      
+	      {
+		"description": "Récupère les données de son profile",
+		"url": "http://localhost:8081/auth/profile",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+	      
+	      
+	      
+	      {
+		"description": "Modifier ses informations personnels",
+		"url": "http://localhost:8081/auth/profile",
+		"method": "POST",
+		"datas": {
+		  "body": {
+		    "oldpwd": "[oldpwd]",
+		    "newpwd": "[newpwd]",
+		    "confPwd": "[confPwd]",
+		    "login": "[login]",
+		    "email": "[email]"
+		  },
+		  
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	    ],
 
 
 
 
-    "api_events": [
-      {
-        "description": "Pour récupérer tous les evenements de l'utilisateur",
-        "url": "http://localhost:8081/events",
-        "method": "GET",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
-
-      {
-        "description": "Pour récupérer tous les evenements passés et créer par l'utilisateur",
-        "url": "http://localhost:8081/events/eventsexpired",
-        "method": "GET",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
-
-      {
-        "description": "Pour récupérer tous les evenements passés auxquels l'utilisateur est invité",
-        "url": "http://localhost:8081/events/eventsinvitedexpired",
-        "method": "GET",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
 
 
-      {
-        "description": "Pour récupérer les données d'un evement par son id",
-        "url": "http://localhost:8081/events/[id_event]",
-        "method": "GET",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
+	    "api_events": [
+	      {
+		"description": "Pour récupérer tous les evenements de l'utilisateur",
+		"url": "http://localhost:8081/events",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
 
-      {
-        "description": "Pour récupérer les invités d'un evenement avec son id",
-        "url": "http://localhost:8081/events/[id_event]/invites",
-        "method": "GET",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
+	      {
+		"description": "Pour récupérer tous les evenements passés et créer par l'utilisateur",
+		"url": "http://localhost:8081/events/eventsexpired",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
 
-      {
-        "description": "Pour récupérer les messages d'un evenement avec son id",
-        "url": "http://localhost:8081/events/[id_event]/messages",
-        "method": "GET",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
-
-
-      {
-        "description": "Pour invité un utilisateur avec son id dans un evement",
-        "url": "http://localhost:8081/events/invite",
-        "method": "POST",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          },
-          "body": {
-            "id_event": "[id_event]",
-            "id_invite": "[id_user]"
-          }
-        },
-        "headers": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      },
+	      {
+		"description": "Pour récupérer tous les evenements passés auxquels l'utilisateur est invité",
+		"url": "http://localhost:8081/events/eventsinvitedexpired",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
 
 
-      {
-        "description": "Pour créer un evenement",
-        "url": "http://localhost:8081/events/create",
-        "method": "POST",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          },
-          "body": {
-            "titre": "[titre]",
-            "description": "[description]",
-            "date": "[date]", /* Format : 22 Mars, 2022 */
-            "heure": "[heure]", /* Format : 23:56 */
-            "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
-          }
-        },
-        "headers": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      },
+	      {
+		"description": "Pour récupérer les données d'un evement par son id",
+		"url": "http://localhost:8081/events/[id_event]",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+	      
 
-      {
-        "description": "Pour supprimer events passés et créés par un utilisateur",
-        "url": "http://localhost:8081/events/refresheventsexpired",
-        "method": "DELETE",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          }
-        }
-      },
+	      {
+		"description": "Pour récupérer les invités d'un evenement avec son id",
+		"url": "http://localhost:8081/events/[id_event]/invites",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+	      
+	      
+	      {
+		"description": "Pour récupèrer tous les messages de l'utilisateur dans un évenement",
+		"url": "http://localhost:8081/events/[id_event]/messages",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		}
+	      },
+	      
+	      
+	      {
+		"description": "Pour accepter l'invitation à un évenement",
+		"url": "http://localhost:8081/events/[id_event]/invitations",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		}
+	      },
+	    
+	      
+	      
+	      {
+		"description": "Récupère toutes les invitations",
+		"url": "http://localhost:8081/events/invitations/all",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		}
+	      },
+	      
 
-      {
-        "description": "Pour accepter l'invitation à un évenement",
-        "url": "http://localhost:8081/events/accept",
-        "method": "POST",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          },
-          "body": {
-            "id_event": "[id_event]",
-            "message": "[message]"
-          }
-        },
-        "headers": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      },
+	      {
+		"description": "Pour récupérer les messages d'un evenement avec son id",
+		"url": "http://localhost:8081/events/[id_event]/messages",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+
+
+	      {
+		"description": "Pour invité un utilisateur avec son id dans un evement",
+		"url": "http://localhost:8081/events/invite",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		  "body": {
+		    "id_event": "[id_event]",
+		    "id_invite": "[id_user]"
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+
+
+	      {
+		"description": "Pour créer un evenement",
+		"url": "http://localhost:8081/events/create",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		  "body": {
+		    "titre": "[titre]",
+		    "description": "[description]",
+		    "date": "[date]", /* Format : 22 Mars, 2022 */
+		    "heure": "[heure]", /* Format : 23:56 */
+		    "lieu": "[lieu]", /* Format : 34 rue de Tulipes, 54000 Nancy */
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	      
+	      
+	      {
+		"description": "Pour poster un message sur l'evenement",
+		"url": "http://localhost:8081/events/post_message",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		  "body": {
+		    "id_event": "[id_event]",
+		    "message": "[message]"
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	      
+
+	      {
+		"description": "Pour supprimer events passés et créés par un utilisateur",
+		"url": "http://localhost:8081/events/refresheventsexpired",
+		"method": "DELETE",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+	      
+
+	      {
+		"description": "Pour accepter l'invitation à un évenement",
+		"url": "http://localhost:8081/events/accept",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		  "body": {
+		    "id_event": "[id_event]",
+		    "message": "[message]"
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	      
+	      
+	      
+	      {
+		"description": "Pour dire qu'on est intéréssé par l'evenement",
+		"url": "http://localhost:8081/events/interested",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		  "body": {
+		    "id_event": "[id_event]",
+		    "message": "[message]"
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
 
 
 
-      {
-        "description": "Pour décliner l'invitation à un évenement",
-        "url": "http://localhost:8081/events/decline",
-        "method": "POST",
-        "datas": {
-          "Authorization": {
-            "type": "Bearer Token",
-            "data": {
-              "Token": "[token]"
-            }
-          },
-          "body": {
-            "id_event": "[id_event]",
-            "message": "[message]"
-          }
-        },
-        "headers": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }
-    ]
+	      {
+		"description": "Pour décliner l'invitation à un évenement",
+		"url": "http://localhost:8081/events/decline",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  },
+		  "body": {
+		    "id_event": "[id_event]",
+		    "message": "[message]"
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      }
+	    ]
+    },
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    "App-Backoffice": {
+	    "api_auth": [
+	      {
+		"description": "Envoie login et mdp, renvoie token de connection",
+		"url": "http://localhost:8083/auth/signin",
+		"method": "POST",
+		"datas": {
+		  "Authorization": {
+		    "type": "Basic Auth",
+		    "data": {
+		      "Username": "[login]",
+		      "Password": "[password]"
+		    }
+		  },
+		  "body": {}
+		}
+	      },
+	      
+	      
+	      
+	      {
+		"description": "Modifier son mot de passe",
+		"url": "http://localhost:8083/auth/modify_pwd",
+		"method": "POST",
+		"datas": {
+		  "body": {
+		    "oldpwd": "[oldpwd]",
+		    "newpwd": "[newpwd]",
+		    "confPwd": "[confPwd]",
+		  },
+		  
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+		"headers": {
+		  "Content-Type": "application/x-www-form-urlencoded"
+		}
+	      },
+	      
+	      
+	      
+	      
+	      
+	      {
+		"description": "Récupère tous les utilisateurs non admin de la plateforme",
+		"url": "http://localhost:8083/users",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+	      },
+	      
+	      
+	      {
+		"description": "Récupère tous les utilisateurs non admin inactifs de la plateforme",
+		"url": "http://localhost:8083/users/inactiveusers",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+	      },
+	      
+	      
+	      {
+		"description": "Supprime les utilisateurs inactifs",
+		"url": "http://localhost:8083/users/deleteinactiveusers",
+		"method": "DELETE",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+	      },
+	      
+	      
+	      {
+		"description": "Supprime un utilisateur à partir de son id",
+		"url": "http://localhost:8083/users/[id_user]",
+		"method": "DELETE",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+	      },
+	 
+	    ],
+
+
+
+
+
+
+	    "api_events": [
+	      {
+		"description": "Pour récupérer tous les evenements de la plateforme",
+		"url": "http://localhost:8083/events/all",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+
+	      {
+		"description": "Pour récupérer tous les evenements éxpirer de la plateforme",
+		"url": "http://localhost:8083/events/eventsexpired",
+		"method": "GET",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		}
+	      },
+	      
+	      
+	      {
+		"description": "Supprime un eve à partir de son id",
+		"url": "http://localhost:8083/events/[id_event]",
+		"method": "DELETE",
+		"datas": {
+		  "Authorization": {
+		    "type": "Bearer Token",
+		    "data": {
+		      "Token": "[token]"
+		    }
+		  }
+		},
+	      },
+	      
+	    ]
+    }
+    
   }
 }
