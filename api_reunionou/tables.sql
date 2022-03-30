@@ -23,8 +23,7 @@ CREATE TABLE `events`(
     `date_RV` datetime NOT NULL,
     `geoloc` varchar(256) NOT NULL,
     `url` varchar(256),
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`id_createur`) REFERENCES utilisateur(`id`),
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `invitation`;
