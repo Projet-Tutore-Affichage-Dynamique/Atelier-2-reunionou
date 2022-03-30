@@ -1,7 +1,7 @@
 <template>
 <div>
   <main class="container">
-    <h1>Evenements</h1>
+    <h1>Evénements</h1>
     <aside class="mb-5">
       <!-- <button class="btn btn-success"><router-link class="nav-link active" aria-current="page" to="/new_event" style="color:white">Créer un nouvel événement</router-link></button> -->
     </aside>
@@ -56,7 +56,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
       <div class="toast-body">
-        Voulez-vous vraiment supprimer l'évènement suivant : {{ this.event_suppr }}
+        Voulez-vous vraiment supprimer l'événement suivant : {{ this.event_suppr }}
 
         <div class="mt-2 pt-2 border-top">
           <button type="button" class="btn btn-primary btn-sm" v-on:click="deleteEvent">OUI</button>

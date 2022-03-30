@@ -18,7 +18,7 @@
             <router-link class="nav-link" aria-current="page" to="/account">Mon compte</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/events">Evenements</router-link>
+            <router-link class="nav-link" aria-current="page" to="/events">Evénements</router-link>
           </li>
           <li v-if="this.token" class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/users">Utilisateurs</router-link>
