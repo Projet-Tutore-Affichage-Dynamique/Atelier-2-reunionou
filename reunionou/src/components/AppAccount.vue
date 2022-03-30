@@ -21,7 +21,7 @@
         id="name"
       />
     </div>
-    <a href="/account/password" class="btn btn-outline-primary">modifier mon mot de passe</a>
+    <a href="/account/password" class="btn btn-outline-primary">Modifier mon mot de passe</a>
     <button type="submit" class="btn btn-primary">
       Modifier mon compte
     </button>

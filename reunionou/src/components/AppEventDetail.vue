@@ -39,7 +39,7 @@
         <article v-for='user in users' :key='user._id'>
           <div v-if="user.id != this.id">
           {{user.login}} 
-            <a v-if="event.id_createur == this.id" href="javascript:void(0)" @click="sendInvite(user.id)">inviter</a>
+            <a v-if="event.id_createur == this.id" href="javascript:void(0)" @click="sendInvite(user.id)">Inviter</a>
             <span v-for="invit in invitations" :key='invit._id'> 
               <span v-if="invit.id_invite == user.id">
                 {{getStatus(invit.status)}}
