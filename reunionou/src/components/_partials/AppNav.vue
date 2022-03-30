@@ -27,7 +27,7 @@
             <a class="nav-link active" aria-current="page" href="/events">Mes événements</a>
           </li>
           <li v-if="this.token" class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/events">Mes invitations</a>
+            <a class="nav-link active" aria-current="page" href="/invitations">Mes invitations</a>
           </li>
         </ul>          
         <ul class="navbar-nav">

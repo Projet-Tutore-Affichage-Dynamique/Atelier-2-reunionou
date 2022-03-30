@@ -524,6 +524,26 @@ router.get('/:id/invitations', function(req, res, next) {
     }
 });
 
+router.get('/invitations/all', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+
+    // Récupère les données de la requête
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+        Connection.query("SELECT * FROM invitation WHERE id_invite='"+id_user+"'", (error, result, fields) => {
+            if(!error){
+                res.status(200).json({"invitations": result});
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table users";
+                res.status(500).json(error500(message));
+            }
+        });
+    }else{
+        res.status(401).json(error401('Utilisateur inconnue'));
+    }
+});
+
 
 router.post('/accept', function(req, res, next){
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
