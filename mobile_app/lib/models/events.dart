@@ -7,7 +7,7 @@ class Events {
 
   factory Events.fromJson(Map<String, dynamic> json) {
     return Events(
-      events: json['events']
+      events: json['events'],
     );
   }
 }

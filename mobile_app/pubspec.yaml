@@ -31,6 +31,7 @@ dependencies:
   accordion: ^1.0.3
   date_field: ^3.0.0
   google_maps_flutter: ^2.1.3
+  provider: ^6.0.0
 
   flutter:
     sdk: flutter

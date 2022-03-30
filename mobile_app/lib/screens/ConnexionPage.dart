@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/main.dart';
-import 'package:mobile_app/data/dataMethodes.dart';
+import 'package:mobile_app/data/AllData.dart';
+import 'package:provider/provider.dart';
 
 class ConnexionPage extends StatefulWidget {
   const ConnexionPage({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class ConnexionPage extends StatefulWidget {
 
 
 
-class _ConnexionPageState extends State<ConnexionPage> {
+class _ConnexionPageState extends State<ConnexionPage>{
 
   @override
   Widget build(BuildContext context) {
@@ -42,66 +42,65 @@ class _ConnexionPageState extends State<ConnexionPage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: SizedBox(
-                  width: 300,
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Identifiant ou E-mail',
+              Consumer<All_Data>(builder: (context, data, child) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: SizedBox(
+                    width: 300,
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Identifiant ou E-mail',
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          data.setDataId(value);
+                        });
+                      },
                     ),
-                    onChanged: (value) {
-                      dataId = value;
-                    },
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: SizedBox(
-                  width: 300,
-                  child: TextField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Mot de passe',
+                );
+              }),
+              Consumer<All_Data>(builder: (context, data, child) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: SizedBox(
+                    width: 300,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Mot de passe',
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          data.setDataMdp(value);
+                        });
+                      },
                     ),
-                    onChanged: (value) {
-                      dataMdp = value;
-                    },
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                );
+              }),
+              Consumer<All_Data>(builder: (context, data, child) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        data.postConnexion(data.getDataId(),data.getDataMdp());
+                      });
+                      Navigator.pop(context);
+                      },
+                    child: const Text('Connexion'),
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    setState(() {
-                      DataMethodes().postConnexion();
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyApp()),
-                    );
-                  },
-                  child: const Text('Connexion'),
-                ),
-              ),
-
-
-
-
-
-
+                );
+              }),
             ],
           ),
         ),
-
       ),
     );
   }
