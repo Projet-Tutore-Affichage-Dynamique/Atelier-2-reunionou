@@ -26,7 +26,7 @@
     <br>
     <br>
     <h1>Evénements expirés</h1>
-    <div class="row row-cols-1 row-cols-md-5 g-4">
+    <!--<div class="row row-cols-1 row-cols-md-5 g-4">
        <div class="col" v-for='event in expiredEvents.data.events' :key='event._id'  >
         <div class="card h-100">
           <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
    
   </main>
 
@@ -114,20 +114,7 @@ export default {
         });
 
 
-        axios
-          .get("http://localhost:8083/events/eventsexpired", {
-            headers: {
-              'Authorization': `token ${this.token}`
-            }
-          })
-          .then((response) => {
-            this.expiredEvents = response;
-            console.log(response)
-          })
-          .catch((error) => {
-            this.errored = true;
-            console.log(error);
-          });
+      
   },
   methods: {
     convert_dateExpired(date){
@@ -172,7 +159,7 @@ export default {
             this.hide_Toast();
             this.reload_Events();
             console.log("Evenement supprimé !" + response);
-            this.$router.go();
+            //this.$router.go();
           })
           .catch((error) => {
             this.errored = true;
