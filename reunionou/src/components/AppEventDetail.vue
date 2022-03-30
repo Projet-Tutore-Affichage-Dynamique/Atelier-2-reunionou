@@ -12,7 +12,7 @@
       <div class="border-top mt-5">
         <h2>Messages</h2>
         <article v-for='message in messages' :key='message._id'>
-          <h6><span class="badge bg-primary">{{message.id_createur}}</span></h6>
+          <h6><span class="badge bg-primary">{{getLoginOfUser(message.id_createur)}}</span></h6>
           {{message.message}} <span class="badge bg-secondary">{{message.date}}</span>
         </article>
       </div>
@@ -48,7 +48,8 @@ export default {
       id: null,
       messages: null,
       users: null,
-      invitations: null
+      invitations: null,
+      name: null
     };
   },
   beforeMount(){
@@ -167,6 +168,26 @@ export default {
           break;
       }
       return str;
+    },
+    getLoginOfUser(id_user){
+        axios
+        .get(
+          "http://localhost:8081/auth/user/id/"+id_user,
+          {
+            headers: {
+              "Authorization": `token ${localStorage.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          
+          this.name = response.data.users[0].login;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        });  
+        return this.name;
     }
   }
 };

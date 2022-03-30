@@ -135,6 +135,32 @@ router.get('/users', function(req, res, next) {
             }
 });
 
+router.get('/user/id/:id', function(req, res, next){
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    let user = req.params['id'];
+    let id_user = req.query['id_user'];
+
+    if(id_user!==undefined&&id_user!==null){
+        Connection.query("SELECT login FROM utilisateur WHERE id='"+user+"'", (error, result, fields) => {
+            if(!error){
+
+                if(result!==undefined && result!==null){
+
+                    res.status(200).json({'users': result});
+
+                } else{
+                    res.status(401).json(error401("Il n'y a pas d'utilisateur correspondant"));
+                }
+
+            } else{
+                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table utilisateur";
+                res.status(500).json(error500(message));
+            }
+        });
+    }
+});
+
+
 
 router.post('/check', function(req, res, next) {
 

@@ -170,6 +170,25 @@ router.get('/users', function(req, res, next) {
     });
 });
 
+router.get('/user/id/:id', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    // Récupère les données de la requête
+    let user = req.params['id'];
+    let id_user = getUUIDFromAuthorization(req.headers.authorization);
+
+    axios
+    .get('http://api_users:3000/auth/user/id/'+user+'?id_user='+id_user)
+    .then(result => {
+        res.status(result.status).json(result.data);
+    })
+    .catch(error => {
+        if(error.response)
+            res.status(error.response.status).json(error.response.data);
+        else
+            res.status(500).json(error);
+    });
+});
+
 function getUUIDFromAuthorization(autho){
     let token = autho.split(' ')[1];
     let id_user = null;
