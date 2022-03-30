@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppNav />
+    <AppNav ref="nav"/>
     <router-view />
   </div>
 </template>
@@ -12,6 +12,12 @@ export default {
   components: {
     AppNav,
   },
+
+  methods: {
+    refresh_Nav(){
+      this.$refs.nav.$forceUpdate;
+    }
+  }
 };
 </script>
 <style>

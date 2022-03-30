@@ -42,13 +42,11 @@ router.delete('/:id', function(req, res, next){
 
         axios
             .delete('http://api_users:3000/events/'+id_user,
-                querystring.stringify({
-                    "id_user": id
-                }),
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
-                    }
+                    },
+                    data: querystring.stringify({"id_user": id}),
                 }
             )
             .then(result => {

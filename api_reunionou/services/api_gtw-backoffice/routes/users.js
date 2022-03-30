@@ -39,13 +39,11 @@ router.delete('/deleteinactiveusers', function(req, res, next){
 
         axios
             .delete('http://api_users:3000/users',
-                querystring.stringify({
-                    "id": id
-                }),
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
-                    }
+                    },
+                    data: querystring.stringify({"id": id}),
                 }
             )
             .then(result => {
@@ -65,20 +63,18 @@ router.delete('/deleteinactiveusers', function(req, res, next){
 
 router.delete('/:id', function(req, res, next){
 
-    if(verify_adminUser(req.headers.authorization)){
+    if(verify_adminUser(req.headers.authorization) && verify_IdUser(req.params['id'])){
 
         let id = getUUIDFromAuthorization(req.headers.authorization);
-        let id_user = verify_IdUser(req.params['id']);
+        let id_user = req.params['id'];
 
         axios
             .delete('http://api_users:3000/users/'+id_user,
-                querystring.stringify({
-                    "id": id
-                }),
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
-                    }
+                    },
+                    data: querystring.stringify({"id": id}),
                 }
             )
             .then(result => {

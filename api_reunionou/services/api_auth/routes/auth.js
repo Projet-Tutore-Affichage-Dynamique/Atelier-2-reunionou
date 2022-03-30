@@ -188,6 +188,8 @@ router.post('/signup', function(req, res, next) {
     let confpwd = req.body.confpwd;
     let email = req.body.email;
 
+    console.log(req.body);
+
     //Vérifie si les données sont présente et ne contiennent pas de caractères interdits  ||  Vérifie que les mots de passe sont identiques
     if(verifyDataSignUp(req.body) && confpwd===pwd){
 
