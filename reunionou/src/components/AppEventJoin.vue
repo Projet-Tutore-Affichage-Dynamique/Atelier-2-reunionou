@@ -72,7 +72,7 @@ export default {
       this.id = localStorage.id;
       
       axios
-        .get("http://localhost:8081/events/"+this.$route.params.id, {
+        .get("http://51.210.15.53:8081/events/"+this.$route.params.id, {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
@@ -86,7 +86,7 @@ export default {
         });
 
         axios
-        .get("http://localhost:8081/events/"+this.$route.params.id+"/messages", {
+        .get("http://51.210.15.53:8081/events/"+this.$route.params.id+"/messages", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
@@ -100,7 +100,7 @@ export default {
         });
 
         axios
-        .get("http://localhost:8081/auth/users", {
+        .get("http://51.210.15.53:8081/auth/users", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
@@ -114,7 +114,7 @@ export default {
         });
 
         axios
-        .get("http://localhost:8081/events/"+this.$route.params.id+"/invitations",
+        .get("http://51.210.15.53:8081/events/"+this.$route.params.id+"/invitations",
           {
             headers: {
               "Authorization": `token ${localStorage.token}`,
@@ -132,7 +132,7 @@ export default {
     async handleSubmit() {
       axios
       // A adapater avec la nouvelle table de la BDD
-        .post("http://localhost:8081/auth/signup", {
+        .post("http://51.210.15.53:8081/auth/signup", {
           login: this.login,
           email: this.email,
           pwd: this.pwd,

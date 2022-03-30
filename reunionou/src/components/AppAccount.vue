@@ -52,7 +52,7 @@ export default {
       this.token = localStorage.token;
       
       axios
-        .get("http://localhost:8081/auth/profile", {
+        .get("http://51.210.15.53:8081/auth/profile", {
           headers: { 
             'Authorization': `token ${localStorage.token}` 
           }
@@ -70,7 +70,7 @@ export default {
     methods: {
       async handleSubmit() {
         axios
-          .post("http://localhost:8081/auth/profile", 
+          .post("http://51.210.15.53:8081/auth/profile",
           {
             login: this.login,
             email: this.email,

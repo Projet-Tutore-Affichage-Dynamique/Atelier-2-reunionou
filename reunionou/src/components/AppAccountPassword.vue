@@ -58,7 +58,7 @@ export default {
     methods: {
       async handleSubmit() {
         axios
-          .post("http://localhost:8081/auth/modify_pwd", 
+          .post("http://51.210.15.53:8081/auth/modify_pwd",
           {
             oldPwd: this.oldPwd,
             newPwd: this.newPwd,

@@ -37,7 +37,7 @@ export default {
   },
   beforeMount(){
         axios
-        .get("http://localhost:8081/events/invitations/all", {
+        .get("http://51.210.15.53:8081/events/invitations/all", {
           headers: { 
             'Authorization': `token ${localStorage.token}` 
           }
@@ -54,7 +54,7 @@ export default {
     getEvent(id_event){
         axios
         .get(
-          "http://localhost:8081/events/"+id_event,
+          "http://51.210.15.53:8081/events/"+id_event,
           {
             headers: {
               "Authorization": `token ${localStorage.token}`,

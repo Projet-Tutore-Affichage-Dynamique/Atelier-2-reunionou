@@ -21,4 +21,4 @@ INSERT INTO `messages` (`id_event`,`id_createur`,`message`, `date`) VALUES
 
 INSERT INTO `utilisateur_invite` (`id`,`nom_prenom`,`email`,`created`) VALUES
 ('84846ba0-a096-46f0-881a-73a18080036e','Jean Valjean', 'jeanvaljean@hugo.fr' NOW()),
-('02ad4c8a-eb05-48b4-8e8d-c4836957a9eb','Candide','candide@voltaire.fr', NOW()),
+('02ad4c8a-eb05-48b4-8e8d-c4836957a9eb','Candide','candide@voltaire.fr', NOW());

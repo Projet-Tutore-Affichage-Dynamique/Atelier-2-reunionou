@@ -81,14 +81,14 @@ export default {
       this.id = localStorage.id;
       
       axios
-        .get("http://localhost:8081/events/"+this.$route.params.id, {
+        .get("http://51.210.15.53:8081/events/"+this.$route.params.id, {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
         })
         .then((response) => {
           this.event = response.data.event;
-          this.text = "http://localhost:8080/event_join/" + this.event.id_createur + "/" + this.event.id;
+          this.text = "http://51.210.15.53:8080/event_join/" + this.event.id_createur + "/" + this.event.id;
         })
         .catch((error) => {
           console.log(error)
@@ -96,7 +96,7 @@ export default {
         });
 
         axios
-        .get("http://localhost:8081/events/"+this.$route.params.id+"/messages", {
+        .get("http://51.210.15.53:8081/events/"+this.$route.params.id+"/messages", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
@@ -110,7 +110,7 @@ export default {
         });
 
         axios
-        .get("http://localhost:8081/auth/users", {
+        .get("http://51.210.15.53:8081/auth/users", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
@@ -124,7 +124,7 @@ export default {
         });
 
         axios
-        .get("http://localhost:8081/events/"+this.$route.params.id+"/invitations",
+        .get("http://51.210.15.53:8081/events/"+this.$route.params.id+"/invitations",
           {
             headers: {
               "Authorization": `token ${localStorage.token}`,
@@ -142,7 +142,7 @@ export default {
     async sendInvite(invite_id){
        axios
         .post(
-          "http://localhost:8081/events/invite",
+          "http://51.210.15.53:8081/events/invite",
           {
             id_event: this.event.id,
             id_invite: invite_id,
@@ -192,7 +192,7 @@ export default {
     getLoginOfUser(id_user){
         axios
         .get(
-          "http://localhost:8081/auth/user/id/"+id_user,
+          "http://51.210.15.53:8081/auth/user/id/"+id_user,
           {
             headers: {
               "Authorization": `token ${localStorage.token}`,
@@ -217,10 +217,10 @@ export default {
         route = 'decline'
       }
 
-      console.log("http://localhost:8081/events/"+route);
+      console.log("http://51.210.15.53:8081/events/"+route);
 
       axios
-        .post("http://localhost:8081/events/"+route, 
+        .post("http://51.210.15.53:8081/events/"+route,
           {
             id_event: this.event.id,
             msg: '',

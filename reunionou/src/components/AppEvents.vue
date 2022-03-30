@@ -45,7 +45,7 @@ export default {
       this.id = localStorage.id;
       
       axios
-        .get("http://localhost:8081/events", {
+        .get("http://51.210.15.53:8081/events", {
           headers: { 
             'Authorization': `token ${this.token}` 
           }
