@@ -100,7 +100,8 @@ function verify_adminUser(autho){
     try{
         let decoded = jwt.verify(token, pKey, {algorithm: 'HS256'});
 
-        return (decoded.admin === 1);
+        console.log(decoded.admin.data[0] === 1);
+        return (decoded.admin.data[0] == 1);
     } catch(err){
         return false;
     }
