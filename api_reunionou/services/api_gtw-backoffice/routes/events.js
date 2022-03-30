@@ -31,6 +31,29 @@ router.get('/all', function(req, res, next){
     }
 });
 
+router.get('/eventsexpired', function(req, res, next){
+
+    console.log(verify_adminUser(req.headers.authorization));
+    if(verify_adminUser(req.headers.authorization)){
+        //console.log('coucou');
+
+        axios
+            .get('http://api_events:3000/events/eventsexpired')
+            .then(result => {
+                res.status(result.status).json(result.data);
+            })
+            .catch(error => {
+                if(error.response)
+                    res.status(error.response.status).json(error.response.data);
+                else
+                    res.status(500).json(error);
+            });
+
+    } else{
+        res.status(401).json({"error": "Vous n'etes pas authorisé à accéder à l'api pour admin"});
+    }
+});
+
 
 
 router.delete('/:id', function(req, res, next){
