@@ -7,7 +7,7 @@ import 'package:mobile_app/models/events.dart';
 import 'package:mobile_app/models/eventDetail.dart';
 import 'package:mobile_app/models/widgetEvent.dart';
 
-var ip = "192.168.42.168:8082";
+var ip = "51.210.15.53:8082";
 
 class All_Data extends ChangeNotifier{
 
