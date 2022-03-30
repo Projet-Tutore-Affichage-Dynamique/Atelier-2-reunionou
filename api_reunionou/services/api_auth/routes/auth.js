@@ -342,7 +342,7 @@ function error401(error){
 }
 
 function error500(error){
-    return {
+    return {    
         "type": "error",
         "error": "500",
         "message": error
