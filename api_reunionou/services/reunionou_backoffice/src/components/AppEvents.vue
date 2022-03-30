@@ -18,11 +18,32 @@
             <small v-else class="text-danger">expiré depuis {{ convert_dateExpired(event.date_RV) }}</small>
           </div>
           <div class="card-footer">
+            <!--<button type="button" class="btn btn-danger me-2" v-if="(new Date(event.date_RV).getTime()) < (new Date().getTime())" v-on:click="show_Toast(event)">Supprimer</button>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <h1>Evénements expirés</h1>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+       <div class="col" v-for='event in expiredEvents.data.events' :key='event._id'  >
+        <div class="card h-100">
+          <img src="https://picsum.photos/200" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">{{ event.title }}</h5>
+            <p class="card-text">{{ event.description }}</p>
+            <br>
+            <small v-if="(new Date(event.date_RV)) > (new Date())" class="text-muted">{{ new Date(event.date_RV).toDateString() }}</small>
+            <small v-else class="text-danger">expiré depuis {{ convert_dateExpired(event.date_RV) }}</small>
+          </div>
+          <div class="card-footer">
             <button type="button" class="btn btn-danger me-2" v-if="(new Date(event.date_RV).getTime()) < (new Date().getTime())" v-on:click="show_Toast(event)">Supprimer</button>
           </div>
         </div>
       </div>
     </div>
+   
   </main>
 
   <!-- TOAST -->
@@ -58,6 +79,7 @@ export default {
       token: null,
       login: null,
       id: null,
+      expiredEvents:null,
 
       event_suppr: '',
       event_idSuppr: ''
@@ -84,11 +106,28 @@ export default {
         .then((response) => {
           this.events = response;
           console.log(response);
+          
         })
         .catch((error) => {
           console.log(error)
           this.errored = true;
         });
+
+
+        axios
+          .get("http://localhost:8083/events/eventsexpired", {
+            headers: {
+              'Authorization': `token ${this.token}`
+            }
+          })
+          .then((response) => {
+            this.expiredEvents = response;
+            console.log(response)
+          })
+          .catch((error) => {
+            this.errored = true;
+            console.log(error);
+          });
   },
   methods: {
     convert_dateExpired(date){
@@ -133,6 +172,25 @@ export default {
             this.hide_Toast();
             this.reload_Events();
             console.log("Evenement supprimé !" + response);
+            this.$router.go();
+          })
+          .catch((error) => {
+            this.errored = true;
+            console.log(error);
+          });
+    },
+
+
+    getExpiredEvent(){
+      //console.log('id_event: '+this.event_idSuppr);
+      axios
+          .get("http://localhost:8083/events/eventsexpired", {
+            headers: {
+              'Authorization': `token ${this.token}`
+            }
+          })
+          .then((response) => {
+            this.expiredEvents = response;
           })
           .catch((error) => {
             this.errored = true;

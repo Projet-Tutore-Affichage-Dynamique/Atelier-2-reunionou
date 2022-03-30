@@ -78,14 +78,11 @@ router.get('/', function(req, res, next) {
 });
 
 
-/**Recupere les evenements passés et créer par un utilisateur */
+/**Recupere les evenements passés */
 router.get('/eventsexpired', function(req, res, next) {
+
     res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
-    // Récupère les données de la requête
-    let id_user = req.query['id_user'];
-
-    // Date au format datetime pour comparer avec bdd
     let today=new Date();
     today = today.getUTCFullYear() + '-' +
     ('00' + (today.getUTCMonth()+1)).slice(-2) + '-' +
@@ -93,77 +90,26 @@ router.get('/eventsexpired', function(req, res, next) {
     ('00' + today.getUTCHours()).slice(-2) + ':' + 
     ('00' + today.getUTCMinutes()).slice(-2) + ':' + 
     ('00' + today.getUTCSeconds()).slice(-2);
+    Connection.query("SELECT * FROM events WHERE date_rv<'"+today+"'", (error, result, fields) => {
+        if(!error){
 
-    if(id_user!==undefined&&id_user!==null){
+            if(result[0]!==undefined && result[0]!==null){
 
-        //Récupère tous les events passés par rapport à la date du jour et créer par l'utilisateur
-       
-        Connection.query("SELECT * FROM events WHERE date_rv<'"+today+"' AND id_createur='"+id_user+"'", (error, result, fields) => {
-            if(!error){
-                if(result==undefined && result==null){
-                    res.status(200).json({"events":result});
-                }else{
-                    if(result==null){
-                        res.status(204).json({"message": "Aucun évènements passés"});
-                    }else{
-                        res.status(200).json({"events": result});
-                    }
-                }
-            }else{
-                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
-                res.status(500).json(error500(message));
+                res.status(200).json({"events": result});
+
+            } else{
+                res.status(404).json(error401("Il n'y a aucun évènements expirés"));
             }
-        });
-
-    }else{
-        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
-    }
+        } else{
+            let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
+            res.status(500).json(error500(message));
+        }
+    });
+     
 });
 
 
-/**Recupere les evenements passés auxquels l'utilisateur est invité*/
-router.get('/eventsinvitedexpired', function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
-    // Récupère les données de la requête
-    let id_user = req.query['id_user'];
-
-    // Date au format datetime pour comparer avec bdd
-    let today=new Date();
-    today = today.getUTCFullYear() + '-' +
-    ('00' + (today.getUTCMonth()+1)).slice(-2) + '-' +
-    ('00' + today.getUTCDate()).slice(-2) + ' ' + 
-    ('00' + today.getUTCHours()).slice(-2) + ':' + 
-    ('00' + today.getUTCMinutes()).slice(-2) + ':' + 
-    ('00' + today.getUTCSeconds()).slice(-2);
-
-    if(id_user!==undefined&&id_user!==null){
-
-        //Récupère tous les events passés par rapport à la date du jour et créer par l'utilisateur
-       
-        Connection.query("SELECT * FROM events e INNER JOIN invitation i ON e.id=i.id_event WHERE date_rv<'"+today+"' AND id_invite='"+id_user+"'", (error, result, fields) => {
-            if(!error){
-                console.log(today)
-                console.log(result)
-                if(result==undefined && result==null){
-                    res.status(200).json({"events invited expired":result});
-                }else{
-                    if(result==null){
-                        res.status(204).json({"message": "Aucun évènements auquel vous êtes convié n'est passé"});
-                    }else{
-                        res.status(200).json({"events invited expired": result});
-                    }
-                }
-            }else{
-                let message = req.app.get('env') === 'development' ? error : "Erreur dans la table events";
-                res.status(500).json(error500(message));
-            }
-        });
-
-    }else{
-        res.status(401).json(error401("Vous devez être connecté pour accéder à ce service"));
-    }
-});
 
 /* Récupère les données de l'évenement */
 router.get('/:id', function(req, res, next) {
