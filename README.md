@@ -11,6 +11,10 @@ L'application est disponible en version web et en version mobile.
 - ORIAS Théo
 - WILT Lilian
 
+## Taches réalisées :
+- Gestion du front-end client (Vue.js): AUBERTIN Valentin & FRISSON Pierre-Alexandre
+- Gestion des API: LE NALINEC Leopold & WILT Lilian
+- Gestion de la version mobile (flutter): ORIAS Théo
 
 ## Tech Stack
 
